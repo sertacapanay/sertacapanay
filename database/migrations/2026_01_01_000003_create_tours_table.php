@@ -1,0 +1,5 @@
+<?php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+return new class extends Migration { public function up(): void { Schema::create('tours', function (Blueprint $table) { $table->id(); $table->string('title_tr'); $table->string('title_en')->nullable(); $table->string('slug')->unique(); $table->string('region_tr')->nullable(); $table->string('region_en')->nullable(); $table->string('country_tr')->nullable(); $table->string('country_en')->nullable(); $table->integer('duration_days')->nullable(); $table->decimal('price', 12, 2)->nullable(); $table->string('currency')->default('EUR'); $table->date('start_date')->nullable(); $table->string('cover_image')->nullable(); $table->text('short_description_tr')->nullable(); $table->text('short_description_en')->nullable(); $table->longText('description_tr')->nullable(); $table->longText('description_en')->nullable(); $table->boolean('is_featured')->default(false); $table->boolean('is_active')->default(true); $table->timestamps(); }); } public function down(): void { Schema::dropIfExists('tours'); } };

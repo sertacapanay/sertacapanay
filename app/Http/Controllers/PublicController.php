@@ -1,0 +1,172 @@
+<?php
+namespace App\Http\Controllers;
+use App\Models\Post;
+use App\Models\Place;
+use App\Models\Tour;
+use Illuminate\Http\Request;
+class PublicController extends Controller
+{
+    private function locale(string $locale): string { return in_array($locale, ['tr','en']) ? $locale : 'tr'; }
+    public function home(string $locale = 'tr')
+    {
+        $locale = $this->locale($locale);
+        return view('public.home', [
+            'locale'  => $locale,
+            'isEn'    => $locale === 'en',
+            'posts'   => Post::published()->latest()->take(3)->get(),
+            'places'  => Place::latest()->take(6)->get(),
+            'tours'   => Tour::latest()->take(3)->get(),
+        ]);
+    }
+
+    public function posts(string $locale = 'tr', Request $request)
+    {
+        $locale = $this->locale($locale);
+        $col    = $locale === 'en' ? 'category_en' : 'category_tr';
+
+        $categories = Post::published()
+            ->whereNotNull($col)
+            ->where($col, '!=', '')
+            ->select($col)
+            ->distinct()
+            ->orderBy($col)
+            ->pluck($col);
+
+        $query = Post::published()->latest();
+
+        if ($request->filled('category')) {
+            $query->where($col, $request->category);
+        }
+
+        return view('public.posts.index', [
+            'locale'           => $locale,
+            'isEn'             => $locale === 'en',
+            'posts'            => $query->paginate(12)->withQueryString(),
+            'categories'       => $categories,
+            'selectedCategory' => $request->category,
+        ]);
+    }
+    public function postShow(string $locale, string $slug)
+    {
+        $locale = $this->locale($locale);
+        $post   = Post::published()->where('slug', $slug)->firstOrFail();
+        $col    = $locale === 'en' ? 'category_en' : 'category_tr';
+
+        $relatedPosts = Post::published()
+            ->where('id', '!=', $post->id)
+            ->when($post->{$col}, fn($q) => $q->where($col, $post->{$col}))
+            ->latest()
+            ->take(3)
+            ->get();
+
+        if ($relatedPosts->count() < 3) {
+            $relatedPosts = Post::published()
+                ->where('id', '!=', $post->id)
+                ->latest()
+                ->take(3)
+                ->get();
+        }
+
+        return view('public.posts.show', compact('locale', 'post', 'relatedPosts') + ['isEn' => $locale === 'en']);
+    }
+    public function places(string $locale = 'tr', Request $request)
+    {
+        $locale = $this->locale($locale);
+        $col    = $locale === 'en' ? 'country_en' : 'country_tr';
+
+        $countries = Place::active()
+            ->whereNotNull($col)
+            ->where($col, '!=', '')
+            ->select($col)
+            ->distinct()
+            ->orderBy($col)
+            ->pluck($col);
+
+        $query = Place::active()->latest();
+
+        if ($request->filled('country')) {
+            $query->where($col, $request->country);
+        }
+
+        return view('public.places.index', [
+            'locale'          => $locale,
+            'isEn'            => $locale === 'en',
+            'places'          => $query->paginate(12)->withQueryString(),
+            'countries'       => $countries,
+            'selectedCountry' => $request->country,
+        ]);
+    }
+    public function placeShow(string $locale, string $slug)
+    {
+        $locale = $this->locale($locale);
+        $place  = Place::active()->where('slug', $slug)->firstOrFail();
+        $col    = $locale === 'en' ? 'country_en' : 'country_tr';
+
+        $relatedPlaces = Place::active()
+            ->where('id', '!=', $place->id)
+            ->when($place->{$col}, fn($q) => $q->where($col, $place->{$col}))
+            ->latest()
+            ->take(3)
+            ->get();
+
+        if ($relatedPlaces->count() < 3) {
+            $relatedPlaces = Place::active()
+                ->where('id', '!=', $place->id)
+                ->latest()
+                ->take(3)
+                ->get();
+        }
+
+        return view('public.places.show', compact('locale', 'place', 'relatedPlaces') + ['isEn' => $locale === 'en']);
+    }
+    public function tours(string $locale = 'tr', Request $request)
+    {
+        $locale = $this->locale($locale);
+        $col    = $locale === 'en' ? 'country_en' : 'country_tr';
+
+        $countries = Tour::active()
+            ->whereNotNull($col)
+            ->where($col, '!=', '')
+            ->select($col)
+            ->distinct()
+            ->orderBy($col)
+            ->pluck($col);
+
+        $query = Tour::active()->latest();
+
+        if ($request->filled('country')) {
+            $query->where($col, $request->country);
+        }
+
+        return view('public.tours.index', [
+            'locale'          => $locale,
+            'isEn'            => $locale === 'en',
+            'tours'           => $query->paginate(12)->withQueryString(),
+            'countries'       => $countries,
+            'selectedCountry' => $request->country,
+        ]);
+    }
+    public function tourShow(string $locale, string $slug)
+    {
+        $locale = $this->locale($locale);
+        $tour   = Tour::active()->where('slug', $slug)->firstOrFail();
+        $col    = $locale === 'en' ? 'country_en' : 'country_tr';
+
+        $relatedTours = Tour::active()
+            ->where('id', '!=', $tour->id)
+            ->when($tour->{$col}, fn($q) => $q->where($col, $tour->{$col}))
+            ->latest()
+            ->take(3)
+            ->get();
+
+        if ($relatedTours->count() < 3) {
+            $relatedTours = Tour::active()
+                ->where('id', '!=', $tour->id)
+                ->latest()
+                ->take(3)
+                ->get();
+        }
+
+        return view('public.tours.show', compact('locale', 'tour', 'relatedTours') + ['isEn' => $locale === 'en']);
+    }
+}
