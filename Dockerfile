@@ -20,4 +20,4 @@ RUN composer install --no-dev --optimize-autoloader \
 
 EXPOSE 8000
 
-CMD sh -c "php artisan migrate --force && php artisan storage:link && php artisan serve --host=0.0.0.0 --port=${PORT:-8000}"
+CMD sh -c "mkdir -p storage/framework/views storage/framework/cache/data storage/framework/sessions storage/logs storage/app/public database && chmod -R 775 storage bootstrap/cache && php artisan migrate --force && php artisan storage:link && php artisan serve --host=0.0.0.0 --port=${PORT:-8000}"
