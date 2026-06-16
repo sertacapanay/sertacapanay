@@ -1,5 +1,7 @@
 # Sertac Apanay
 
+![CI](https://github.com/sertacapanay/sertacapanay/actions/workflows/ci.yml/badge.svg)
+
 Kültürel anlatıcı ve seyahat uzmanı Sertaç Apanay'ın kişisel web sitesi. Laravel + Filament ile geliştirilmiş, Türkçe/İngilizce iki dilli içerik yönetim sistemi.
 
 ## Özellikler
