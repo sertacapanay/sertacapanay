@@ -21,7 +21,7 @@ RUN composer install --no-dev --optimize-autoloader \
 EXPOSE 8000
 
 CMD sh -c "\
-  mkdir -p storage/framework/views storage/framework/cache/data storage/framework/sessions storage/logs storage/app/public database && \
+  mkdir -p storage/framework/views storage/framework/cache/data storage/framework/sessions storage/logs storage/app/public storage/database database && \
   chmod -R 775 storage bootstrap/cache && \
   KEY_FILE=storage/.app_key && \
   if [ ! -f \"\$KEY_FILE\" ]; then \
