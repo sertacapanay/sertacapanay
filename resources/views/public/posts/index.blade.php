@@ -136,7 +136,7 @@
               'desc_en'  => 'Travel isn\'t about the places you arrive at — it\'s about the transformative space between departure and arrival.',
             ],
           ] as $ph)
-          <div class="post">
+          <a href="#" class="post">
             <div class="pthumb">
               <img src="{{ $ph['img'] }}" alt="" loading="lazy">
             </div>
@@ -153,7 +153,7 @@
               <span data-tr>{{ $ph['desc_tr'] }}</span>
               <span class="b" data-en>{{ $ph['desc_en'] }}</span>
             </p>
-          </div>
+          </a>
           @endforeach
         @endforelse
 
