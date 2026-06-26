@@ -112,10 +112,11 @@
           @endphp
           @foreach([
             [
+              'slug'     => 'her-gezgin-yurt-disinda-yemek-yapmayi-ogrenmeli',
               'img'      => $post1Img,
               'cat_tr'   => 'yemek',
               'cat_en'   => 'food',
-              'date'     => '14 Haz 2026',
+              'date'     => '22 Haz 2026',
               'read_tr'  => '5 dk',
               'read_en'  => '5 min',
               'title_tr' => 'Her Gezgin Yurt Dışında Yemek Yapmayı Öğrenmeli',
@@ -124,10 +125,11 @@
               'desc_en'  => 'The market is the real museum. Learning to cook local cuisine transforms you from tourist to temporary resident.',
             ],
             [
+              'slug'     => 'destinasyonlar-arasindaki-sessizlik',
               'img'      => $post2Img,
               'cat_tr'   => 'seyahat hikâyeleri',
               'cat_en'   => 'travel stories',
-              'date'     => '14 Haz 2026',
+              'date'     => '15 Haz 2026',
               'read_tr'  => '6 dk',
               'read_en'  => '6 min',
               'title_tr' => 'Destinasyonlar Arasındaki Sessizlik',
@@ -136,7 +138,7 @@
               'desc_en'  => 'Travel isn\'t about the places you arrive at — it\'s about the transformative space between departure and arrival.',
             ],
           ] as $ph)
-          <a href="#" class="post">
+          <a href="/{{ $locale }}/blog/{{ $ph['slug'] }}" class="post">
             <div class="pthumb">
               <img src="{{ $ph['img'] }}" alt="" loading="lazy">
             </div>
