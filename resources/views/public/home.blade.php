@@ -337,7 +337,7 @@
         <a href="/{{ $locale }}/places/{{ $place->slug }}" class="card {{ $aspect }}">
           <div class="bg">
             @if($place->image)
-              <img src="{{ asset('storage/'.$place->image) }}" alt="{{ $pname }}">
+              <img src="{{ asset('storage/'.$place- loading="lazy">image) }}" alt="{{ $pname }}">
             @endif
           </div>
           <div class="meta">
@@ -412,7 +412,7 @@
         <a href="/{{ $locale }}/guides/{{ $note->slug }}" class="note {{ $i % 2 !== 0 ? 'alt' : '' }}">
           <div class="nimg">
             @if($note->image)
-              <img src="{{ asset('storage/'.$note->image) }}" alt="{{ $ntitle }}">
+              <img src="{{ asset('storage/'.$note- loading="lazy">image) }}" alt="{{ $ntitle }}">
             @endif
           </div>
           @if($ncountry)
@@ -482,7 +482,7 @@
         <a href="/{{ $locale }}/shop/{{ $product->slug }}" class="prod">
           <div class="pimg">
             @if($product->image)
-              <img src="{{ asset('storage/'.$product->image) }}" alt="{{ $pname }}">
+              <img src="{{ asset('storage/'.$product- loading="lazy">image) }}" alt="{{ $pname }}">
             @endif
           </div>
           @if($psrc)<span class="src">{{ $psrc }}</span>@endif

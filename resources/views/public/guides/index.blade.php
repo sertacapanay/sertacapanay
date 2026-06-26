@@ -93,7 +93,7 @@
           <a href="/{{ $locale }}/guides/{{ $place->slug }}" class="guide">
             <div class="gimg">
               @if($place->image)
-                <img src="{{ asset('storage/'.$place->image) }}" alt="{{ $title }}">
+                <img src="{{ asset('storage/'.$place->image) }}" alt="{{ $title }}" loading="lazy">
               @endif
             </div>
             <div class="gloc">
@@ -134,7 +134,7 @@
           ] as $g)
           <div class="guide">
             <div class="gimg">
-              <img src="{{ $g['img'] }}" alt="">
+              <img src="{{ $g['img'] }}" alt="" loading="lazy">
             </div>
             <div class="gloc">
               <span data-tr>{{ $g['loc_tr'] }}</span>

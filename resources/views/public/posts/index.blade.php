@@ -92,7 +92,7 @@
           <a href="/{{ $locale }}/blog/{{ $post->slug }}" class="post">
             <div class="pthumb">
               @if($post->cover_image)
-                <img src="{{ asset('storage/'.$post->cover_image) }}" alt="{{ $ptitle }}">
+                <img src="{{ asset('storage/'.$post->cover_image) }}" alt="{{ $ptitle }}" loading="lazy">
               @endif
             </div>
             <div class="pmeta">
@@ -138,7 +138,7 @@
           ] as $ph)
           <div class="post">
             <div class="pthumb">
-              <img src="{{ $ph['img'] }}" alt="">
+              <img src="{{ $ph['img'] }}" alt="" loading="lazy">
             </div>
             <div class="pmeta">
               <span data-tr>{{ $ph['cat_tr'] }}</span><span class="b" data-en>{{ $ph['cat_en'] }}</span>

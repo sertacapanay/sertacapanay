@@ -92,7 +92,7 @@
           <a href="/{{ $locale }}/shop/{{ $product->slug }}" class="sprod">
             <div class="pimg">
               @if($product->image)
-                <img src="{{ asset('storage/'.$product->image) }}" alt="{{ $pname }}">
+                <img src="{{ asset('storage/'.$product->image) }}" alt="{{ $pname }}" loading="lazy">
               @endif
             </div>
             @if($psrc)<span class="src">{{ $psrc }}</span>@endif
@@ -120,7 +120,7 @@
           ] as $ph)
           <div class="sprod">
             <div class="pimg">
-              <img src="{{ $ph['img'] }}" alt="">
+              <img src="{{ $ph['img'] }}" alt="" loading="lazy">
             </div>
             <span class="src">
               <span data-tr>{{ $ph['src_tr'] }}</span><span class="b" data-en>{{ $ph['src_en'] }}</span>
