@@ -19,7 +19,7 @@
     color:rgba(243,239,230,.6);margin-bottom:18px}
   .roles{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px}
   .role3{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
-    color:rgba(243,239,230,.45);border:1px solid rgba(243,239,230,.2);padding:5px 14px;border-radius:20px}
+    color:rgba(243,239,230,.45);border:1px solid rgba(243,239,230,.2);padding:5px 14px;border-radius:20px;background:transparent}
   .hero h1{font-family:var(--display);font-size:clamp(46px,7vw,90px);font-weight:400;
     line-height:1.04;letter-spacing:-.01em;margin:20px 0 28px;max-width:740px}
   .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
