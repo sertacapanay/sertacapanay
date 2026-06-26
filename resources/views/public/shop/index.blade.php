@@ -93,6 +93,9 @@
             <div class="pimg">
               @if($product->image)
                 <img src="{{ asset('storage/'.$product->image) }}" alt="{{ $pname }}" loading="lazy">
+              @else
+                @php $fi = (($loop->index % 4) + 1); @endphp
+                <img src="{{ asset('images/shop-prod'.$fi.'.jpg') }}" alt="{{ $pname }}" loading="lazy">
               @endif
             </div>
             @if($psrc)<span class="src">{{ $psrc }}</span>@endif

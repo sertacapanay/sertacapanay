@@ -99,11 +99,20 @@
         </p>
       @endif
 
-      @if($post->cover_image)
-        <div class="ahero">
+      @php
+        $slugCoverMap = [
+          'her-gezgin-yurt-disinda-yemek-yapmayi-ogrenmeli' => 'blog-post1.jpg',
+          'destinasyonlar-arasindaki-sessizlik'              => 'blog-post2.jpg',
+        ];
+        $coverFallback = $slugCoverMap[$post->slug] ?? 'blog-post1.jpg';
+      @endphp
+      <div class="ahero">
+        @if($post->cover_image)
           <img src="{{ asset('storage/'.$post->cover_image) }}" alt="{{ $title }}" loading="lazy">
-        </div>
-      @endif
+        @else
+          <img src="{{ asset('images/'.$coverFallback) }}" alt="{{ $title }}" loading="lazy">
+        @endif
+      </div>
 
       @if($body)
         <div class="article-body">
@@ -138,8 +147,14 @@
         @endphp
         <a href="/{{ $locale }}/blog/{{ $rel->slug }}" class="rpost">
           <div class="pthumb">
+            @php
+              $relCoverMap = ['her-gezgin-yurt-disinda-yemek-yapmayi-ogrenmeli'=>'blog-post1.jpg','destinasyonlar-arasindaki-sessizlik'=>'blog-post2.jpg'];
+              $relFallback = $relCoverMap[$rel->slug] ?? 'blog-post1.jpg';
+            @endphp
             @if($rel->cover_image)
               <img src="{{ asset('storage/'.$rel->cover_image) }}" alt="{{ $rt }}" loading="lazy">
+            @else
+              <img src="{{ asset('images/'.$relFallback) }}" alt="{{ $rt }}" loading="lazy">
             @endif
           </div>
           @if($rc_tr)

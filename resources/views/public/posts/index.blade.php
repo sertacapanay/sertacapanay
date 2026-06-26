@@ -93,6 +93,9 @@
             <div class="pthumb">
               @if($post->cover_image)
                 <img src="{{ asset('storage/'.$post->cover_image) }}" alt="{{ $ptitle }}" loading="lazy">
+              @else
+                @php $bi = (($loop->index % 2) + 1); @endphp
+                <img src="{{ asset('images/blog-post'.$bi.'.jpg') }}" alt="{{ $ptitle }}" loading="lazy">
               @endif
             </div>
             <div class="pmeta">

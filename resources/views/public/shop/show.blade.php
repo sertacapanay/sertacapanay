@@ -64,8 +64,19 @@
 
     <div class="pd">
       <div class="pdimg">
+        @php
+          $slugImgMap = [
+            'el-dokumasi-ikat-atki'          => 'shop-prod1.jpg',
+            'zellige-seramik-kase'           => 'shop-prod2.jpg',
+            'antika-princ-pusula'            => 'shop-prod3.jpg',
+            'el-yapimi-deri-seyahat-defteri' => 'shop-prod4.jpg',
+          ];
+          $fallbackImg = $slugImgMap[$product->slug] ?? 'shop-prod1.jpg';
+        @endphp
         @if($product->image)
           <img src="{{ asset('storage/'.$product->image) }}" alt="{{ $pname }}" loading="lazy">
+        @else
+          <img src="{{ asset('images/'.$fallbackImg) }}" alt="{{ $pname }}" loading="lazy">
         @endif
       </div>
 
