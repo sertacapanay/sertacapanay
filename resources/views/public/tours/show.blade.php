@@ -123,7 +123,7 @@
         <a href="/{{ $locale }}/tours/{{ $rel->slug }}" class="rec">
           <div class="rimg">
             @if($rel->cover_image)
-              <img src="{{ asset('storage/'.$rel- loading="lazy">cover_image) }}" alt="{{ $isEn ? $rel->name_en : $rel->name_tr }}">
+              <img src="{{ asset('storage/'.$rel->cover_image) }}" alt="{{ $isEn ? $rel->name_en : $rel->name_tr }}" loading="lazy">
             @endif
           </div>
           <div class="rpd">

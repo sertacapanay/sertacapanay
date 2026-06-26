@@ -58,7 +58,7 @@
     <div class="pd">
       <div class="pdimg">
         @if($product->image)
-          <img src="{{ asset('storage/'.$product- loading="lazy">image) }}" alt="{{ $pname }}">
+          <img src="{{ asset('storage/'.$product->image) }}" alt="{{ $pname }}" loading="lazy">
         @endif
       </div>
       <div class="pd-info">
@@ -88,7 +88,7 @@
         @php $rn = $isEn ? ($rel->title_en ?? $rel->title_tr) : $rel->title_tr; @endphp
         <a href="/{{ $locale }}/shop/{{ $rel->slug }}" class="sprod">
           <div class="pimg">
-            @if($rel->image)<img src="{{ asset('storage/'.$rel- loading="lazy">image) }}" alt="{{ $rn }}">@endif
+            @if($rel->image)<img src="{{ asset('storage/'.$rel->image) }}" alt="{{ $rn }}" loading="lazy">@endif
           </div>
           <div class="pname">{{ $rn }}</div>
           @if($rel->price)<div class="price">{{ $rel->currency }} {{ number_format($rel->price, 0) }}</div>@endif
