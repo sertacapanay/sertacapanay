@@ -11,11 +11,12 @@ class PublicController extends Controller
     {
         $locale = $this->locale($locale);
         return view('public.home', [
-            'locale'  => $locale,
-            'isEn'    => $locale === 'en',
-            'posts'   => Post::published()->latest()->take(3)->get(),
-            'places'  => Place::latest()->take(6)->get(),
-            'tours'   => Tour::latest()->take(3)->get(),
+            'locale'     => $locale,
+            'isEn'       => $locale === 'en',
+            'heroImage'  => asset('images/hero.jpg'),
+            'posts'      => Post::published()->latest()->take(3)->get(),
+            'places'     => Place::latest()->take(6)->get(),
+            'tours'      => Tour::latest()->take(3)->get(),
         ]);
     }
 
