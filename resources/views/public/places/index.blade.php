@@ -8,7 +8,7 @@
   /* HERO */
   .hero{position:relative;min-height:78vh;display:flex;align-items:flex-end;color:var(--bone);overflow:hidden}
   .hero-bg{position:absolute;inset:0;z-index:0;
-    background:url('{{ asset("images/places-hero.jpg") }}') center/cover no-repeat}
+    background:url('{{ asset("images/destinations-hero.jpg") }}') center/cover no-repeat}
   .hero::after{content:"";position:absolute;inset:0;z-index:1;
     background:linear-gradient(180deg,rgba(8,10,14,.5) 0%,rgba(8,10,14,.08) 35%,rgba(8,10,14,.55) 75%,rgba(8,10,14,.8) 100%)}
   .hero .wrap{position:relative;z-index:2;padding-bottom:64px;padding-top:120px;padding-left:44px;
@@ -109,7 +109,7 @@
         $pname   = $isEn ? ($place->title_en ?? $place->title_tr) : $place->title_tr;
         $country = $isEn ? ($place->country_en ?? $place->country_tr) : $place->country_tr;
         $excerpt = $isEn ? ($place->excerpt_en ?? $place->excerpt_tr ?? '') : ($place->excerpt_tr ?? '');
-        $imgUrl  = $place->image ? asset('storage/'.$place->image) : asset('images/places-hero.jpg');
+        $imgUrl  = $place->image ? asset('storage/'.$place->image) : asset('images/destinations-hero.jpg');
         $ccode   = strtoupper(substr($country ?? '', 0, 2));
         $cregion = $country ?? '';
       @endphp
