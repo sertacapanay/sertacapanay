@@ -353,7 +353,18 @@
       <span class="mark"><span class="pin"></span></span>
       <span class="wm">Sertaç Apanay</span>
     </a>
+    <ul class="menu">
+      <li><a href="/{{ $locale ?? 'tr' }}/places"><span data-tr>Destinasyonlar</span><span data-en>Destinations</span></a></li>
+      <li><a href="/{{ $locale ?? 'tr' }}/tours"><span data-tr>Turlar</span><span data-en>Tours</span></a></li>
+      <li><a href="/{{ $locale ?? 'tr' }}/blog">Blog</a></li>
+      <li><a href="/{{ $locale ?? 'tr' }}/contact"><span data-tr>İletişim</span><span data-en>Contact</span></a></li>
+    </ul>
     <div class="nav-right">
+      @php $loc = $locale ?? 'tr'; $currentPath = preg_replace('#^/(tr|en)#','',request()->getPathInfo()); @endphp
+      <div class="lang">
+        <button onclick="window.location='/tr{{ $currentPath }}'" class="{{ $loc==='tr'?'active':'' }}">TR</button>
+        <button onclick="window.location='/en{{ $currentPath }}'" class="{{ $loc==='en'?'active':'' }}">EN</button>
+      </div>
       <button class="menu-btn" aria-label="Menü" onclick="toggleMenu(true)">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
           <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/>
