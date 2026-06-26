@@ -9,7 +9,7 @@
     position:relative;min-height:56vh;display:flex;align-items:flex-end;
     padding:120px 0 56px;background-size:cover;background-position:center 30%;
     background-image:linear-gradient(180deg,rgba(8,10,14,.45) 0%,rgba(8,10,14,.1) 42%,rgba(8,10,14,.65) 100%),
-      url('{{ asset("images/hero.jpg") }}');
+      url('{{ asset("images/flights-hero.jpg") }}');
     color:var(--bone)
   }
   .page-hero .wrap{width:100%;max-width:100%;margin:0;padding-left:44px}
