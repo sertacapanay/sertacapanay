@@ -9,6 +9,11 @@
   <meta property="og:description" content="@yield('description', 'Kültürel anlatıcı, seyahat uzmanı.')">
   <meta property="og:type"        content="website">
   <meta name="twitter:card"       content="summary_large_image">
+  {{-- Telif Hakkı / Copyright --}}
+  <meta name="author"             content="Sertaç Apanay">
+  <meta name="copyright"          content="© {{ date('Y') }} Sertaç Apanay. Tüm hakları saklıdır.">
+  <meta name="rights"             content="All content on this site is the exclusive property of Sertaç Apanay. Unauthorized reproduction, copying, scraping or redistribution is strictly prohibited.">
+  <meta name="robots"             content="index, follow, noodp, noydir">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">

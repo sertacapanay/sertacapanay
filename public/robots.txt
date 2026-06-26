@@ -1,2 +1,80 @@
+# robots.txt — sertacapanay.net
+# © Sertac Apanay. Unauthorized scraping is prohibited.
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Yandex
+Allow: /
+
+User-agent: HTTrack
+Disallow: /
+
+User-agent: WebCopier
+Disallow: /
+
+User-agent: WebReaper
+Disallow: /
+
+User-agent: Wget
+Disallow: /
+
+User-agent: curl
+Disallow: /
+
+User-agent: SiteSucker
+Disallow: /
+
+User-agent: Teleport
+Disallow: /
+
+User-agent: TeleportPro
+Disallow: /
+
+User-agent: Offline Explorer
+Disallow: /
+
+User-agent: Website Ripper Copier
+Disallow: /
+
+User-agent: Cyotek WebCopy
+Disallow: /
+
+User-agent: SurfOffline
+Disallow: /
+
+User-agent: larbin
+Disallow: /
+
+User-agent: libwww-perl
+Disallow: /
+
+User-agent: GetRight
+Disallow: /
+
+User-agent: python-requests
+Disallow: /
+
+User-agent: scrapy
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
 User-agent: *
-Disallow:
+Allow: /
+Crawl-delay: 10
+
+Sitemap: https://sertacapanay.net/sitemap.xml
