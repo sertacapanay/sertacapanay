@@ -154,9 +154,7 @@
      HERO
 ════════════════════════════════════════ --}}
 <section class="hero" id="top">
-  @if(isset($heroImage))
-    <img class="hero-bg-img" src="{{ $heroImage }}" alt="hero">
-  @endif
+  <img class="hero-bg-img" src="{{ isset($heroImage) ? $heroImage : asset('images/hero.jpg') }}" alt="hero" loading="eager">
 
   <div class="scroll-explore">
     <span data-tr>Keşfetmek için kaydır</span><span data-en>Scroll to Explore</span>
@@ -271,7 +269,7 @@
       </div>
 
       <div class="about-img">
-        {{-- Profil fotoğrafı Filament'ten eklenecek --}}
+        <img src="{{ asset('images/about-sertac.jpg') }}" alt="Sertaç Apanay" loading="lazy">
       </div>
     </div>
 
@@ -353,28 +351,32 @@
   {{-- Statik placeholder ─ veri girilene kadar gösterilir --}}
   <div class="wrap">
     <div class="masonry">
-      <a href="/{{ $locale }}/places" class="card r43" style="background:var(--ink)">
+      <a href="/{{ $locale }}/places" class="card r43">
+        <div class="bg"><img src="{{ asset('images/dest-japan.jpg') }}" alt="Japonya" loading="lazy"></div>
         <div class="meta">
           <span class="tag"><span data-tr>Asya · 6 ziyaret</span><span data-en>Asia · 6 visits</span></span>
           <div class="name"><span data-tr>Japonya</span><span data-en>Japan</span></div>
           <div class="desc"><span data-tr>Her ayrıntıda incelik, güzellik ve derinlik.</span><span data-en>Precision, beauty, and depth in every detail.</span></div>
         </div>
       </a>
-      <a href="/{{ $locale }}/places" class="card r34" style="background:var(--ink)">
+      <a href="/{{ $locale }}/places" class="card r34">
+        <div class="bg"><img src="{{ asset('images/dest-peru.jpg') }}" alt="Peru" loading="lazy"></div>
         <div class="meta">
           <span class="tag"><span data-tr>Güney Amerika · 2 ziyaret</span><span data-en>South America · 2 visits</span></span>
           <div class="name"><span data-tr>Peru</span><span data-en>Peru</span></div>
           <div class="desc"><span data-tr>And'lar zamandan eski sırlar saklar.</span><span data-en>The Andes hold secrets older than time.</span></div>
         </div>
       </a>
-      <a href="/{{ $locale }}/places" class="card r43" style="background:var(--ink)">
+      <a href="/{{ $locale }}/places" class="card r43">
+        <div class="bg"><img src="{{ asset('images/dest-jordan.jpg') }}" alt="Ürdün" loading="lazy"></div>
         <div class="meta">
           <span class="tag"><span data-tr>Asya · 3 ziyaret</span><span data-en>Asia · 3 visits</span></span>
           <div class="name"><span data-tr>Ürdün</span><span data-en>Jordan</span></div>
           <div class="desc"><span data-tr>Kumtaşı şehirlerin binyılları fısıldadığı yer.</span><span data-en>Where sandstone cities whisper millennia of history.</span></div>
         </div>
       </a>
-      <a href="/{{ $locale }}/places" class="card r34" style="background:var(--ink)">
+      <a href="/{{ $locale }}/places" class="card r34">
+        <div class="bg"><img src="{{ asset('images/dest-italy.jpg') }}" alt="İtalya" loading="lazy"></div>
         <div class="meta">
           <span class="tag"><span data-tr>Avrupa · 8 ziyaret</span><span data-en>Europe · 8 visits</span></span>
           <div class="name"><span data-tr>İtalya</span><span data-en>Italy</span></div>
@@ -430,7 +432,7 @@
     {{-- Statik placeholder --}}
     <div class="notes-grid">
       <a href="/{{ $locale }}/guides" class="note">
-        <div class="nimg" style="background:linear-gradient(160deg,#5a4a3a,#b0895a)"></div>
+        <div class="nimg"><img src="{{ asset('images/marrakech.jpg') }}" alt="Marakeş" loading="lazy"></div>
         <div class="loc">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--coral)" stroke="none"><circle cx="12" cy="12" r="6"/></svg>
           <span data-tr>Marakeş, Fas</span><span data-en>Marrakech, Morocco</span>
@@ -440,7 +442,7 @@
         <p class="b" data-en>Marrakech is organized chaos elevated to an art form. The medina will disorient you, challenge you, and ultimately…</p>
       </a>
       <a href="/{{ $locale }}/guides" class="note alt">
-        <div class="nimg" style="background:linear-gradient(160deg,#2a3a4a,#5a8a9a)"></div>
+        <div class="nimg"><img src="{{ asset('images/kyoto.jpg') }}" alt="Kyoto" loading="lazy"></div>
         <div class="loc">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--coral)" stroke="none"><circle cx="12" cy="12" r="6"/></svg>
           <span data-tr>Kyoto, Japonya</span><span data-en>Kyoto, Japan</span>
@@ -495,13 +497,13 @@
     {{-- Statik placeholder --}}
     <div class="bazaar-grid">
       @foreach([
-        ['src_tr'=>'Kaynak: Ubud, Bali','src_en'=>'Sourced in Ubud, Bali','name_tr'=>'El Dokuması İkat Atkı','name_en'=>'Handwoven Ikat Scarf','price'=>'$95.00'],
-        ['src_tr'=>'Kaynak: Marakeş, Fas','src_en'=>'Sourced in Marrakech, Morocco','name_tr'=>'Zellige Seramik Kâse','name_en'=>'Zellige Ceramic Bowl','price'=>'$52.00'],
-        ['src_tr'=>'Kaynak: İstanbul, Türkiye','src_en'=>'Sourced in Istanbul, Turkey','name_tr'=>'Antika Pirinç Pusula','name_en'=>'Vintage Brass Compass','price'=>'$145.00'],
-        ['src_tr'=>'Kaynak: Fez, Fas','src_en'=>'Sourced in Fez, Morocco','name_tr'=>'El Yapımı Deri Seyahat Defteri','name_en'=>'Artisan Leather Travel Journal','price'=>'$68.00'],
+        ['img'=>'shop-prod1.jpg','src_tr'=>'Kaynak: Ubud, Bali','src_en'=>'Sourced in Ubud, Bali','name_tr'=>'El Dokuması İkat Atkı','name_en'=>'Handwoven Ikat Scarf','price'=>'$95.00'],
+        ['img'=>'shop-prod2.jpg','src_tr'=>'Kaynak: Marakeş, Fas','src_en'=>'Sourced in Marrakech, Morocco','name_tr'=>'Zellige Seramik Kâse','name_en'=>'Zellige Ceramic Bowl','price'=>'$52.00'],
+        ['img'=>'shop-prod3.jpg','src_tr'=>'Kaynak: İstanbul, Türkiye','src_en'=>'Sourced in Istanbul, Turkey','name_tr'=>'Antika Pirinç Pusula','name_en'=>'Vintage Brass Compass','price'=>'$145.00'],
+        ['img'=>'shop-prod4.jpg','src_tr'=>'Kaynak: Fez, Fas','src_en'=>'Sourced in Fez, Morocco','name_tr'=>'El Yapımı Deri Seyahat Defteri','name_en'=>'Artisan Leather Travel Journal','price'=>'$68.00'],
       ] as $item)
       <a href="/{{ $locale }}/shop" class="prod">
-        <div class="pimg" style="background:var(--bone-2)"></div>
+        <div class="pimg"><img src="{{ asset('images/'.$item['img']) }}" alt="" loading="lazy"></div>
         <span class="src"><span data-tr>{{ $item['src_tr'] }}</span><span data-en>{{ $item['src_en'] }}</span></span>
         <div class="pname"><span data-tr>{{ $item['name_tr'] }}</span><span data-en>{{ $item['name_en'] }}</span></div>
         <div class="price">{{ $item['price'] }}</div>
