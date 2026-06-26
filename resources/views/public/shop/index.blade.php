@@ -5,19 +5,22 @@
 
 @push('styles')
 <style>
-  .page-head{padding:140px 0 50px;border-bottom:1px solid var(--line)}
-  .page-head .wrap{padding-left:44px;width:100%;max-width:100%;margin:0}
+  .page-hero{position:relative;min-height:56vh;display:flex;align-items:flex-end;
+    padding:120px 0 56px;background-size:cover;background-position:center;color:var(--bone);
+    background-image:linear-gradient(180deg,rgba(8,10,14,.45) 0%,rgba(8,10,14,.1) 42%,rgba(8,10,14,.65) 100%),
+      url('{{ asset("images/shop-hero.jpg") }}')}
+  .page-hero .wrap{width:100%;max-width:100%;margin:0;padding-left:44px}
   .page-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;
-    color:var(--coral);display:block;margin-bottom:16px}
-  .page-title{font-family:var(--display);font-style:italic;font-weight:500;
-    font-size:clamp(42px,7vw,86px);line-height:1;margin:0}
-  .page-lead{margin:18px 0 0;color:var(--muted);font-size:17px;max-width:560px;line-height:1.7}
+    color:rgba(243,239,230,.55);margin-bottom:14px;display:block}
+  .page-title{font-family:var(--display);font-size:clamp(40px,6vw,86px);font-style:italic;font-weight:400;line-height:1.05;margin:0}
+  .page-lead{font-size:16px;color:rgba(243,239,230,.75);margin-top:14px;max-width:520px;line-height:1.6}
 
-  .filter-bar{display:flex;gap:8px;flex-wrap:wrap;padding:28px 0;border-bottom:1px solid var(--line)}
-  .filter-btn{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  /* Category filters — cat-filters/cat-btn per shop.html reference */
+  .cat-filters{display:flex;gap:8px;flex-wrap:wrap;padding:28px 0;border-bottom:1px solid var(--line)}
+  .cat-btn{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
     padding:7px 18px;border-radius:20px;border:1px solid var(--line);background:transparent;
     color:var(--muted);cursor:pointer;transition:.2s;text-decoration:none}
-  .filter-btn:hover,.filter-btn.active{background:var(--ink);color:var(--bone);border-color:var(--ink)}
+  .cat-btn:hover,.cat-btn.active{background:var(--ink);color:var(--bone);border-color:var(--ink)}
 
   .shop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;padding:48px 0 90px}
   @media(max-width:1000px){.shop-grid{grid-template-columns:repeat(3,1fr)}}
@@ -49,9 +52,9 @@
 @endpush
 
 @section('content')
-<section class="page-head">
+<section class="page-hero">
   <div class="wrap">
-    <span class="page-eyebrow"><span data-tr>ÇARŞI</span><span data-en>SHOP</span></span>
+    <span class="page-eyebrow"><span data-tr>ÇARŞI</span><span data-en>BAZAAR</span></span>
     <h1 class="page-title"><span data-tr>Seyahat<br>Eşyaları</span><span data-en>Travel<br>Objects</span></h1>
     <p class="page-lead" data-tr>Seyahatten ilham alınmış, dünyanın dört bir yanından özenle seçilmiş eserler.</p>
     <p class="page-lead b" data-en>Travel-inspired objects and curated finds from around the world.</p>
@@ -61,13 +64,13 @@
 <main>
   <div class="wrap">
     @if($categories->isNotEmpty())
-    <div class="filter-bar">
-      <a href="/{{ $locale }}/shop" class="filter-btn {{ !$selectedCategory ? 'active' : '' }}">
+    <div class="cat-filters">
+      <a href="/{{ $locale }}/shop" class="cat-btn {{ !$selectedCategory ? 'active' : '' }}">
         <span data-tr>Tümü</span><span data-en>All</span>
       </a>
       @foreach($categories as $cat)
         <a href="/{{ $locale }}/shop?category={{ urlencode($cat) }}"
-           class="filter-btn {{ $selectedCategory === $cat ? 'active' : '' }}">{{ $cat }}</a>
+           class="cat-btn {{ $selectedCategory === $cat ? 'active' : '' }}">{{ $cat }}</a>
       @endforeach
     </div>
     @endif

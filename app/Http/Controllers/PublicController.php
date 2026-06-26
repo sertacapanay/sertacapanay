@@ -142,10 +142,13 @@ class PublicController extends Controller
             $query->where($col, $request->country);
         }
 
+        $allTours = Tour::active()->get();
+
         return view('public.tours.index', [
             'locale'          => $locale,
             'isEn'            => $locale === 'en',
             'tours'           => $query->paginate(12)->withQueryString(),
+            'allTours'        => $allTours,
             'countries'       => $countries,
             'selectedCountry' => $request->country,
         ]);

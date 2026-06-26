@@ -5,39 +5,59 @@
 
 @push('styles')
 <style>
-  .page-hero{position:relative;min-height:52vh;display:flex;align-items:flex-end;
+  /* Hero */
+  .page-hero{position:relative;min-height:56vh;display:flex;align-items:flex-end;
     padding:120px 0 56px;background-size:cover;background-position:center 30%;
     background-image:linear-gradient(180deg,rgba(8,10,14,.45) 0%,rgba(8,10,14,.1) 42%,rgba(8,10,14,.65) 100%),
-      url('{{ asset("images/hero.jpg") }}');color:var(--bone)}
+      url('{{ asset("images/flights-hero.jpg") }}');color:var(--bone)}
   .page-hero .wrap{width:100%;max-width:100%;margin:0;padding-left:44px}
-  .page-title{font-family:var(--display);font-size:clamp(42px,6vw,80px);font-style:italic;font-weight:400;line-height:1.05}
   .page-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;
     color:rgba(243,239,230,.55);margin-bottom:14px}
+  .page-title{font-family:var(--display);font-size:clamp(42px,6vw,80px);font-style:italic;font-weight:400;line-height:1.05}
   .page-lead{font-size:16px;color:rgba(243,239,230,.75);margin-top:14px;max-width:520px;line-height:1.6}
 
-  .stats-row{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line);background:var(--paper)}
-  .stat-item{padding:48px 24px;text-align:center;border-right:1px solid var(--line)}
-  .stat-item:last-child{border-right:0}
-  .stat-item .num{font-family:var(--display);font-size:56px;font-weight:500;line-height:1;font-feature-settings:"onum" 1}
-  .stat-item .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:12px}
-  @media(max-width:640px){.stats-row{grid-template-columns:1fr}.stat-item{border-right:0;border-bottom:1px solid var(--line)}}
+  /* Stats strip — 4-col per HTML reference */
+  .fstats{display:grid;grid-template-columns:repeat(4,1fr);background:var(--paper);border-bottom:1px solid var(--line)}
+  .fstat{padding:40px 24px;text-align:center;border-right:1px solid var(--line)}
+  .fstat:last-child{border-right:0}
+  .fstat .n{font-family:var(--display);font-size:54px;font-weight:500;line-height:1;
+    font-feature-settings:"onum" 1;color:var(--ink)}
+  .fstat .l{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+    color:var(--muted);margin-top:10px;line-height:1.4}
+  @media(max-width:720px){.fstats{grid-template-columns:repeat(2,1fr)}.fstat:nth-child(2){border-right:0}}
+  @media(max-width:400px){.fstats{grid-template-columns:1fr}.fstat{border-right:0}}
 
-  .flog-wrap{padding:48px 0 90px}
-  .flog{border-top:1px solid var(--line)}
-  .frow{display:grid;grid-template-columns:90px 1fr auto;gap:24px;align-items:center;
-    padding:22px 4px;border-bottom:1px solid var(--line);transition:background .15s}
-  .frow:hover{background:var(--paper)}
-  .frow .fno{font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:var(--coral)}
-  .frow .fair{color:var(--ink);font-size:15px;line-height:1.3}
-  .frow .fair small{display:block;font-size:12px;color:var(--muted);margin-top:3px;font-family:var(--mono)}
-  .frow .froute{font-family:var(--display);font-style:italic;font-size:24px;color:var(--ink);white-space:nowrap}
-  .frow .froute .ar{color:var(--muted);margin:0 10px}
+  /* Flight list */
+  .page-body{padding:48px 0 90px}
+  .fl-list{display:flex;flex-direction:column;gap:3px}
+
+  .fcard{display:grid;grid-template-columns:auto 1fr auto;gap:20px 28px;align-items:center;
+    padding:20px 22px;border:1px solid var(--line);border-radius:4px;background:var(--paper);
+    transition:box-shadow .2s}
+  .fcard:hover{box-shadow:0 4px 18px rgba(8,10,14,.08)}
+  .fl-no{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--coral);
+    display:flex;align-items:center;gap:8px}
+  .fl-no svg{width:16px;height:16px;opacity:.6}
+  .fl-route{display:flex;align-items:center;gap:0}
+  .fl-end{text-align:center}
+  .fl-end .code{font-family:var(--display);font-style:italic;font-size:28px;
+    font-weight:500;line-height:1;color:var(--ink)}
+  .fl-end .city{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);margin-top:4px}
+  .fl-mid{flex:1;display:flex;align-items:center;justify-content:center;color:var(--line);padding:0 16px}
+  .fl-mid svg{width:24px;height:24px}
+  .fl-meta{text-align:right;font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.7}
+  .fl-meta strong{display:block;font-weight:400;color:var(--ink)}
+
   .empty-state{padding:80px 0;text-align:center;color:var(--muted)}
   .empty-state p{font-family:var(--display);font-style:italic;font-size:28px;margin-bottom:12px;color:var(--ink)}
-  .empty-state span{font-size:15px}
-  @media(max-width:600px){
-    .frow{grid-template-columns:70px 1fr;gap:6px 16px}
-    .frow .froute{grid-column:1/-1;font-size:19px}
+
+  @media(max-width:680px){
+    .fcard{grid-template-columns:1fr auto;grid-template-rows:auto auto}
+    .fl-no{grid-column:1;grid-row:2}
+    .fl-route{grid-column:1/-1;grid-row:1}
+    .fl-meta{grid-column:2;grid-row:2;text-align:right}
+    .fl-end .code{font-size:22px}
   }
 </style>
 @endpush
@@ -52,46 +72,63 @@
   </div>
 </section>
 
-@if($total > 0)
-<div class="stats-row">
-  <div class="stat-item">
-    <div class="num">{{ $total }}</div>
-    <div class="lbl"><span data-tr>Toplam Uçuş</span><span data-en>Total Flights</span></div>
+<div class="fstats">
+  <div class="fstat">
+    <div class="n">{{ $total }}</div>
+    <div class="l"><span data-tr>Toplam Uçuş</span><span data-en>Total Flights</span></div>
   </div>
-  <div class="stat-item">
-    <div class="num">{{ number_format($km) }}</div>
-    <div class="lbl"><span data-tr>Toplam km</span><span data-en>Total km</span></div>
+  <div class="fstat">
+    <div class="n">{{ $total > 0 ? number_format($km) : 0 }}</div>
+    <div class="l"><span data-tr>Toplam km</span><span data-en>Distance km</span></div>
   </div>
-  <div class="stat-item">
-    <div class="num">{{ $flights->unique(fn($f) => implode('|', array_filter([$f->from_city, $f->to_city])))->count() }}</div>
-    <div class="lbl"><span data-tr>Farklı Rota</span><span data-en>Unique Routes</span></div>
+  <div class="fstat">
+    <div class="n">{{ $total > 0 ? round($km / 850) : 0 }}</div>
+    <div class="l"><span data-tr>Tahmini Saat</span><span data-en>Hours Airborne</span></div>
+  </div>
+  <div class="fstat">
+    <div class="n">{{ $flights->pluck('airline')->filter()->unique()->count() }}</div>
+    <div class="l"><span data-tr>Havayolu</span><span data-en>Airlines</span></div>
   </div>
 </div>
-@endif
 
-<main>
-  <div class="wrap flog-wrap">
+<main class="page">
+  <div class="wrap page-body">
     @if($flights->isEmpty())
       <div class="empty-state">
         <p data-tr>Henüz uçuş kaydı yok</p>
         <p class="b" data-en>No flights logged yet</p>
-        <span data-tr>Yakında eklenecek...</span>
-        <span data-en>Coming soon...</span>
       </div>
     @else
-      <div class="flog">
+      <div class="fl-list" id="fl-list">
         @foreach($flights as $i => $flight)
-        <div class="frow">
-          <div class="fno">{{ str_pad($i+1, 3, '0', STR_PAD_LEFT) }}</div>
-          <div class="fair">
-            {{ $flight->airline }}
-            @if($flight->flight_number)<small>{{ $flight->flight_number }}</small>@endif
-            @if($flight->flight_date)<small>{{ \Carbon\Carbon::parse($flight->flight_date)->locale($locale)->isoFormat('D MMM YYYY') }}</small>@endif
+        <div class="fcard">
+          <div class="fl-no">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+            </svg>
+            {{ $flight->flight_number ?? str_pad($i+1, 3, '0', STR_PAD_LEFT) }}
           </div>
-          <div class="froute">
-            {{ $flight->from_city ?? '—' }}
-            <span class="ar">→</span>
-            {{ $flight->to_city ?? '—' }}
+          <div class="fl-route">
+            <div class="fl-end from">
+              <div class="code">{{ $flight->from_code ?? strtoupper(substr($flight->from_city ?? '---', 0, 3)) }}</div>
+              <div class="city">{{ $flight->from_city ?? '—' }}</div>
+            </div>
+            <div class="fl-mid">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                <path d="M5 12h14M15 7l5 5-5 5"/>
+              </svg>
+            </div>
+            <div class="fl-end to">
+              <div class="code">{{ $flight->to_code ?? strtoupper(substr($flight->to_city ?? '---', 0, 3)) }}</div>
+              <div class="city">{{ $flight->to_city ?? '—' }}</div>
+            </div>
+          </div>
+          <div class="fl-meta">
+            @if($flight->airline)<strong>{{ $flight->airline }}</strong>@endif
+            @if($flight->distance_km){{ number_format($flight->distance_km) }} km@endif
+            @if($flight->flight_date)
+              {{ \Carbon\Carbon::parse($flight->flight_date)->locale($locale)->isoFormat('D MMM YYYY') }}
+            @endif
           </div>
         </div>
         @endforeach

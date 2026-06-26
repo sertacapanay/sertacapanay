@@ -5,15 +5,13 @@
 
 @push('styles')
 <style>
-  .page-hero{position:relative;min-height:52vh;display:flex;align-items:flex-end;
-    padding:120px 0 56px;background-size:cover;background-position:center;
-    background-image:linear-gradient(180deg,rgba(8,10,14,.45) 0%,rgba(8,10,14,.1) 42%,rgba(8,10,14,.65) 100%),
-      url('{{ asset("images/places-hero.jpg") }}');color:var(--bone)}
-  .page-hero .wrap{width:100%;max-width:100%;margin:0;padding-left:44px}
-  .page-title{font-family:var(--display);font-size:clamp(42px,6vw,80px);font-style:italic;font-weight:400;line-height:1.05}
+  .page-head{padding:150px 0 50px;border-bottom:1px solid var(--line)}
+  .page-head .wrap{padding-left:44px;width:100%;max-width:100%;margin:0}
   .page-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;
-    color:rgba(243,239,230,.55);margin-bottom:14px}
-  .page-lead{font-size:16px;color:rgba(243,239,230,.75);margin-top:14px;max-width:520px;line-height:1.6}
+    color:var(--coral);display:block;margin-bottom:16px}
+  .page-title{font-family:var(--display);font-style:italic;font-weight:500;
+    font-size:clamp(40px,7vw,86px);line-height:1;margin:0}
+  .page-lead{margin:20px 0 0;color:var(--muted);font-size:17px;max-width:560px;line-height:1.7}
 
   .filter-bar{display:flex;gap:8px;flex-wrap:wrap;padding:28px 0;border-bottom:1px solid var(--line)}
   .filter-btn{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
@@ -48,9 +46,9 @@
 @endpush
 
 @section('content')
-<section class="page-hero">
+<section class="page-head">
   <div class="wrap">
-    <div class="page-eyebrow"><span data-tr>ŞEHİR REHBERLERİ</span><span data-en>CITY GUIDES</span></div>
+    <span class="page-eyebrow"><span data-tr>ŞEHİR REHBERLERİ</span><span data-en>CITY GUIDES</span></span>
     <h1 class="page-title"><span data-tr>Şehirleri<br>Keşfet</span><span data-en>Discover<br>Cities</span></h1>
     <p class="page-lead" data-tr>Sokakları, lezzetleri ve gizli köşeleriyle şehirlere derinlemesine bir bakış.</p>
     <p class="page-lead b" data-en>A deep look into cities — their streets, flavours and hidden corners.</p>

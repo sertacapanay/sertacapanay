@@ -1,9 +1,11 @@
 @extends('public.layout')
 
 @section('title', $isEn ? 'Cruise Log — Sertaç Apanay' : 'Seyir Günlükleri — Sertaç Apanay')
+@section('description', $isEn ? 'Beyond the horizons, into the depths of oceans — cruise experiences and sea voyages.' : 'Ufukların ötesine, okyanusların derinliklerine — cruise deneyimleri ve gemi yolculukları.')
 
 @push('styles')
 <style>
+  /* Hero */
   .page-hero{position:relative;min-height:56vh;display:flex;align-items:flex-end;
     padding:120px 0 56px;background-size:cover;background-position:center;color:var(--bone);
     background-image:linear-gradient(180deg,rgba(8,10,14,.45) 0%,rgba(8,10,14,.12) 40%,rgba(8,10,14,.62) 100%),
@@ -14,26 +16,52 @@
   .page-title{font-family:var(--display);font-size:clamp(42px,6vw,76px);font-style:italic;font-weight:400;line-height:1.05}
   .page-lead{font-size:16px;color:rgba(243,239,230,.75);margin-top:14px;max-width:520px;line-height:1.6}
 
-  .filter-bar{display:flex;gap:8px;flex-wrap:wrap;padding:28px 0;border-bottom:1px solid var(--line)}
-  .filter-btn{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-    padding:7px 18px;border-radius:20px;border:1px solid var(--line);background:transparent;
-    color:var(--muted);cursor:pointer;transition:.2s;text-decoration:none}
-  .filter-btn:hover,.filter-btn.active{background:var(--ink);color:var(--bone);border-color:var(--ink)}
+  /* Stats strip — 4-col per cruises.html reference */
+  .stats{background:var(--paper);border-bottom:1px solid var(--line)}
+  .stats .grid{display:grid;grid-template-columns:repeat(4,1fr)}
+  .stat{padding:40px 24px;text-align:center;border-right:1px solid var(--line)}
+  .stat:last-child{border-right:0}
+  .stat .num{font-family:var(--display);font-size:54px;font-weight:500;line-height:1;
+    font-feature-settings:"onum" 1;color:var(--ink)}
+  .stat .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+    color:var(--muted);margin-top:10px;line-height:1.4}
+  @media(max-width:720px){.stats .grid{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border-right:0}}
+  @media(max-width:400px){.stats .grid{grid-template-columns:1fr}.stat{border-right:0}}
 
-  .tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;padding:48px 0 60px}
-  @media(max-width:900px){.tgrid{grid-template-columns:1fr 1fr}}
-  @media(max-width:600px){.tgrid{grid-template-columns:1fr}}
-  .tcard{position:relative;aspect-ratio:3/4;overflow:hidden;border-radius:4px;background:var(--ink);display:block}
-  .tcard img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
-  .tcard:hover img{transform:scale(1.05)}
-  .tcard .tc-info{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;
-    padding:28px 24px;
-    background:linear-gradient(0deg,rgba(8,10,14,.85) 0%,rgba(8,10,14,.2) 60%,transparent 100%);
-    color:var(--bone)}
-  .tcard .tc-country{font-family:var(--mono);font-size:10px;letter-spacing:.2em;
-    text-transform:uppercase;color:rgba(243,239,230,.55);margin-bottom:6px}
-  .tcard .tc-name{font-family:var(--display);font-size:22px;font-style:italic;line-height:1.2}
-  .tcard .tc-price{font-size:15px;font-weight:600;color:var(--coral);margin-top:12px}
+  /* Cruise list */
+  .sec{padding:48px 0 90px}
+  .clist{display:flex;flex-direction:column;gap:3px}
+
+  .ccard{display:grid;grid-template-columns:auto 1fr auto;gap:20px 28px;align-items:center;
+    padding:20px 22px;border:1px solid var(--line);border-radius:4px;background:var(--paper);
+    transition:box-shadow .2s;text-decoration:none;color:inherit}
+  .ccard:hover{box-shadow:0 4px 18px rgba(8,10,14,.08)}
+
+  .c-header{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--coral)}
+  .c-ship{font-size:13px;color:var(--muted)}
+
+  .c-route{display:flex;align-items:center}
+  .c-port{text-align:center}
+  .c-port .code{font-family:var(--display);font-style:italic;font-size:28px;
+    font-weight:500;line-height:1;color:var(--ink)}
+  .c-port .city{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);margin-top:4px}
+  .c-route-mid{flex:1;display:flex;align-items:center;justify-content:center;color:var(--line);padding:0 16px}
+  .ship-icon svg{width:28px;height:28px}
+
+  .c-meta{text-align:right;font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.7}
+  .c-meta strong{display:block;font-weight:400;color:var(--ink)}
+
+  .empty-state{padding:80px 0;text-align:center;color:var(--muted)}
+  .empty-state p{font-family:var(--display);font-style:italic;font-size:28px;margin-bottom:12px;color:var(--ink)}
+
+  @media(max-width:680px){
+    .ccard{grid-template-columns:1fr auto;grid-template-rows:auto auto}
+    .c-header{grid-column:1;grid-row:2}
+    .c-route{grid-column:1/-1;grid-row:1}
+    .c-meta{grid-column:2;grid-row:2;text-align:right}
+    .c-port .code{font-size:22px}
+  }
 </style>
 @endpush
 
@@ -47,47 +75,90 @@
   </div>
 </section>
 
-<main class="page">
+<section class="stats">
   <div class="wrap">
-    <div class="filter-bar">
-      <a href="/{{ $locale }}/tours" class="filter-btn {{ !$selectedCountry ? 'active' : '' }}">
-        <span data-tr>Tümü</span><span data-en>All</span>
-      </a>
-      @foreach($countries as $country)
-        <a href="/{{ $locale }}/tours?country={{ urlencode($country) }}"
-           class="filter-btn {{ $selectedCountry === $country ? 'active' : '' }}">
-          {{ $country }}
-        </a>
-      @endforeach
+    <div class="grid">
+      <div class="stat">
+        <div class="num">{{ $allTours->count() }}</div>
+        <div class="lbl"><span data-tr>Toplam Seyir</span><span data-en>Total Cruises</span></div>
+      </div>
+      <div class="stat">
+        <div class="num">{{ $allTours->sum('nights') ?? 0 }}</div>
+        <div class="lbl"><span data-tr>Toplam Gece</span><span data-en>Total Nights</span></div>
+      </div>
+      <div class="stat">
+        <div class="num">{{ $allTours->pluck('ship_name')->filter()->unique()->count() }}</div>
+        <div class="lbl"><span data-tr>Gemi</span><span data-en>Ships</span></div>
+      </div>
+      <div class="stat">
+        <div class="num">{{ $allTours->pluck('country_tr')->filter()->unique()->count() }}</div>
+        <div class="lbl"><span data-tr>Ülke / Bölge</span><span data-en>Countries</span></div>
+      </div>
     </div>
+  </div>
+</section>
 
-    <div class="tgrid">
-      @foreach($tours as $tour)
-      <a href="/{{ $locale }}/tours/{{ $tour->slug }}" class="tcard">
-        @if($tour->cover_image)
-          <img src="{{ asset('storage/'.$tour->cover_image) }}" alt="{{ $isEn ? $tour->name_en : $tour->name_tr }}">
-        @endif
-        <div class="tc-info">
-          <div class="tc-country">{{ $isEn ? ($tour->country_en ?? '') : ($tour->country_tr ?? '') }}</div>
-          <div class="tc-name">{{ $isEn ? $tour->name_en : $tour->name_tr }}</div>
-          @if($tour->price ?? false)
-            <div class="tc-price">{{ number_format($tour->price) }} ₺</div>
-          @endif
-        </div>
-      </a>
-      @endforeach
-    </div>
+<section class="sec">
+  <div class="wrap">
+    @if($tours->isEmpty())
+      <div class="empty-state">
+        <p data-tr>Henüz seyir kaydı yok</p>
+        <p class="b" data-en>No cruises logged yet</p>
+      </div>
+    @else
+      <div class="clist" id="cruise-list">
+        @foreach($tours as $tour)
+          @php
+            $tname   = $isEn ? ($tour->title_en ?? $tour->title_tr) : $tour->title_tr;
+            $tfrom   = $isEn ? ($tour->from_port_en ?? $tour->from_port_tr ?? '') : ($tour->from_port_tr ?? '');
+            $tto     = $isEn ? ($tour->to_port_en ?? $tour->to_port_tr ?? '') : ($tour->to_port_tr ?? '');
+            $tcountry = $isEn ? ($tour->country_en ?? $tour->country_tr ?? '') : ($tour->country_tr ?? '');
+          @endphp
+          <a href="/{{ $locale }}/tours/{{ $tour->slug }}" class="ccard">
+            <div>
+              <div class="c-header">{{ $tname }}</div>
+              @if($tour->cruise_line ?? null)
+                <div class="c-ship">{{ $tour->cruise_line }}</div>
+              @endif
+            </div>
+            <div class="c-route">
+              <div class="c-port from">
+                <div class="code">{{ strtoupper(substr($tfrom ?: '---', 0, 3)) }}</div>
+                <div class="city">{{ $tfrom ?: '—' }}</div>
+              </div>
+              <div class="c-route-mid">
+                <div class="ship-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                    <path d="M3 17l9 4 9-4V9l-9-4-9 4v8z"/>
+                    <path d="M12 5v16M3 9l9 4 9-4"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="c-port to">
+                <div class="code">{{ strtoupper(substr($tto ?: '---', 0, 3)) }}</div>
+                <div class="city">{{ $tto ?: '—' }}</div>
+              </div>
+            </div>
+            <div class="c-meta">
+              @if($tour->nights ?? null)<strong>{{ $tour->nights }} <span data-tr>gece</span><span data-en>nights</span></strong>@endif
+              @if($tcountry){{ $tcountry }}@endif
+              @if($tour->departure_date)
+                {{ \Carbon\Carbon::parse($tour->departure_date)->locale($locale)->isoFormat('D MMM YYYY') }}
+              @endif
+            </div>
+          </a>
+        @endforeach
+      </div>
+    @endif
 
     @if($tours->hasPages())
-    <div class="filter-bar" style="justify-content:center;border-top:1px solid var(--line);border-bottom:none;padding-bottom:48px">
-      @if(!$tours->onFirstPage())
-        <a href="{{ $tours->previousPageUrl() }}" class="filter-btn">← <span data-tr>Önceki</span><span data-en>Prev</span></a>
-      @endif
-      @if($tours->hasMorePages())
-        <a href="{{ $tours->nextPageUrl() }}" class="filter-btn"><span data-tr>Sonraki</span><span data-en>Next</span> →</a>
-      @endif
+    <div style="display:flex;justify-content:center;gap:8px;padding:40px 0;font-family:var(--mono);font-size:12px">
+      @if($tours->onFirstPage())<span style="padding:8px 16px;border:1px solid var(--line);border-radius:3px;color:var(--muted)">←</span>
+      @else<a href="{{ $tours->previousPageUrl() }}" style="padding:8px 16px;border:1px solid var(--line);border-radius:3px;color:var(--ink)">←</a>@endif
+      @if($tours->hasMorePages())<a href="{{ $tours->nextPageUrl() }}" style="padding:8px 16px;border:1px solid var(--line);border-radius:3px;color:var(--ink)">→</a>
+      @else<span style="padding:8px 16px;border:1px solid var(--line);border-radius:3px;color:var(--muted)">→</span>@endif
     </div>
     @endif
   </div>
-</main>
+</section>
 @endsection
