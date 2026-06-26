@@ -54,7 +54,8 @@
   .lang{display:flex;border:1px solid rgba(243,239,230,.4);border-radius:40px;overflow:hidden;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;transition:border-color .4s ease}
   .lang button{background:none;border:0;padding:6px 11px;cursor:pointer;color:rgba(243,239,230,.75);transition:all .2s}
   .lang button.active{background:rgba(243,239,230,.9);color:var(--ink)}
-  .menu-btn{position:relative;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:none;border:0;cursor:pointer}
+  .menu-btn{position:relative;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:none;border:0;cursor:pointer;color:rgba(243,239,230,.85);transition:color .4s ease}
+  .menu-btn:hover{color:#fff}
   .menu-btn .ring{width:28px;height:28px;border:1px solid rgba(243,239,230,.7);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:border-color .25s}
   .menu-btn:hover .ring{border-color:#fff}
   .menu-btn .ring .pin{width:6px;height:6px;border-radius:50%;background:var(--coral)}
@@ -66,6 +67,8 @@
   header.scrolled .lang{border-color:var(--line)}
   header.scrolled .lang button{color:var(--muted)}
   header.scrolled .lang button.active{background:var(--ink);color:var(--bone)}
+  header.scrolled .menu-btn{color:var(--ink)}
+  header.scrolled .menu-btn:hover{color:var(--coral)}
   header.scrolled .menu-btn .ring{border-color:rgba(28,26,24,.6)}
   header.scrolled .menu-btn:hover .ring{border-color:var(--ink)}
   header.scrolled .menu-btn .caret{border-top-color:rgba(28,26,24,.55)}
@@ -495,7 +498,12 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') toggl
 
 (function() {
   var h = document.getElementById('site-header');
-  function s() { h.classList.toggle('scrolled', window.scrollY > 30); }
+  // Hero olan sayfalarda (ana sayfa, section hero) scroll ile açılır.
+  // Hero olmayan sayfalarda (contact, shop, tour-detail vb.) header baştan opak görünür.
+  var hasHero = !!document.querySelector('.hero, .page-hero');
+  function s() {
+    h.classList.toggle('scrolled', !hasHero || window.scrollY > 30);
+  }
   window.addEventListener('scroll', s, { passive: true });
   s();
 })();
