@@ -359,7 +359,7 @@
       <li><a href="/{{ $locale ?? 'tr' }}/tours"><span data-tr>Seyirler</span><span data-en>Cruises</span></a></li>
       <li><a href="/{{ $locale ?? 'tr' }}/guides"><span data-tr>Rehberler</span><span data-en>Guides</span></a></li>
       <li><a href="/{{ $locale ?? 'tr' }}/blog">Blog</a></li>
-      <li><a href="#"><span data-tr>Çarşı</span><span data-en>Shop</span></a></li>
+      <li><a href="/{{ $locale ?? 'tr' }}/shop"><span data-tr>Çarşı</span><span data-en>Shop</span></a></li>
     </ul>
     <div class="nav-right">
       @php $loc = $locale ?? 'tr'; $currentPath = preg_replace('#^/(tr|en)#','',request()->getPathInfo()); @endphp
@@ -417,8 +417,8 @@
       <span class="r-lab"><span data-tr>Blog</span><span data-en>Blog</span></span>
       <span class="r-num">06</span>
     </a>
-    <a class="r-item"
-       style="left:15.4%;top:70.0%" href="#" onclick="toggleMenu(false)">
+    <a class="r-item {{ request()->is($loc.'/shop*') ? 'active' : '' }}"
+       style="left:15.4%;top:70.0%" href="/{{ $loc }}/shop" onclick="toggleMenu(false)">
       <span class="r-lab"><span data-tr>Çarşı</span><span data-en>Shop</span></span>
       <span class="r-num">07</span>
     </a>
@@ -463,7 +463,7 @@
         <ul>
           <li><a href="/{{ $locale ?? 'tr' }}/places"><span data-tr>Destinasyonlar</span><span data-en>Destinations</span></a></li>
           <li><a href="/{{ $locale ?? 'tr' }}/tours"><span data-tr>Seyir Günlükleri</span><span data-en>Cruise Log</span></a></li>
-          <li><a href="/{{ $locale ?? 'tr' }}/places"><span data-tr>Şehir Rehberleri</span><span data-en>City Guides</span></a></li>
+          <li><a href="/{{ $locale ?? 'tr' }}/guides"><span data-tr>Şehir Rehberleri</span><span data-en>City Guides</span></a></li>
           <li><a href="/{{ $locale ?? 'tr' }}/blog">Blog</a></li>
         </ul>
       </div>

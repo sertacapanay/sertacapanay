@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Place;
 use App\Models\Tour;
+use App\Models\Flight;
+use App\Models\Product;
 use Illuminate\Http\Request;
 class PublicController extends Controller
 {
@@ -169,5 +171,95 @@ class PublicController extends Controller
         }
 
         return view('public.tours.show', compact('locale', 'tour', 'relatedTours') + ['isEn' => $locale === 'en']);
+    }
+
+    public function flights(string $locale = 'tr')
+    {
+        $locale = $this->locale($locale);
+        $flights = Flight::latest('flight_date')->get();
+        return view('public.flights.index', [
+            'locale'  => $locale,
+            'isEn'    => $locale === 'en',
+            'flights' => $flights,
+            'total'   => $flights->count(),
+            'km'      => $flights->sum('distance_km'),
+        ]);
+    }
+
+    public function guides(string $locale = 'tr', Request $request)
+    {
+        $locale = $this->locale($locale);
+        $col    = $locale === 'en' ? 'country_en' : 'country_tr';
+        $countries = Place::active()
+            ->whereNotNull($col)->where($col, '!=', '')
+            ->select($col)->distinct()->orderBy($col)->pluck($col);
+        $query = Place::active()->latest();
+        if ($request->filled('country')) {
+            $query->where($col, $request->country);
+        }
+        return view('public.guides.index', [
+            'locale'          => $locale,
+            'isEn'            => $locale === 'en',
+            'places'          => $query->paginate(12)->withQueryString(),
+            'countries'       => $countries,
+            'selectedCountry' => $request->country,
+        ]);
+    }
+
+    public function guideShow(string $locale, string $slug)
+    {
+        $locale = $this->locale($locale);
+        $place  = Place::active()->where('slug', $slug)->firstOrFail();
+        $col    = $locale === 'en' ? 'country_en' : 'country_tr';
+        $related = Place::active()
+            ->where('id', '!=', $place->id)
+            ->when($place->{$col}, fn($q) => $q->where($col, $place->{$col}))
+            ->latest()->take(3)->get();
+        if ($related->count() < 3) {
+            $related = Place::active()->where('id', '!=', $place->id)->latest()->take(3)->get();
+        }
+        return view('public.guides.show', compact('locale', 'place', 'related') + ['isEn' => $locale === 'en']);
+    }
+
+    public function shop(string $locale = 'tr', Request $request)
+    {
+        $locale = $this->locale($locale);
+        $col    = $locale === 'en' ? 'category_en' : 'category_tr';
+        $categories = Product::where('is_active', true)
+            ->whereNotNull($col)->where($col, '!=', '')
+            ->select($col)->distinct()->orderBy($col)->pluck($col);
+        $query = Product::where('is_active', true)->latest();
+        if ($request->filled('category')) {
+            $query->where($col, $request->category);
+        }
+        return view('public.shop.index', [
+            'locale'           => $locale,
+            'isEn'             => $locale === 'en',
+            'products'         => $query->paginate(16)->withQueryString(),
+            'categories'       => $categories,
+            'selectedCategory' => $request->category,
+        ]);
+    }
+
+    public function productShow(string $locale, string $slug)
+    {
+        $locale  = $this->locale($locale);
+        $product = Product::where('is_active', true)->where('slug', $slug)->firstOrFail();
+        $related = Product::where('is_active', true)
+            ->where('id', '!=', $product->id)
+            ->latest()->take(4)->get();
+        return view('public.shop.show', compact('locale', 'product', 'related') + ['isEn' => $locale === 'en']);
+    }
+
+    public function contact(string $locale = 'tr')
+    {
+        $locale = $this->locale($locale);
+        return view('public.contact', ['locale' => $locale, 'isEn' => $locale === 'en']);
+    }
+
+    public function about(string $locale = 'tr')
+    {
+        $locale = $this->locale($locale);
+        return view('public.contact', ['locale' => $locale, 'isEn' => $locale === 'en', 'scrollToAbout' => true]);
     }
 }
