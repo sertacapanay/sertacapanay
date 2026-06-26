@@ -355,9 +355,11 @@
     </a>
     <ul class="menu">
       <li><a href="/{{ $locale ?? 'tr' }}/places"><span data-tr>Destinasyonlar</span><span data-en>Destinations</span></a></li>
-      <li><a href="/{{ $locale ?? 'tr' }}/tours"><span data-tr>Turlar</span><span data-en>Tours</span></a></li>
+      <li><a href="/{{ $locale ?? 'tr' }}/flights"><span data-tr>Uçuşlar</span><span data-en>Flights</span></a></li>
+      <li><a href="/{{ $locale ?? 'tr' }}/tours"><span data-tr>Seyirler</span><span data-en>Cruises</span></a></li>
+      <li><a href="/{{ $locale ?? 'tr' }}/guides"><span data-tr>Rehberler</span><span data-en>Guides</span></a></li>
       <li><a href="/{{ $locale ?? 'tr' }}/blog">Blog</a></li>
-      <li><a href="/{{ $locale ?? 'tr' }}/contact"><span data-tr>İletişim</span><span data-en>Contact</span></a></li>
+      <li><a href="#"><span data-tr>Çarşı</span><span data-en>Shop</span></a></li>
     </ul>
     <div class="nav-right">
       @php $loc = $locale ?? 'tr'; $currentPath = preg_replace('#^/(tr|en)#','',request()->getPathInfo()); @endphp
@@ -400,14 +402,14 @@
       <span class="r-lab"><span data-tr>Seyir&nbsp;Günlükleri</span><span data-en>Cruise&nbsp;Log</span></span>
       <span class="r-num">03</span>
     </a>
-    <a class="r-item"
-       style="left:84.6%;top:70.0%" href="/{{ $loc }}/places" onclick="toggleMenu(false)">
-      <span class="r-lab"><span data-tr>Uçuş&nbsp;Günlüğü</span><span data-en>Flight&nbsp;Log</span></span>
+    <a class="r-item {{ request()->is($loc.'/flights*') ? 'active' : '' }}"
+       style="left:84.6%;top:70.0%" href="/{{ $loc }}/flights" onclick="toggleMenu(false)">
+      <span class="r-lab"><span data-tr>Uçuşlar</span><span data-en>Flights</span></span>
       <span class="r-num">04</span>
     </a>
-    <a class="r-item {{ request()->is($loc.'/places*') ? 'active' : '' }}"
-       style="left:63.7%;top:87.6%" href="/{{ $loc }}/places" onclick="toggleMenu(false)">
-      <span class="r-lab"><span data-tr>Şehir&nbsp;Rehberleri</span><span data-en>City&nbsp;Guides</span></span>
+    <a class="r-item {{ request()->is($loc.'/guides*') ? 'active' : '' }}"
+       style="left:63.7%;top:87.6%" href="/{{ $loc }}/guides" onclick="toggleMenu(false)">
+      <span class="r-lab"><span data-tr>Rehberler</span><span data-en>Guides</span></span>
       <span class="r-num">05</span>
     </a>
     <a class="r-item {{ request()->is($loc.'/blog*') ? 'active' : '' }}"
