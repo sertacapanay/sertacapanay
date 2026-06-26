@@ -13,12 +13,13 @@ class PublicController extends Controller
     {
         $locale = $this->locale($locale);
         return view('public.home', [
-            'locale'     => $locale,
-            'isEn'       => $locale === 'en',
-            'heroImage'  => asset('images/hero.jpg'),
-            'posts'      => Post::published()->latest()->take(3)->get(),
-            'places'     => Place::latest()->take(6)->get(),
-            'tours'      => Tour::latest()->take(3)->get(),
+            'locale'    => $locale,
+            'isEn'      => $locale === 'en',
+            'heroImage' => asset('images/hero.jpg'),
+            'places'    => Place::latest()->take(4)->get(),
+            'notes'     => Place::latest()->skip(4)->take(2)->get(),
+            'products'  => Product::where('is_active', true)->latest()->take(4)->get(),
+            'posts'     => Post::published()->latest()->take(2)->get(),
         ]);
     }
 
