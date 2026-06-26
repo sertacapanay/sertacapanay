@@ -1,202 +1,83 @@
 @extends('public.layout')
-@section('title', txt($place,'name',$locale).' | Sertac Apanay')
-@section('description', txt($place,'short_description',$locale))
+
+@section('title', ($isEn ? $place->name_en : $place->name_tr) . ' — Sertaç Apanay')
+@section('description', $isEn ? ($place->short_description_en ?? '') : ($place->short_description_tr ?? ''))
+
+@push('styles')
+<style>
+  .page-hero{position:relative;min-height:60vh;display:flex;align-items:flex-end;
+    padding:140px 0 60px;background-size:cover;background-position:center;color:var(--bone)}
+  .page-hero .wrap{width:100%;max-width:100%;margin:0;padding-left:44px}
+  .page-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;
+    color:rgba(243,239,230,.55);margin-bottom:14px}
+  .page-title{font-family:var(--display);font-size:clamp(40px,6vw,72px);font-style:italic;font-weight:400;line-height:1.06}
+  .page-lead{font-size:16px;color:rgba(243,239,230,.75);margin-top:14px;max-width:560px;line-height:1.65}
+
+  .page-body{max-width:800px;margin:0 auto;padding:60px 44px 80px}
+  .page-body p{font-size:17px;line-height:1.85;margin-bottom:1.4em}
+  .page-body h2{font-family:var(--display);font-size:28px;font-style:italic;margin:2.4em 0 .8em}
+  .page-body img{width:100%;border-radius:3px;margin:2em 0}
+
+  .recs{padding:60px 0;background:var(--paper)}
+  .recs .wrap{max-width:1240px;margin:0 auto;padding:0 44px}
+  .recs h2{font-family:var(--display);font-size:32px;font-style:italic;margin-bottom:32px}
+  .rec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media(max-width:768px){.rec-grid{grid-template-columns:1fr}}
+  .rec{background:var(--bone);border:1px solid var(--line);border-radius:3px;overflow:hidden;display:block}
+  .rec .rimg{aspect-ratio:4/3;overflow:hidden;background:var(--bone-2)}
+  .rec .rimg img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+  .rec:hover .rimg img{transform:scale(1.04)}
+  .rec .rpd{padding:18px}
+  .rec .rcat{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--coral);margin-bottom:8px}
+  .rec h3{font-family:var(--display);font-size:19px;font-style:italic;line-height:1.25}
+</style>
+@endpush
 
 @section('content')
+@php
+  $name = $isEn ? $place->name_en : $place->name_tr;
+  $country = $isEn ? ($place->country_en ?? '') : ($place->country_tr ?? '');
+  $desc = $isEn ? ($place->short_description_en ?? '') : ($place->short_description_tr ?? '');
+  $body = $isEn ? ($place->body_en ?? '') : ($place->body_tr ?? '');
+  $heroStyle = $place->cover_image
+    ? 'background-image:linear-gradient(180deg,rgba(8,10,14,.35) 0%,rgba(8,10,14,.1) 42%,rgba(8,10,14,.65) 100%),url("'.asset('storage/'.$place->cover_image).'")'
+    : 'background:var(--ink)';
+@endphp
 
-{{-- Hero --}}
-<div class="relative w-full h-[60vh] min-h-[380px] overflow-hidden bg-stone-900">
-    @if($place->cover_image)
-        <img src="{{ asset('storage/'.$place->cover_image) }}"
-             alt="{{ txt($place,'name',$locale) }}"
-             class="absolute inset-0 w-full h-full object-cover opacity-65">
-    @endif
-    <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-900/30 to-transparent"></div>
-
-    <div class="absolute bottom-0 left-0 right-0 max-w-5xl mx-auto px-6 pb-12">
-        {{-- Breadcrumb --}}
-        <nav class="flex items-center gap-2 text-xs text-stone-400 mb-6">
-            <a href="/{{ $locale }}" class="hover:text-white transition">
-                {{ $isEn ? 'Home' : 'Anasayfa' }}
-            </a>
-            <span>/</span>
-            <a href="/{{ $locale }}/places" class="hover:text-white transition">
-                {{ $isEn ? 'Places' : 'Yerler' }}
-            </a>
-            <span>/</span>
-            <span class="text-stone-300 truncate max-w-xs">{{ txt($place,'name',$locale) }}</span>
-        </nav>
-
-        {{-- Type + Location --}}
-        <div class="flex flex-wrap items-center gap-3 mb-5">
-            @if($place->type)
-                <span class="bg-amber-500 text-white text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full">
-                    {{ $place->type }}
-                </span>
-            @endif
-            @php
-                $locationParts = array_filter([
-                    txt($place,'city',$locale),
-                    txt($place,'region',$locale),
-                    txt($place,'country',$locale),
-                ]);
-            @endphp
-            @if($locationParts)
-                <span class="text-stone-300 text-sm">
-                    {{ implode(' · ', $locationParts) }}
-                </span>
-            @endif
-            @if($place->is_featured)
-                <span class="border border-amber-400 text-amber-400 text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full">
-                    {{ $isEn ? 'Featured' : 'Öne Çıkan' }}
-                </span>
-            @endif
-        </div>
-
-        <h1 class="text-4xl md:text-6xl font-serif text-white leading-tight">
-            {{ txt($place,'name',$locale) }}
-        </h1>
-    </div>
-</div>
-
-{{-- Article --}}
-<article class="max-w-5xl mx-auto px-6 py-16">
-
-    {{-- Short Description / Lead --}}
-    @if(txt($place,'short_description',$locale))
-        <p class="text-xl md:text-2xl text-stone-500 font-serif italic leading-relaxed mb-16 pb-16 border-b border-stone-200">
-            {{ txt($place,'short_description',$locale) }}
-        </p>
-    @endif
-
-    {{-- Content Sections --}}
-    @php
-        $sections = [
-            ['key' => 'history',    'en' => 'History',         'tr' => 'Tarihçe'],
-            ['key' => 'stories',    'en' => 'Stories',         'tr' => 'Hikâyeler'],
-            ['key' => 'what_to_see','en' => 'What to See',     'tr' => 'Görülecek Yerler'],
-        ];
-    @endphp
-
-    <div class="space-y-16">
-        @foreach($sections as $section)
-            @if(txt($place, $section['key'], $locale))
-                <section>
-                    <h2 class="text-3xl font-serif mb-6 flex items-center gap-4">
-                        <span class="w-8 h-px bg-amber-500 inline-block"></span>
-                        {{ $isEn ? $section['en'] : $section['tr'] }}
-                    </h2>
-                    <div class="text-stone-700 text-lg leading-9 whitespace-pre-line">
-                        {{ txt($place, $section['key'], $locale) }}
-                    </div>
-                </section>
-            @endif
-        @endforeach
-    </div>
-
-    {{-- Map --}}
-    @if($place->latitude && $place->longitude)
-        <div class="mt-16 pt-16 border-t border-stone-200">
-            <h2 class="text-3xl font-serif mb-6 flex items-center gap-4">
-                <span class="w-8 h-px bg-amber-500 inline-block"></span>
-                {{ $isEn ? 'Location' : 'Konum' }}
-            </h2>
-            <div class="rounded-2xl overflow-hidden shadow-md">
-                <iframe
-                    src="https://www.openstreetmap.org/export/embed.html?bbox={{ $place->longitude - 0.15 }},{{ $place->latitude - 0.15 }},{{ $place->longitude + 0.15 }},{{ $place->latitude + 0.15 }}&layer=mapnik&marker={{ $place->latitude }},{{ $place->longitude }}"
-                    class="w-full h-72 border-0"
-                    loading="lazy"
-                    title="{{ txt($place,'name',$locale) }}">
-                </iframe>
-            </div>
-            <a href="https://www.openstreetmap.org/?mlat={{ $place->latitude }}&mlon={{ $place->longitude }}#map=14/{{ $place->latitude }}/{{ $place->longitude }}"
-               target="_blank"
-               rel="noopener"
-               class="inline-block mt-3 text-sm text-amber-700 hover:underline">
-                {{ $isEn ? 'Open in OpenStreetMap →' : 'OpenStreetMap\'de aç →' }}
-            </a>
-        </div>
-    @endif
-
-    {{-- Footer --}}
-    <div class="mt-16 pt-8 border-t border-stone-200 flex justify-between items-center flex-wrap gap-4">
-        @if($locationParts)
-            <span class="text-sm text-stone-400">{{ implode(' · ', $locationParts) }}</span>
-        @endif
-        <a href="/{{ $locale }}/places"
-           class="text-sm font-semibold text-stone-600 hover:text-stone-900 transition">
-            ← {{ $isEn ? 'Back to Places' : 'Yerlere Dön' }}
-        </a>
-    </div>
-
-</article>
-
-{{-- Related Places --}}
-@if($relatedPlaces->isNotEmpty())
-<section class="bg-stone-50 py-20">
-    <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-3xl font-serif mb-10">
-            {{ $isEn ? 'More Places' : 'Diğer Yerler' }}
-        </h2>
-
-        <div class="grid md:grid-cols-3 gap-6">
-            @foreach($relatedPlaces as $related)
-                <a href="/{{ $locale }}/places/{{ $related->slug }}"
-                   class="group bg-white rounded-3xl shadow overflow-hidden hover:shadow-lg transition flex flex-col">
-
-                    @if($related->cover_image)
-                        <div class="h-48 overflow-hidden flex-shrink-0">
-                            <img src="{{ asset('storage/'.$related->cover_image) }}"
-                                 alt="{{ txt($related,'name',$locale) }}"
-                                 class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                        </div>
-                    @else
-                        <div class="h-48 bg-gradient-to-br from-amber-100 to-stone-200 flex-shrink-0 flex items-center justify-center">
-                            <span class="text-stone-400 text-4xl">🗺</span>
-                        </div>
-                    @endif
-
-                    <div class="p-6 flex flex-col flex-1">
-                        @php
-                            $relatedLocation = array_filter([
-                                txt($related,'city',$locale),
-                                txt($related,'country',$locale),
-                            ]);
-                        @endphp
-                        @if($related->type || $relatedLocation)
-                            <div class="flex items-center gap-2 mb-3 flex-wrap">
-                                @if($related->type)
-                                    <span class="text-xs font-semibold uppercase tracking-wider text-amber-700">
-                                        {{ $related->type }}
-                                    </span>
-                                @endif
-                                @if($relatedLocation)
-                                    <span class="text-xs text-stone-400">
-                                        {{ implode(' · ', $relatedLocation) }}
-                                    </span>
-                                @endif
-                            </div>
-                        @endif
-
-                        <h3 class="text-lg font-bold mb-2 group-hover:text-amber-700 transition leading-snug flex-1">
-                            {{ txt($related,'name',$locale) }}
-                        </h3>
-
-                        @if(txt($related,'short_description',$locale))
-                            <p class="text-stone-500 text-sm leading-relaxed line-clamp-2 mb-4">
-                                {{ txt($related,'short_description',$locale) }}
-                            </p>
-                        @endif
-
-                        <span class="mt-auto text-sm font-semibold text-amber-700 group-hover:underline">
-                            {{ $isEn ? 'Explore →' : 'Keşfet →' }}
-                        </span>
-                    </div>
-                </a>
-            @endforeach
-        </div>
-    </div>
+<section class="page-hero" style="{{ $heroStyle }}">
+  <div class="wrap">
+    @if($country)<div class="page-eyebrow">{{ $country }}</div>@endif
+    <h1 class="page-title">{{ $name }}</h1>
+    @if($desc)<p class="page-lead">{{ $desc }}</p>@endif
+  </div>
 </section>
-@endif
 
+<main>
+  <div class="page-body">
+    {!! $body !!}
+  </div>
+
+  @if($relatedPlaces->count())
+  <section class="recs">
+    <div class="wrap">
+      <h2><span data-tr>İlgili Destinasyonlar</span><span data-en>Related Destinations</span></h2>
+      <div class="rec-grid">
+        @foreach($relatedPlaces as $rel)
+        <a href="/{{ $locale }}/places/{{ $rel->slug }}" class="rec">
+          <div class="rimg">
+            @if($rel->cover_image)
+              <img src="{{ asset('storage/'.$rel->cover_image) }}" alt="{{ $isEn ? $rel->name_en : $rel->name_tr }}">
+            @endif
+          </div>
+          <div class="rpd">
+            <div class="rcat">{{ $isEn ? ($rel->country_en ?? '') : ($rel->country_tr ?? '') }}</div>
+            <h3>{{ $isEn ? $rel->name_en : $rel->name_tr }}</h3>
+          </div>
+        </a>
+        @endforeach
+      </div>
+    </div>
+  </section>
+  @endif
+</main>
 @endsection

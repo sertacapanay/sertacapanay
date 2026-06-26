@@ -1,103 +1,115 @@
 @extends('public.layout')
-@section('title', ($isEn ? 'Blog' : 'Blog').' | Sertac Apanay')
+
+@section('title', $isEn ? 'Blog — Sertaç Apanay' : 'Blog — Sertaç Apanay')
+
+@push('styles')
+<style>
+  .page-hero{position:relative;min-height:52vh;display:flex;align-items:flex-end;
+    padding:120px 0 56px;background-size:cover;background-position:center;
+    background-image:linear-gradient(180deg,rgba(8,10,14,.4) 0%,rgba(8,10,14,.12) 42%,rgba(8,10,14,.62) 100%),
+      url('{{ asset("images/blog-hero.jpg") }}');color:var(--bone)}
+  .page-hero .wrap{width:100%;max-width:100%;margin:0;padding-left:44px}
+  .page-title{font-family:var(--display);font-size:clamp(42px,6vw,76px);font-style:italic;font-weight:400;line-height:1.05}
+  .page-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;
+    color:rgba(243,239,230,.55);margin-bottom:14px}
+  .page-lead{font-size:16px;color:rgba(243,239,230,.75);margin-top:14px;max-width:520px;line-height:1.6}
+
+  .filter-bar{display:flex;gap:8px;flex-wrap:wrap;padding:28px 0;border-bottom:1px solid var(--line)}
+  .filter-btn{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    padding:7px 18px;border-radius:20px;border:1px solid var(--line);background:transparent;
+    color:var(--muted);cursor:pointer;transition:.2s;text-decoration:none}
+  .filter-btn:hover,.filter-btn.active{background:var(--ink);color:var(--bone);border-color:var(--ink)}
+
+  .post-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;padding:48px 0}
+  @media(max-width:900px){.post-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){.post-grid{grid-template-columns:1fr}}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:4px;overflow:hidden;
+    display:flex;flex-direction:column;transition:box-shadow .25s}
+  .card:hover{box-shadow:0 8px 32px rgba(8,10,14,.1)}
+  .card .pimg{aspect-ratio:16/9;overflow:hidden;background:var(--bone-2)}
+  .card .pimg img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+  .card:hover .pimg img{transform:scale(1.04)}
+  .card .pd{padding:22px;flex:1;display:flex;flex-direction:column}
+  .card .cat{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--coral);margin-bottom:10px}
+  .card h3{font-family:var(--display);font-size:22px;font-style:italic;line-height:1.2;margin-bottom:10px}
+  .card .lede{font-size:14px;color:var(--muted);line-height:1.6;flex:1}
+  .card .meta{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:16px;
+    padding-top:16px;border-top:1px solid var(--line)}
+
+  .pagination-wrap{display:flex;justify-content:center;gap:8px;padding:32px 0 64px}
+  .pagination-wrap a,.pagination-wrap span{font-family:var(--mono);font-size:12px;letter-spacing:.1em;
+    padding:8px 16px;border:1px solid var(--line);border-radius:3px;color:var(--ink)}
+  .pagination-wrap .active-page{background:var(--ink);color:var(--bone);border-color:var(--ink)}
+</style>
+@endpush
 
 @section('content')
-
-{{-- Page Header --}}
-<section class="bg-stone-900 text-white py-20">
-    <div class="max-w-7xl mx-auto px-6">
-        <p class="text-amber-400 uppercase tracking-widest text-xs font-semibold mb-4">
-            {{ $isEn ? 'Stories & Discoveries' : 'Hikâyeler & Keşifler' }}
-        </p>
-        <h1 class="text-5xl md:text-6xl font-serif">Blog</h1>
-    </div>
+<section class="page-hero">
+  <div class="wrap">
+    <div class="page-eyebrow"><span data-tr>YAZILI BELLEK</span><span data-en>WRITTEN MEMORY</span></div>
+    <h1 class="page-title">Blog</h1>
+    <p class="page-lead" data-tr>Seyahatten yansımalar, kültürel gözlemler ve yol notları.</p>
+    <p class="page-lead b" data-en>Reflections from travel, cultural observations and road notes.</p>
+  </div>
 </section>
 
-{{-- Category Filter --}}
-@if($categories->isNotEmpty())
-<div class="border-b bg-white sticky top-[57px] z-40">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex gap-3 overflow-x-auto">
-        <a href="/{{ $locale }}/blog"
-           class="whitespace-nowrap px-5 py-2 rounded-full text-sm font-medium transition
-                  {{ !$selectedCategory ? 'bg-stone-900 text-white' : 'bg-stone-100 text-stone-600 hover:bg-stone-200' }}">
-            {{ $isEn ? 'All' : 'Tümü' }}
+<main class="page">
+  <div class="wrap">
+    <div class="filter-bar">
+      <a href="/{{ $locale }}/blog"
+         class="filter-btn {{ !$selectedCategory ? 'active' : '' }}">
+        <span data-tr>Tümü</span><span data-en>All</span>
+      </a>
+      @foreach($categories as $cat)
+        <a href="/{{ $locale }}/blog?category={{ urlencode($cat) }}"
+           class="filter-btn {{ $selectedCategory === $cat ? 'active' : '' }}">
+          {{ $cat }}
         </a>
-        @foreach($categories as $cat)
-            <a href="/{{ $locale }}/blog?category={{ urlencode($cat) }}"
-               class="whitespace-nowrap px-5 py-2 rounded-full text-sm font-medium transition
-                      {{ $selectedCategory === $cat ? 'bg-stone-900 text-white' : 'bg-stone-100 text-stone-600 hover:bg-stone-200' }}">
-                {{ $cat }}
-            </a>
-        @endforeach
+      @endforeach
     </div>
-</div>
-@endif
 
-{{-- Posts Grid --}}
-<section class="max-w-7xl mx-auto px-6 py-16">
-
-    @if($posts->isEmpty())
-        <p class="text-stone-500 text-lg">
-            {{ $isEn ? 'No posts found.' : 'Henüz yazı yok.' }}
-        </p>
-    @else
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            @foreach($posts as $post)
-                <a href="/{{ $locale }}/blog/{{ $post->slug }}"
-                   class="group bg-white rounded-3xl shadow overflow-hidden hover:shadow-lg transition flex flex-col">
-
-                    {{-- Cover Image --}}
-                    @if($post->cover_image)
-                        <div class="h-52 overflow-hidden flex-shrink-0">
-                            <img src="{{ asset('storage/'.$post->cover_image) }}"
-                                 alt="{{ txt($post,'title',$locale) }}"
-                                 class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                        </div>
-                    @else
-                        <div class="h-52 bg-gradient-to-br from-amber-50 to-stone-100 flex-shrink-0 flex items-center justify-center">
-                            <span class="text-stone-200 text-7xl font-serif leading-none">"</span>
-                        </div>
-                    @endif
-
-                    {{-- Content --}}
-                    <div class="p-6 flex flex-col flex-1">
-                        <div class="flex items-center gap-3 mb-3">
-                            @if(txt($post,'category',$locale))
-                                <span class="text-xs font-semibold uppercase tracking-wider text-amber-700">
-                                    {{ txt($post,'category',$locale) }}
-                                </span>
-                            @endif
-                            @if($post->published_at)
-                                <span class="text-xs text-stone-400">
-                                    {{ \Carbon\Carbon::parse($post->published_at)->locale($locale)->isoFormat('D MMM YYYY') }}
-                                </span>
-                            @endif
-                        </div>
-
-                        <h2 class="text-xl font-bold mb-3 group-hover:text-amber-700 transition leading-snug">
-                            {{ txt($post,'title',$locale) }}
-                        </h2>
-
-                        @if(txt($post,'excerpt',$locale))
-                            <p class="text-stone-500 text-sm leading-relaxed line-clamp-3 flex-1">
-                                {{ txt($post,'excerpt',$locale) }}
-                            </p>
-                        @endif
-
-                        <span class="mt-5 text-sm font-semibold text-amber-700 group-hover:underline">
-                            {{ $isEn ? 'Read more →' : 'Devamını oku →' }}
-                        </span>
-                    </div>
-                </a>
-            @endforeach
+    <div class="post-grid">
+      @foreach($posts as $post)
+      <a href="/{{ $locale }}/blog/{{ $post->slug }}" class="card">
+        <div class="pimg">
+          @if($post->cover_image)
+            <img src="{{ asset('storage/'.$post->cover_image) }}" alt="{{ $isEn ? $post->title_en : $post->title_tr }}">
+          @endif
         </div>
-
-        {{-- Pagination --}}
-        <div class="mt-12">
-            {{ $posts->links() }}
+        <div class="pd">
+          @php $cat = $isEn ? ($post->category_en ?? '') : ($post->category_tr ?? ''); @endphp
+          @if($cat)<div class="cat">{{ $cat }}</div>@endif
+          <h3>{{ $isEn ? $post->title_en : $post->title_tr }}</h3>
+          <p class="lede">{{ $isEn ? $post->excerpt_en : $post->excerpt_tr }}</p>
+          @if($post->published_at)
+            <div class="meta">{{ \Carbon\Carbon::parse($post->published_at)->locale($locale)->isoFormat('D MMMM YYYY') }}</div>
+          @endif
         </div>
+      </a>
+      @endforeach
+    </div>
+
+    @if($posts->hasPages())
+    <div class="pagination-wrap">
+      @if($posts->onFirstPage())
+        <span>←</span>
+      @else
+        <a href="{{ $posts->previousPageUrl() }}">←</a>
+      @endif
+      @foreach($posts->getUrlRange(1, $posts->lastPage()) as $page => $url)
+        @if($page == $posts->currentPage())
+          <span class="active-page">{{ $page }}</span>
+        @else
+          <a href="{{ $url }}">{{ $page }}</a>
+        @endif
+      @endforeach
+      @if($posts->hasMorePages())
+        <a href="{{ $posts->nextPageUrl() }}">→</a>
+      @else
+        <span>→</span>
+      @endif
+    </div>
     @endif
-
-</section>
-
+  </div>
+</main>
 @endsection

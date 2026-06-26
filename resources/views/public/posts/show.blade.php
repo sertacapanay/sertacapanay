@@ -1,149 +1,106 @@
 @extends('public.layout')
-@section('title', txt($post,'seo_title',$locale) ?: txt($post,'title',$locale))
-@section('description', txt($post,'seo_description',$locale) ?: txt($post,'excerpt',$locale))
+
+@section('title', ($isEn ? $post->title_en : $post->title_tr) . ' — Sertaç Apanay')
+@section('description', $isEn ? $post->excerpt_en : $post->excerpt_tr)
+
+@push('styles')
+<style>
+  .page-hero{position:relative;min-height:60vh;display:flex;align-items:flex-end;
+    padding:140px 0 60px;background-size:cover;background-position:center;color:var(--bone)}
+  .page-hero .wrap{width:100%;max-width:100%;margin:0;padding-left:44px}
+  .page-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;
+    color:rgba(243,239,230,.55);margin-bottom:14px}
+  .page-title{font-family:var(--display);font-size:clamp(36px,5vw,64px);font-style:italic;
+    font-weight:400;line-height:1.08;max-width:820px}
+  .ameta{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:rgba(243,239,230,.5);
+    margin-top:18px;display:flex;gap:24px;flex-wrap:wrap}
+
+  .article{max-width:740px;margin:0 auto;padding:60px 44px 80px}
+  .article p{font-size:17px;line-height:1.85;margin-bottom:1.4em;color:var(--ink)}
+  .article h2{font-family:var(--display);font-size:28px;font-style:italic;margin:2.4em 0 .8em}
+  .article h3{font-family:var(--display);font-size:22px;font-style:italic;margin:2em 0 .6em}
+  .article img{width:100%;border-radius:3px;margin:2em 0}
+  .article blockquote{border-left:2px solid var(--coral);padding-left:24px;
+    font-family:var(--display);font-size:22px;font-style:italic;color:var(--ink);margin:2em 0}
+  .atags{display:flex;gap:8px;flex-wrap:wrap;margin-top:40px;padding-top:32px;border-top:1px solid var(--line)}
+  .tag{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+    padding:5px 14px;border:1px solid var(--line);border-radius:20px;color:var(--muted)}
+
+  .recs{padding:60px 0;background:var(--paper)}
+  .recs .wrap{max-width:1240px;margin:0 auto;padding:0 44px}
+  .recs h2{font-family:var(--display);font-size:32px;font-style:italic;margin-bottom:32px}
+  .rec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media(max-width:768px){.rec-grid{grid-template-columns:1fr}}
+  .rec{background:var(--bone);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+  .rec .rimg{aspect-ratio:16/9;overflow:hidden;background:var(--bone-2)}
+  .rec .rimg img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+  .rec:hover .rimg img{transform:scale(1.04)}
+  .rec .rpd{padding:18px}
+  .rec .rcat{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--coral);margin-bottom:8px}
+  .rec h3{font-family:var(--display);font-size:19px;font-style:italic;line-height:1.25}
+</style>
+@endpush
 
 @section('content')
-
 @php
-    $content     = txt($post, 'content', $locale) ?? '';
-    $wordCount   = str_word_count(strip_tags($content));
-    $readingTime = max(1, ceil($wordCount / 200));
+  $title = $isEn ? $post->title_en : $post->title_tr;
+  $excerpt = $isEn ? $post->excerpt_en : $post->excerpt_tr;
+  $body = $isEn ? $post->body_en : $post->body_tr;
+  $cat = $isEn ? ($post->category_en ?? '') : ($post->category_tr ?? '');
+  $heroStyle = $post->cover_image
+    ? 'background-image:linear-gradient(180deg,rgba(8,10,14,.35) 0%,rgba(8,10,14,.1) 42%,rgba(8,10,14,.65) 100%),url("'.asset('storage/'.$post->cover_image).'")'
+    : 'background:var(--ink)';
 @endphp
 
-{{-- Hero --}}
-<div class="relative w-full h-[55vh] min-h-[340px] overflow-hidden bg-stone-900">
-    @if($post->cover_image)
-        <img src="{{ asset('storage/'.$post->cover_image) }}"
-             alt="{{ txt($post,'title',$locale) }}"
-             class="absolute inset-0 w-full h-full object-cover opacity-60">
-    @endif
-    <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-900/40 to-transparent"></div>
-
-    <div class="absolute bottom-0 left-0 right-0 max-w-4xl mx-auto px-6 pb-12">
-        {{-- Breadcrumb --}}
-        <nav class="flex items-center gap-2 text-xs text-stone-400 mb-6">
-            <a href="/{{ $locale }}" class="hover:text-white transition">
-                {{ $isEn ? 'Home' : 'Anasayfa' }}
-            </a>
-            <span>/</span>
-            <a href="/{{ $locale }}/blog" class="hover:text-white transition">Blog</a>
-            <span>/</span>
-            <span class="text-stone-300 truncate max-w-xs">{{ txt($post,'title',$locale) }}</span>
-        </nav>
-
-        {{-- Meta --}}
-        <div class="flex flex-wrap items-center gap-4 mb-5">
-            @if(txt($post,'category',$locale))
-                <span class="bg-amber-500 text-white text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full">
-                    {{ txt($post,'category',$locale) }}
-                </span>
-            @endif
-            @if($post->published_at)
-                <span class="text-stone-300 text-sm">
-                    {{ \Carbon\Carbon::parse($post->published_at)->locale($locale)->isoFormat('D MMMM YYYY') }}
-                </span>
-            @endif
-            <span class="text-stone-400 text-sm">
-                {{ $readingTime }} {{ $isEn ? 'min read' : 'dk okuma' }}
-            </span>
-        </div>
-
-        <h1 class="text-4xl md:text-5xl font-serif text-white leading-tight">
-            {{ txt($post,'title',$locale) }}
-        </h1>
+<section class="page-hero" style="{{ $heroStyle }}">
+  <div class="wrap">
+    @if($cat)<div class="page-eyebrow">{{ $cat }}</div>@endif
+    <h1 class="page-title">{{ $title }}</h1>
+    <div class="ameta">
+      @if($post->published_at)
+        <span>{{ \Carbon\Carbon::parse($post->published_at)->locale($locale)->isoFormat('D MMMM YYYY') }}</span>
+      @endif
     </div>
-</div>
-
-{{-- Article --}}
-<article class="max-w-4xl mx-auto px-6 py-16">
-
-    {{-- Excerpt / Lead --}}
-    @if(txt($post,'excerpt',$locale))
-        <p class="text-xl md:text-2xl text-stone-500 font-serif italic leading-relaxed mb-12 pb-12 border-b border-stone-200">
-            {{ txt($post,'excerpt',$locale) }}
-        </p>
-    @endif
-
-    {{-- Content --}}
-    <div class="prose-content text-stone-800 text-lg leading-9 whitespace-pre-line">
-        {{ $content }}
-    </div>
-
-    {{-- Footer Meta --}}
-    <div class="mt-16 pt-8 border-t border-stone-200 flex flex-wrap items-center justify-between gap-4">
-        <div class="flex items-center gap-3 flex-wrap">
-            @if(txt($post,'category',$locale))
-                <a href="/{{ $locale }}/blog?category={{ urlencode(txt($post,'category',$locale)) }}"
-                   class="text-xs font-semibold uppercase tracking-wider text-amber-700 hover:underline">
-                    {{ txt($post,'category',$locale) }}
-                </a>
-            @endif
-            @if($post->published_at)
-                <span class="text-stone-400 text-sm">
-                    {{ \Carbon\Carbon::parse($post->published_at)->locale($locale)->isoFormat('D MMMM YYYY') }}
-                </span>
-            @endif
-        </div>
-        <a href="/{{ $locale }}/blog"
-           class="text-sm font-semibold text-stone-600 hover:text-stone-900 transition">
-            ← {{ $isEn ? 'Back to Blog' : 'Blog\'a Dön' }}
-        </a>
-    </div>
-
-</article>
-
-{{-- Related Posts --}}
-@if($relatedPosts->isNotEmpty())
-<section class="bg-stone-50 py-20">
-    <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-3xl font-serif mb-10">
-            {{ $isEn ? 'More Stories' : 'Diğer Yazılar' }}
-        </h2>
-
-        <div class="grid md:grid-cols-3 gap-6">
-            @foreach($relatedPosts as $related)
-                <a href="/{{ $locale }}/blog/{{ $related->slug }}"
-                   class="group bg-white rounded-3xl shadow overflow-hidden hover:shadow-lg transition flex flex-col">
-
-                    @if($related->cover_image)
-                        <div class="h-48 overflow-hidden flex-shrink-0">
-                            <img src="{{ asset('storage/'.$related->cover_image) }}"
-                                 alt="{{ txt($related,'title',$locale) }}"
-                                 class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                        </div>
-                    @else
-                        <div class="h-48 bg-gradient-to-br from-amber-50 to-stone-100 flex-shrink-0 flex items-center justify-center">
-                            <span class="text-stone-200 text-7xl font-serif leading-none">"</span>
-                        </div>
-                    @endif
-
-                    <div class="p-6 flex flex-col flex-1">
-                        <div class="flex items-center gap-3 mb-3">
-                            @if(txt($related,'category',$locale))
-                                <span class="text-xs font-semibold uppercase tracking-wider text-amber-700">
-                                    {{ txt($related,'category',$locale) }}
-                                </span>
-                            @endif
-                            @if($related->published_at)
-                                <span class="text-xs text-stone-400">
-                                    {{ \Carbon\Carbon::parse($related->published_at)->locale($locale)->isoFormat('D MMM YYYY') }}
-                                </span>
-                            @endif
-                        </div>
-
-                        <h3 class="text-lg font-bold mb-2 group-hover:text-amber-700 transition leading-snug flex-1">
-                            {{ txt($related,'title',$locale) }}
-                        </h3>
-
-                        <span class="mt-4 text-sm font-semibold text-amber-700 group-hover:underline">
-                            {{ $isEn ? 'Read →' : 'Oku →' }}
-                        </span>
-                    </div>
-                </a>
-            @endforeach
-        </div>
-    </div>
+  </div>
 </section>
-@endif
 
+<main>
+  <article class="article">
+    @if($excerpt)
+      <p style="font-size:19px;line-height:1.7;color:var(--muted);margin-bottom:2em">{{ $excerpt }}</p>
+    @endif
+    <div>{!! $body !!}</div>
+    @if($post->tags ?? false)
+      <div class="atags">
+        @foreach(explode(',', $post->tags) as $t)
+          <span class="tag">{{ trim($t) }}</span>
+        @endforeach
+      </div>
+    @endif
+  </article>
+
+  @if($relatedPosts->count())
+  <section class="recs">
+    <div class="wrap">
+      <h2><span data-tr>İlgili Yazılar</span><span data-en>Related Posts</span></h2>
+      <div class="rec-grid">
+        @foreach($relatedPosts as $rel)
+        <a href="/{{ $locale }}/blog/{{ $rel->slug }}" class="rec">
+          <div class="rimg">
+            @if($rel->cover_image)
+              <img src="{{ asset('storage/'.$rel->cover_image) }}" alt="{{ $isEn ? $rel->title_en : $rel->title_tr }}">
+            @endif
+          </div>
+          <div class="rpd">
+            @php $rc = $isEn ? ($rel->category_en ?? '') : ($rel->category_tr ?? ''); @endphp
+            @if($rc)<div class="rcat">{{ $rc }}</div>@endif
+            <h3>{{ $isEn ? $rel->title_en : $rel->title_tr }}</h3>
+          </div>
+        </a>
+        @endforeach
+      </div>
+    </div>
+  </section>
+  @endif
+</main>
 @endsection
