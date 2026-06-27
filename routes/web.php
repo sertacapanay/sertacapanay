@@ -5,6 +5,33 @@ use App\Http\Controllers\SitemapController;
 
 Route::redirect('/', '/tr');
 
+// TEMPORARY DEBUG — kaldırılacak
+Route::get('/debug-err', function() {
+    try {
+        $view = view('public.home', [
+            'locale'    => 'tr',
+            'isEn'      => false,
+            'heroImage' => asset('images/hero.jpg'),
+            'places'    => \App\Models\Place::latest()->take(4)->get(),
+            'notes'     => \App\Models\Place::latest()->skip(4)->take(2)->get(),
+            'products'  => \App\Models\Product::where('is_active', true)->latest()->take(4)->get(),
+            'posts'     => \App\Models\Post::published()->latest()->take(2)->get(),
+        ]);
+        return $view->render();
+    } catch (\Throwable $e) {
+        return response()->json([
+            'error' => $e->getMessage(),
+            'file'  => str_replace(base_path(), '', $e->getFile()),
+            'line'  => $e->getLine(),
+            'trace' => collect($e->getTrace())->take(8)->map(fn($f) => [
+                'file' => str_replace(base_path(), '', $f['file'] ?? ''),
+                'line' => $f['line'] ?? '',
+                'fn'   => ($f['class'] ?? '').'::'.($f['function'] ?? ''),
+            ])->all(),
+        ]);
+    }
+});
+
 Route::get('/sitemap.xml', [SitemapController::class, 'index']);
 
 Route::get('/{locale}', [PublicController::class, 'home'])->whereIn('locale', ['tr','en'])->name('home');
