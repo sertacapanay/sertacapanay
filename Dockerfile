@@ -1,10 +1,8 @@
 FROM php:8.4-cli
 
-RUN apt-get update && apt-get install -y \
-        curl git unzip libpng-dev libxml2-dev libzip-dev libicu-dev \
-    && docker-php-ext-install pdo pdo_sqlite mbstring xml zip gd intl bcmath opcache \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+# apt-get olmadan: sadece yerleşik extension'lar + curl ile composer
+RUN docker-php-ext-install pdo pdo_sqlite mbstring opcache \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 WORKDIR /app
 
