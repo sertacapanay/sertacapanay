@@ -5,40 +5,6 @@ use App\Http\Controllers\SitemapController;
 
 Route::redirect('/', '/tr');
 
-// TEMPORARY DEBUG — kaldırılacak
-Route::get('/debug-err', function() {
-    try {
-        $view = view('public.home', [
-            'locale'    => 'tr',
-            'isEn'      => false,
-            'heroImage' => asset('images/hero.jpg'),
-            'places'    => \App\Models\Place::latest()->take(4)->get(),
-            'notes'     => \App\Models\Place::latest()->skip(4)->take(2)->get(),
-            'products'  => \App\Models\Product::where('is_active', true)->latest()->take(4)->get(),
-            'posts'     => \App\Models\Post::published()->latest()->take(2)->get(),
-        ]);
-        return $view->render();
-    } catch (\Throwable $e) {
-        // Try to read compiled file around error line
-        $compiledFile = $e->getFile();
-        $errorLine = $e->getLine();
-        $compiledSnippet = [];
-        if (file_exists($compiledFile)) {
-            $lines = file($compiledFile);
-            $start = max(0, $errorLine - 15);
-            $end   = min(count($lines), $errorLine + 5);
-            for ($i = $start; $i < $end; $i++) {
-                $compiledSnippet[$i + 1] = rtrim($lines[$i]);
-            }
-        }
-        return response()->json([
-            'error'    => $e->getMessage(),
-            'file'     => str_replace(base_path(), '', $e->getFile()),
-            'line'     => $errorLine,
-            'compiled' => $compiledSnippet,
-        ]);
-    }
-});
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index']);
 
