@@ -484,9 +484,9 @@
         <a href="/{{ $locale }}/shop/{{ $product->slug }}" class="prod">
           <div class="pimg">
             @if($product->image)
-              <img src="{{ asset('storage/'.$product->image) }}" alt="{{ $pname }}" loading="lazy">
+              <img src="{{ asset('storage/'.$product->image) }}" alt="{{ $pname }}" loading="eager">
             @else
-              <img src="{{ asset('images/shop-prod'.($loop->index % 4 + 1).'.jpg') }}" alt="{{ $pname }}" loading="lazy">
+              <img src="{{ asset('images/shop-prod'.($loop->index % 4 + 1).'.jpg') }}" alt="{{ $pname }}" loading="eager">
             @endif
           </div>
           @if($psrc)<span class="src">{{ $psrc }}</span>@endif
