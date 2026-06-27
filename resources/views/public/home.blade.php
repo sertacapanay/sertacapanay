@@ -268,8 +268,15 @@
         </div>
       </div>
 
-      <div class="about-img">
-        <img src="{{ asset('images/about-sertac.jpg') }}" alt="Sertaç Apanay" loading="lazy">
+      <div>
+        <div style="display:flex;justify-content:flex-end;margin-bottom:14px">
+          <a class="arrow" href="/{{ $locale }}/about">
+            <span data-tr>hakkımda →</span><span data-en>about me →</span>
+          </a>
+        </div>
+        <div class="about-img">
+          <img src="{{ asset('images/about-sertac.jpg') }}" alt="Sertaç Apanay" loading="lazy">
+        </div>
       </div>
     </div>
 
