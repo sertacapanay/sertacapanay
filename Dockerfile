@@ -12,7 +12,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN composer install --no-dev --optimize-autoloader \
+RUN composer update --no-dev --optimize-autoloader \
     && chmod -R 775 storage bootstrap/cache
 
 EXPOSE 8080
