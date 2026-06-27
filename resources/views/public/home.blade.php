@@ -485,6 +485,8 @@
           <div class="pimg">
             @if($product->image)
               <img src="{{ asset('storage/'.$product->image) }}" alt="{{ $pname }}" loading="lazy">
+            @else
+              <img src="{{ asset('images/shop-prod'.($loop->index % 4 + 1).'.jpg') }}" alt="{{ $pname }}" loading="lazy">
             @endif
           </div>
           @if($psrc)<span class="src">{{ $psrc }}</span>@endif
