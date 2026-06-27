@@ -266,7 +266,7 @@ class PublicController extends Controller
     public function about(string $locale = 'tr')
     {
         $locale = $this->locale($locale);
-        return view('public.contact', ['locale' => $locale, 'isEn' => $locale === 'en', 'scrollToAbout' => true]);
+        return view('public.about', ['locale' => $locale, 'isEn' => $locale === 'en']);
     }
 
     public function contactSubmit(string $locale, Request $request)
