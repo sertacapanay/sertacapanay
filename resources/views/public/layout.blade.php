@@ -3,17 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  {{-- ── Primary SEO ── --}}
   <title>@yield('title', 'Sertaç Apanay')</title>
   <meta name="description" content="@yield('description', 'Kültürel anlatıcı, seyahat uzmanı ve yol arkadaşı.')">
-  <meta property="og:title"       content="@yield('title', 'Sertaç Apanay')">
-  <meta property="og:description" content="@yield('description', 'Kültürel anlatıcı, seyahat uzmanı.')">
+  <meta name="author"      content="Sertaç Apanay">
+  <meta name="robots"      content="index, follow">
+
+  {{-- ── Canonical & hreflang ── --}}
+  @php
+    $canonicalLocale = $locale ?? 'tr';
+    $altLocale       = $canonicalLocale === 'tr' ? 'en' : 'tr';
+    $currentPath     = request()->getPathInfo();
+    $altPath         = preg_replace('#^/('.$canonicalLocale.')#', '/'.$altLocale, $currentPath);
+    $baseUrl         = 'https://sertacapanay.net';
+    $canonicalUrl    = $baseUrl . $currentPath;
+    $altUrl          = $baseUrl . $altPath;
+  @endphp
+  <link rel="canonical" href="{{ $canonicalUrl }}">
+  <link rel="alternate" hreflang="{{ $canonicalLocale }}" href="{{ $canonicalUrl }}">
+  <link rel="alternate" hreflang="{{ $altLocale }}" href="{{ $altUrl }}">
+  <link rel="alternate" hreflang="x-default" href="{{ $baseUrl }}/tr">
+
+  {{-- ── Open Graph ── --}}
   <meta property="og:type"        content="website">
-  <meta name="twitter:card"       content="summary_large_image">
-  {{-- Telif Hakkı / Copyright --}}
-  <meta name="author"             content="Sertaç Apanay">
-  <meta name="copyright"          content="© {{ date('Y') }} Sertaç Apanay. Tüm hakları saklıdır.">
-  <meta name="rights"             content="All content on this site is the exclusive property of Sertaç Apanay. Unauthorized reproduction, copying, scraping or redistribution is strictly prohibited.">
-  <meta name="robots"             content="index, follow, noodp, noydir">
+  <meta property="og:site_name"   content="Sertaç Apanay">
+  <meta property="og:locale"      content="{{ $canonicalLocale === 'en' ? 'en_US' : 'tr_TR' }}">
+  <meta property="og:url"         content="{{ $canonicalUrl }}">
+  <meta property="og:title"       content="@yield('title', 'Sertaç Apanay')">
+  <meta property="og:description" content="@yield('description', 'Kültürel anlatıcı, seyahat uzmanı ve yol arkadaşı.')">
+  <meta property="og:image"       content="@yield('og_image', asset('images/hero.jpg'))">
+  <meta property="og:image:width"  content="1344">
+  <meta property="og:image:height" content="768">
+
+  {{-- ── Twitter Card ── --}}
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="@yield('title', 'Sertaç Apanay')">
+  <meta name="twitter:description" content="@yield('description', 'Kültürel anlatıcı, seyahat uzmanı ve yol arkadaşı.')">
+  <meta name="twitter:image"       content="@yield('og_image', asset('images/hero.jpg'))">
+
+  {{-- ── Person JSON-LD ── --}}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Sertaç Apanay",
+    "url": "https://sertacapanay.net",
+    "jobTitle": "{{ $canonicalLocale === 'en' ? 'Tour Guide & Travel Designer' : 'Tur Rehberi ve Seyahat Tasarımcısı' }}",
+    "description": "{{ $canonicalLocale === 'en' ? 'Cultural storyteller, travel expert and guide.' : 'Kültürel anlatıcı, seyahat uzmanı ve rehberi.' }}",
+    "sameAs": []
+  }
+  </script>
+  @stack('jsonld')
+
+  {{-- ── Favicon ── --}}
+  <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+  <link rel="apple-touch-icon" href="{{ asset('images/hero.jpg') }}">
+
+  {{-- ── Copyright (machine-readable) ── --}}
+  <meta name="copyright" content="© {{ date('Y') }} Sertaç Apanay. Tüm hakları saklıdır.">
+  <meta name="rights"    content="All content is the exclusive property of Sertaç Apanay. Unauthorized reproduction is prohibited.">
+
+  {{-- ── Fonts ── --}}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">

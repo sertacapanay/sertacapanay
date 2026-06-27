@@ -5,7 +5,9 @@ use App\Models\Place;
 use App\Models\Tour;
 use App\Models\Flight;
 use App\Models\Product;
+use App\Models\Inquiry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 class PublicController extends Controller
 {
     private function locale(string $locale): string { return in_array($locale, ['tr','en']) ? $locale : 'tr'; }
@@ -265,5 +267,32 @@ class PublicController extends Controller
     {
         $locale = $this->locale($locale);
         return view('public.contact', ['locale' => $locale, 'isEn' => $locale === 'en', 'scrollToAbout' => true]);
+    }
+
+    public function contactSubmit(string $locale, Request $request)
+    {
+        $locale = $this->locale($locale);
+
+        $validator = Validator::make($request->all(), [
+            'name'    => 'required|string|max:120',
+            'email'   => 'required|email|max:200',
+            'message' => 'required|string|max:2000',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        Inquiry::create([
+            'name'    => strip_tags($request->name),
+            'email'   => $request->email,
+            'message' => strip_tags($request->message),
+        ]);
+
+        $success = $locale === 'en'
+            ? 'Your message has been received. I will get back to you within 24–48 hours.'
+            : 'Mesajınız alındı. 24–48 saat içinde yanıt vereceğim.';
+
+        return back()->with('success', $success);
     }
 }

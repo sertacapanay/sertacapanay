@@ -16,12 +16,18 @@
   .page-body{padding:56px 0 90px}
   .contact-wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:60px}
 
+  .alert{padding:14px 18px;border-radius:3px;font-size:15px;margin-bottom:22px}
+  .alert-success{background:#f0faf2;border:1px solid #6fcf97;color:#1a7b3c}
+  .alert-error{background:#fff5f5;border:1px solid #fc8181;color:#9b2c2c}
+
   .cform label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
     text-transform:uppercase;color:var(--muted);margin:0 0 8px}
   .cfield{margin-bottom:22px}
   .cform input,.cform textarea{width:100%;border:1px solid var(--line);background:var(--paper);
     padding:13px 14px;font:inherit;color:var(--ink);border-radius:3px;transition:border-color .2s}
   .cform input:focus,.cform textarea:focus{outline:none;border-color:var(--coral)}
+  .cform input.is-invalid,.cform textarea.is-invalid{border-color:#fc8181}
+  .field-error{font-size:12px;color:#e53e3e;margin-top:4px}
   .cform textarea{min-height:130px;resize:vertical}
   .cbtn{background:var(--ink);color:var(--bone);border:0;padding:14px 30px;
     font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;
@@ -86,19 +92,36 @@
       <div class="contact-wrap">
 
         <div class="cform">
+
+          {{-- Success / Error alerts --}}
+          @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+          @endif
+          @if($errors->any())
+            <div class="alert alert-error">
+              @foreach($errors->all() as $err)<div>{{ $err }}</div>@endforeach
+            </div>
+          @endif
+
           <form method="POST" action="/{{ $locale }}/contact">
             @csrf
             <div class="cfield">
               <label><span data-tr>Ad Soyad</span><span data-en>Name</span></label>
-              <input type="text" name="name" required>
+              <input type="text" name="name" value="{{ old('name') }}"
+                class="{{ $errors->has('name') ? 'is-invalid' : '' }}" required>
+              @error('name')<p class="field-error">{{ $message }}</p>@enderror
             </div>
             <div class="cfield">
               <label>E-posta</label>
-              <input type="email" name="email" required>
+              <input type="email" name="email" value="{{ old('email') }}"
+                class="{{ $errors->has('email') ? 'is-invalid' : '' }}" required>
+              @error('email')<p class="field-error">{{ $message }}</p>@enderror
             </div>
             <div class="cfield">
               <label><span data-tr>Mesaj</span><span data-en>Message</span></label>
-              <textarea name="message" required></textarea>
+              <textarea name="message" class="{{ $errors->has('message') ? 'is-invalid' : '' }}"
+                required>{{ old('message') }}</textarea>
+              @error('message')<p class="field-error">{{ $message }}</p>@enderror
             </div>
             <button class="cbtn" type="submit">
               <span data-tr>Gönder</span><span data-en>Send Message</span>
