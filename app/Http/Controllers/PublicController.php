@@ -5,8 +5,11 @@ use App\Models\Place;
 use App\Models\Tour;
 use App\Models\Flight;
 use App\Models\Product;
+use App\Mail\ContactInquiry;
 use App\Models\Inquiry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 class PublicController extends Controller
 {
@@ -283,11 +286,25 @@ class PublicController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
+        $name    = strip_tags($request->name);
+        $email   = $request->email;
+        $message = strip_tags($request->message);
+
         Inquiry::create([
-            'name'    => strip_tags($request->name),
-            'email'   => $request->email,
-            'message' => strip_tags($request->message),
+            'name'    => $name,
+            'email'   => $email,
+            'message' => $message,
         ]);
+
+        // E-posta bildirimi — MAIL_* env değişkenleri tanımlıysa gönderir
+        if (config('mail.default') !== 'log' || config('mail.mailers.smtp.host')) {
+            try {
+                $adminEmail = env('ADMIN_EMAIL', 'sertac@hotmail.com');
+                Mail::to($adminEmail)->send(new ContactInquiry($name, $email, $message));
+            } catch (\Throwable $e) {
+                Log::warning('Contact mail gönderilemedi: ' . $e->getMessage());
+            }
+        }
 
         $success = $locale === 'en'
             ? 'Your message has been received. I will get back to you within 24–48 hours.'

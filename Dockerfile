@@ -1,13 +1,8 @@
-FROM php:8.4-cli
+FROM dunglas/frankenphp:latest-php8.4-alpine
 
-RUN apt-get update && apt-get install -y \
-    libpng-dev libjpeg-dev libfreetype6-dev \
-    libxml2-dev libzip-dev libicu-dev libonig-dev libsqlite3-dev \
-    curl zip unzip git \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install \
-        pdo pdo_sqlite mbstring xml zip gd intl bcmath fileinfo \
-    && rm -rf /var/lib/apt/lists/*
+# PHP eklentileri
+RUN install-php-extensions \
+    pdo pdo_sqlite mbstring xml zip gd intl bcmath fileinfo opcache
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -28,7 +23,11 @@ CMD sh -c "\
     php -r \"echo 'base64:'.base64_encode(random_bytes(32));\" > \"\$KEY_FILE\"; \
   fi && \
   export APP_KEY=\$(cat \"\$KEY_FILE\") && \
+  DB_PATH=\${DB_DATABASE:-/app/storage/database/database.sqlite} && \
+  mkdir -p \$(dirname \"\$DB_PATH\") && \
+  export DB_DATABASE=\$DB_PATH && \
   php artisan migrate --force && \
   php artisan db:seed --force && \
   php artisan storage:link && \
-  php artisan serve --host=0.0.0.0 --port=\${PORT:-8000}"
+  php artisan optimize && \
+  SERVER_NAME=\":${PORT:-8000}\" frankenphp php-server --root public"
