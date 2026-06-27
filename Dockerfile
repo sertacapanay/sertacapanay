@@ -1,10 +1,10 @@
 FROM dunglas/frankenphp:latest-php8.4-alpine
 
-# PHP eklentileri
-RUN install-php-extensions \
-    pdo pdo_sqlite mbstring xml zip gd intl bcmath fileinfo opcache
-
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Gerekli kütüphaneler + PHP eklentileri + Composer
+RUN apk add --no-cache curl \
+    && install-php-extensions \
+        pdo pdo_sqlite mbstring xml zip gd intl bcmath fileinfo opcache \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 WORKDIR /app
 
