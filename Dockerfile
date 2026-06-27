@@ -1,8 +1,12 @@
 FROM php:8.4-cli
 
-# apt-get olmadan: sadece yerleşik extension'lar + curl ile composer
-RUN docker-php-ext-install pdo pdo_sqlite mbstring opcache \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# install-php-extensions: tüm OS bağımlılıklarını otomatik halleder (libsqlite3-dev dahil)
+ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+RUN install-php-extensions pdo pdo_sqlite mbstring xml zip gd intl bcmath fileinfo opcache
+
+# Composer: Docker Hub yerine doğrudan indir
+ADD https://getcomposer.org/download/latest-stable/composer.phar /usr/local/bin/composer
+RUN chmod +x /usr/local/bin/composer
 
 WORKDIR /app
 
