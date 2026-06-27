@@ -45,8 +45,8 @@
   {{-- ── Person JSON-LD ── --}}
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "Person",
+    "@@context": "https://schema.org",
+    "@@type": "Person",
     "name": "Sertaç Apanay",
     "url": "https://sertacapanay.net",
     "jobTitle": "{{ $canonicalLocale === 'en' ? 'Tour Guide & Travel Designer' : 'Tur Rehberi ve Seyahat Tasarımcısı' }}",

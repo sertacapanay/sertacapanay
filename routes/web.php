@@ -19,15 +19,23 @@ Route::get('/debug-err', function() {
         ]);
         return $view->render();
     } catch (\Throwable $e) {
+        // Try to read compiled file around error line
+        $compiledFile = $e->getFile();
+        $errorLine = $e->getLine();
+        $compiledSnippet = [];
+        if (file_exists($compiledFile)) {
+            $lines = file($compiledFile);
+            $start = max(0, $errorLine - 15);
+            $end   = min(count($lines), $errorLine + 5);
+            for ($i = $start; $i < $end; $i++) {
+                $compiledSnippet[$i + 1] = rtrim($lines[$i]);
+            }
+        }
         return response()->json([
-            'error' => $e->getMessage(),
-            'file'  => str_replace(base_path(), '', $e->getFile()),
-            'line'  => $e->getLine(),
-            'trace' => collect($e->getTrace())->take(8)->map(fn($f) => [
-                'file' => str_replace(base_path(), '', $f['file'] ?? ''),
-                'line' => $f['line'] ?? '',
-                'fn'   => ($f['class'] ?? '').'::'.($f['function'] ?? ''),
-            ])->all(),
+            'error'    => $e->getMessage(),
+            'file'     => str_replace(base_path(), '', $e->getFile()),
+            'line'     => $errorLine,
+            'compiled' => $compiledSnippet,
         ]);
     }
 });
