@@ -54,7 +54,7 @@
 
 <main>
   <div class="page-body">
-    {!! $body !!}
+    {!! nl2br(e($body)) !!}
   </div>
 
   @if($relatedPlaces->count())

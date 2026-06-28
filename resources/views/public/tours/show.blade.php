@@ -82,7 +82,7 @@
 <main>
   <div class="tour-layout">
     <div class="tour-body">
-      {!! $body !!}
+      {!! nl2br(e($body)) !!}
     </div>
     <aside class="booking-panel">
       @if($tour->price ?? false)

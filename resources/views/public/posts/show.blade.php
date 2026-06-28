@@ -116,7 +116,7 @@
 
       @if($body)
         <div class="article-body">
-          {!! $body !!}
+          {!! nl2br(e($body)) !!}
         </div>
       @endif
 
