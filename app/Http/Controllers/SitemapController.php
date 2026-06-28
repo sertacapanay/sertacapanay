@@ -11,7 +11,7 @@ class SitemapController extends Controller
 {
     public function index()
     {
-        $baseUrl = 'https://sertacapanay.net';
+        $baseUrl = rtrim(config('app.url'), '/');
 
         $staticPages = [
             ['loc' => $baseUrl.'/tr',         'alt_en' => $baseUrl.'/en',         'priority' => '1.0', 'changefreq' => 'weekly'],
@@ -21,6 +21,7 @@ class SitemapController extends Controller
             ['loc' => $baseUrl.'/tr/guides',   'alt_en' => $baseUrl.'/en/guides',   'priority' => '0.8', 'changefreq' => 'monthly'],
             ['loc' => $baseUrl.'/tr/tours',    'alt_en' => $baseUrl.'/en/tours',    'priority' => '0.7', 'changefreq' => 'monthly'],
             ['loc' => $baseUrl.'/tr/flights',  'alt_en' => $baseUrl.'/en/flights',  'priority' => '0.6', 'changefreq' => 'monthly'],
+            ['loc' => $baseUrl.'/tr/about',    'alt_en' => $baseUrl.'/en/about',    'priority' => '0.6', 'changefreq' => 'yearly'],
             ['loc' => $baseUrl.'/tr/contact',  'alt_en' => $baseUrl.'/en/contact',  'priority' => '0.5', 'changefreq' => 'yearly'],
         ];
 

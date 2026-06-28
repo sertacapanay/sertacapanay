@@ -16,7 +16,7 @@
     $altLocale       = $canonicalLocale === 'tr' ? 'en' : 'tr';
     $currentPath     = request()->getPathInfo();
     $altPath         = preg_replace('#^/('.$canonicalLocale.')#', '/'.$altLocale, $currentPath);
-    $baseUrl         = 'https://sertacapanay.net';
+    $baseUrl         = rtrim(config('app.url'), '/');
     $canonicalUrl    = $baseUrl . $currentPath;
     $altUrl          = $baseUrl . $altPath;
   @endphp
@@ -48,7 +48,7 @@
     "@@context": "https://schema.org",
     "@@type": "Person",
     "name": "Sertaç Apanay",
-    "url": "https://sertacapanay.net",
+    "url": "{{ rtrim(config('app.url'), '/') }}",
     "jobTitle": "{{ $canonicalLocale === 'en' ? 'Tour Guide & Travel Designer' : 'Tur Rehberi ve Seyahat Tasarımcısı' }}",
     "description": "{{ $canonicalLocale === 'en' ? 'Cultural storyteller, travel expert and guide.' : 'Kültürel anlatıcı, seyahat uzmanı ve rehberi.' }}",
     "sameAs": []

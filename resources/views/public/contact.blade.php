@@ -105,6 +105,10 @@
 
           <form method="POST" action="/{{ $locale }}/contact">
             @csrf
+            {{-- Honeypot: botlar doldurur, insanlar görmez --}}
+            <div style="display:none" aria-hidden="true">
+              <input type="text" name="website" tabindex="-1" autocomplete="off">
+            </div>
             <div class="cfield">
               <label><span data-tr>Ad Soyad</span><span data-en>Name</span></label>
               <input type="text" name="name" value="{{ old('name') }}"

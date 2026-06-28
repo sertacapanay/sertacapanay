@@ -75,6 +75,9 @@ Disallow: /
 
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /up
 Crawl-delay: 10
 
-Sitemap: https://sertacapanay.net/sitemap.xml
+Sitemap: https://www.sertacapanay.net/sitemap.xml

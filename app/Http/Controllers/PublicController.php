@@ -147,13 +147,10 @@ class PublicController extends Controller
             $query->where($col, $request->country);
         }
 
-        $allTours = Tour::active()->get();
-
         return view('public.tours.index', [
             'locale'          => $locale,
             'isEn'            => $locale === 'en',
             'tours'           => $query->paginate(12)->withQueryString(),
-            'allTours'        => $allTours,
             'countries'       => $countries,
             'selectedCountry' => $request->country,
         ]);
@@ -276,6 +273,13 @@ class PublicController extends Controller
     {
         $locale = $this->locale($locale);
 
+        // Honeypot — bot doldurarsa sessizce geri dön
+        if ($request->filled('website')) {
+            return back()->with('success', $locale === 'en'
+                ? 'Your message has been received. I will get back to you within 24–48 hours.'
+                : 'Mesajınız alındı. 24–48 saat içinde yanıt vereceğim.');
+        }
+
         $validator = Validator::make($request->all(), [
             'name'    => 'required|string|max:120',
             'email'   => 'required|email|max:200',
@@ -296,14 +300,12 @@ class PublicController extends Controller
             'message' => $message,
         ]);
 
-        // E-posta bildirimi — MAIL_* env değişkenleri tanımlıysa gönderir
-        if (config('mail.default') !== 'log' || config('mail.mailers.smtp.host')) {
-            try {
-                $adminEmail = env('ADMIN_EMAIL', 'sertac@hotmail.com');
-                Mail::to($adminEmail)->send(new ContactInquiry($name, $email, $message));
-            } catch (\Throwable $e) {
-                Log::warning('Contact mail gönderilemedi: ' . $e->getMessage());
-            }
+        // E-posta bildirimi
+        try {
+            $adminEmail = config('mail.from.address', 'sertac@hotmail.com');
+            Mail::to($adminEmail)->send(new ContactInquiry($name, $email, $message));
+        } catch (\Throwable $e) {
+            Log::warning('Contact mail gönderilemedi: ' . $e->getMessage());
         }
 
         $success = $locale === 'en'
