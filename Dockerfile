@@ -30,6 +30,7 @@ CMD sh -c "\
   export DB_DATABASE=\$DB_PATH && \
   php artisan migrate --force && \
   php artisan db:seed --force && \
+  php artisan tinker --execute=\"DB::table('users')->updateOrInsert(['email' => env('ADMIN_EMAIL','sertac@hotmail.com')], ['name' => 'Sertaç Apanay', 'password' => bcrypt(env('ADMIN_PASSWORD','changeme')), 'email_verified_at' => now(), 'updated_at' => now(), 'created_at' => now()]);\" && \
   php artisan storage:link && \
   php artisan optimize && \
   php artisan serve --host=0.0.0.0 --port=\${PORT:-8080}"
