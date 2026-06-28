@@ -10,8 +10,13 @@ class ComingSoon
 {
     public function handle(Request $request, Closure $next): Response
     {
-        // Admin paneli ve health check her zaman erişilebilir
-        if ($request->is('admin*') || $request->is('up')) {
+        $uri = $_SERVER['REQUEST_URI'] ?? $request->getRequestUri();
+
+        if (
+            str_contains($uri, 'admin') ||
+            str_contains($uri, 'livewire') ||
+            $request->is('up')
+        ) {
             return $next($request);
         }
 
