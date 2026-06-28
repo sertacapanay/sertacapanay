@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'coming_soon' => env('COMING_SOON', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
