@@ -26,7 +26,7 @@ class SiteSettings extends Page implements HasForms
     protected static ?string $navigationLabel = 'Site Ayarları';
     protected static ?string $title = 'Site Ayarları';
     protected static ?int $navigationSort = 99;
-    protected static ?string $navigationGroup = 'Yönetim';
+    protected static \UnitEnum|string|null $navigationGroup = 'Yönetim';
     protected static string $view = 'filament.pages.site-settings';
 
     public array $data = [];
