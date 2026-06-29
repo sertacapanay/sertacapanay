@@ -18,9 +18,8 @@ use Filament\Schemas\Schema;
 
 class SiteSettings extends Page
 {
-    protected \BackedEnum|string|null $navigationIcon = 'heroicon-o-cog-6-tooth';
-    protected \UnitEnum|string|null $navigationGroup = 'Yönetim';
-
+    protected static \BackedEnum|string|null $navigationIcon = 'heroicon-o-cog-6-tooth';
+    protected static \UnitEnum|string|null $navigationGroup = 'Yönetim';
     protected static ?string $navigationLabel = 'Site Ayarları';
     protected static ?string $title = 'Site Ayarları';
     protected static ?int $navigationSort = 99;
