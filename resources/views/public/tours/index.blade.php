@@ -1,5 +1,9 @@
 @extends('public.layout')
 
+@push('head')
+<link rel="preload" as="image" href="{{ asset('images/cruise-hero.jpg') }}" fetchpriority="high">
+@endpush
+
 @section('title', $isEn ? 'Cruise Log — Sertaç Apanay' : 'Seyir Günlükleri — Sertaç Apanay')
 @section('description', $isEn ? 'Beyond the horizons, into the depths of oceans — cruise experiences and sea voyages.' : 'Ufukların ötesine, okyanusların derinliklerine — cruise deneyimleri ve gemi yolculukları.')
 

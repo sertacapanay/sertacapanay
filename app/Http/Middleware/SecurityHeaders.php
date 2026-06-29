@@ -21,12 +21,12 @@ class SecurityHeaders
         // Content Security Policy
         $csp = implode('; ', [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' cdn.jsdelivr.net unpkg.com",
+            "script-src 'self' 'unsafe-inline' cdn.jsdelivr.net unpkg.com www.googletagmanager.com",
             "style-src 'self' 'unsafe-inline' fonts.googleapis.com cdn.jsdelivr.net",
             "font-src 'self' fonts.gstatic.com data:",
             "img-src 'self' data: blob: *.sertacapanay.net storage.googleapis.com",
             "media-src 'self'",
-            "connect-src 'self'",
+            "connect-src 'self' www.google-analytics.com",
             "frame-src 'none'",
             "object-src 'none'",
             "base-uri 'self'",

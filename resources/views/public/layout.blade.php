@@ -57,6 +57,18 @@
   </script>
   @stack('jsonld')
 
+  {{-- ── Page-specific head (preload hints, etc.) ── --}}
+  @stack('head')
+
+  {{-- ── Google Analytics GA4 ── --}}
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7ZYDKVLC7Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7ZYDKVLC7Z');
+  </script>
+
   {{-- ── Favicon ── --}}
   <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
   <link rel="apple-touch-icon" href="{{ asset('images/hero.jpg') }}">
