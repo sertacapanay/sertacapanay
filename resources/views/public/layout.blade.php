@@ -398,6 +398,40 @@
 
   </style>
   @stack('styles')
+
+  {{-- ── Dinamik tasarım ayarları ── --}}
+  @php
+    $s_coral   = setting('design.color_coral');
+    $s_gold    = setting('design.color_gold');
+    $s_ink     = setting('design.color_ink');
+    $s_display = setting('design.font_display');
+    $s_ui      = setting('design.font_ui');
+    $s_css     = setting('design.custom_css');
+  @endphp
+  @if($s_coral || $s_gold || $s_ink || $s_display || $s_ui)
+  <style>
+    :root {
+      @if($s_coral)--coral:{{ $s_coral }};--coral-2:{{ $s_coral }};@endif
+      @if($s_gold)--gold:{{ $s_gold }};@endif
+      @if($s_ink)--ink:{{ $s_ink }};@endif
+      @if($s_display)--display:{{ $s_display }};@endif
+      @if($s_ui)--ui:{{ $s_ui }};@endif
+    }
+    @if($s_css){!! $s_css !!}@endif
+  </style>
+  @endif
+
+  {{-- ── Analytics (Google, Meta Pixel) ── --}}
+  @if(setting('analytics.ga_id'))
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ setting('analytics.ga_id') }}"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','{{ setting('analytics.ga_id') }}');</script>
+  @endif
+  @if(setting('analytics.meta_pixel'))
+  <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','{{ setting('analytics.meta_pixel') }}');fbq('track','PageView');</script>
+  @endif
+  @if(setting('ads.header_script'))
+  {!! setting('ads.header_script') !!}
+  @endif
 </head>
 <body>
 
@@ -524,8 +558,21 @@
       <div>
         <h4><span data-tr>İletişim</span><span data-en>Connect</span></h4>
         <ul>
-          <li><a href="#">Instagram</a></li>
-          <li><a href="#">Facebook</a></li>
+          @if(setting('social.instagram'))
+          <li><a href="{{ setting('social.instagram') }}" target="_blank" rel="noopener">Instagram</a></li>
+          @endif
+          @if(setting('social.youtube'))
+          <li><a href="{{ setting('social.youtube') }}" target="_blank" rel="noopener">YouTube</a></li>
+          @endif
+          @if(setting('social.facebook'))
+          <li><a href="{{ setting('social.facebook') }}" target="_blank" rel="noopener">Facebook</a></li>
+          @endif
+          @if(setting('social.twitter'))
+          <li><a href="{{ setting('social.twitter') }}" target="_blank" rel="noopener">X (Twitter)</a></li>
+          @endif
+          @if(setting('social.tiktok'))
+          <li><a href="{{ setting('social.tiktok') }}" target="_blank" rel="noopener">TikTok</a></li>
+          @endif
           <li><a href="/{{ $locale ?? 'tr' }}/about"><span data-tr>Hakkımda</span><span data-en>About Me</span></a></li>
           <li><a href="/{{ $locale ?? 'tr' }}/contact"><span data-tr>İletişim</span><span data-en>Contact</span></a></li>
         </ul>
@@ -571,5 +618,9 @@ alignHero();
 </script>
 
 @stack('scripts')
+
+@if(setting('ads.footer_script'))
+{!! setting('ads.footer_script') !!}
+@endif
 </body>
 </html>
