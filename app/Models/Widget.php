@@ -55,7 +55,9 @@ class Widget extends Model
             return static::where('is_active', true)
                 ->where('position', $position)
                 ->where(function ($q) use ($page) {
-                    $q->whereJsonContains('pages', 'all')
+                    // pages null ise (seçilmemiş) tüm sayfalarda göster
+                    $q->whereNull('pages')
+                      ->orWhereJsonContains('pages', 'all')
                       ->orWhereJsonContains('pages', $page);
                 })
                 ->orderBy('sort')
