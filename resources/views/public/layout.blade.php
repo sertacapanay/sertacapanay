@@ -9,6 +9,7 @@
   <meta name="description" content="@yield('description', 'Kültürel anlatıcı, seyahat uzmanı ve yol arkadaşı.')">
   <meta name="author"      content="Sertaç Apanay">
   <meta name="robots"      content="index, follow">
+  <meta name="google-site-verification" content="3NEGayZbmOZ0y2kmz1xCBDvXgFxefwefY6DY3zZEqGw" />
 
   {{-- ── Canonical & hreflang ── --}}
   @php
