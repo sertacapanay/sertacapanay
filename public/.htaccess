@@ -5,6 +5,10 @@
 
     RewriteEngine On
 
+    # sertacapanay.com → www.sertacapanay.net yönlendirme
+    RewriteCond %{HTTP_HOST} ^(www\.)?sertacapanay\.com$ [NC]
+    RewriteRule ^(.*)$ https://www.sertacapanay.net/$1 [R=301,L]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

@@ -401,6 +401,27 @@
   .footer-widgets-grid{display:flex;gap:40px;flex-wrap:wrap;align-items:flex-start}
   .footer-widgets-grid>.widget{flex:1;min-width:220px;max-width:400px;margin-bottom:0}
 
+  /* ── WhatsApp floating buton ── */
+  .wa-float{position:fixed;bottom:28px;right:28px;z-index:9999;width:56px;height:56px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.2);transition:transform .2s,box-shadow .2s;text-decoration:none}
+  .wa-float:hover{transform:scale(1.08);box-shadow:0 6px 20px rgba(0,0,0,.25)}
+
+  /* ── Widget genel ── */
+  .widget{margin-bottom:28px}
+  .widget-title{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .widget-desc{font-size:14px;color:var(--muted);margin-bottom:12px;line-height:1.6}
+  .yt-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:3px}
+  .yt-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%}
+  .widget-channel-btn{display:inline-flex;align-items:center;gap:10px;padding:12px 20px;border:1.5px solid var(--line);font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);transition:all .2s;border-radius:2px}
+  .yt-btn:hover{background:#FF0000;color:#fff;border-color:#FF0000}
+  .ig-btn:hover{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;border-color:transparent}
+  .nl-form{display:flex;gap:8px}
+  .nl-form input{flex:1;border:1px solid var(--line);padding:10px 14px;font:inherit;font-size:14px;color:var(--ink);background:var(--paper);border-radius:2px}
+  .nl-form button{background:var(--coral);color:#fff;border:0;padding:10px 18px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:background .2s}
+  .nl-form button:hover{background:var(--coral-2)}
+  .social-icons{display:flex;gap:14px;flex-wrap:wrap}
+  .social-icons a{color:var(--muted);transition:color .2s}
+  .social-icons a:hover{color:var(--coral)}
+
   </style>
   @stack('styles')
 
