@@ -5,6 +5,27 @@ use App\Http\Controllers\SitemapController;
 
 Route::redirect('/', '/tr');
 
+// TEMP DEBUG - sonra silinecek
+Route::get('/debug-test', function () {
+    try {
+        $db = \DB::select('SELECT 1');
+        $posts = \App\Models\Post::count();
+        $settings = \App\Models\Setting::count();
+        $widgets = \App\Models\Widget::count();
+        $helper = function_exists('setting') ? 'OK' : 'MISSING';
+        return response()->json([
+            'db' => 'OK',
+            'posts' => $posts,
+            'settings' => $settings,
+            'widgets' => $widgets,
+            'setting_helper' => $helper,
+            'setting_value' => setting('design.color_coral', 'default'),
+        ]);
+    } catch (\Throwable $e) {
+        return response()->json(['error' => $e->getMessage(), 'file' => $e->getFile(), 'line' => $e->getLine()]);
+    }
+});
+
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index']);
 

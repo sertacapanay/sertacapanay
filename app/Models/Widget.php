@@ -49,9 +49,10 @@ class Widget extends Model
      */
     public static function forPosition(string $position, string $page = 'home'): \Illuminate\Support\Collection
     {
-        $key = "widgets_{$position}_{$page}";
+        // Cache'te model değil, sadece ID'leri sakla (serialize sorunu önler)
+        $key = "widget_ids_{$position}_{$page}";
 
-        return Cache::remember($key, 3600, function () use ($position, $page) {
+        $ids = Cache::remember($key, 3600, function () use ($position, $page) {
             try {
                 return static::where('is_active', true)
                     ->where('position', $position)
@@ -61,20 +62,29 @@ class Widget extends Model
                           ->orWhereJsonContains('pages', $page);
                     })
                     ->orderBy('sort')
-                    ->get();
+                    ->pluck('id')
+                    ->toArray();
             } catch (\Throwable $e) {
-                // JSON sorgusu desteklenmiyorsa PHP'de filtrele
                 \Illuminate\Support\Facades\Log::warning('Widget query fallback: ' . $e->getMessage());
                 return static::where('is_active', true)
                     ->where('position', $position)
                     ->orderBy('sort')
-                    ->get()
-                    ->filter(function ($w) use ($page) {
-                        $pages = $w->pages;
-                        return empty($pages) || in_array('all', $pages) || in_array($page, $pages);
-                    });
+                    ->pluck('id')
+                    ->toArray();
             }
         });
+
+        if (empty($ids)) {
+            return collect();
+        }
+
+        $widgets = static::whereIn('id', $ids)->orderBy('sort')->get();
+
+        // Eğer JSON sorgusu fallback kullandıysa PHP'de filtrele
+        return $widgets->filter(function ($w) use ($page) {
+            $pages = $w->pages;
+            return empty($pages) || in_array('all', $pages) || in_array($page, $pages);
+        })->values();
     }
 
     public static function clearCache(): void
