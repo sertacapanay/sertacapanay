@@ -396,6 +396,11 @@
   .booking-panel .wa-btn:hover{background:#20b858}
   @media(max-width:900px){.tour-detail{grid-template-columns:1fr}}
 
+  /* ── Footer widgets ── */
+  .footer-widgets{padding:56px 0;border-top:1px solid var(--line)}
+  .footer-widgets-grid{display:flex;gap:40px;flex-wrap:wrap;align-items:flex-start}
+  .footer-widgets-grid>.widget{flex:1;min-width:220px;max-width:400px;margin-bottom:0}
+
   </style>
   @stack('styles')
 
@@ -530,6 +535,23 @@
 </div>
 
 @yield('content')
+
+{{-- ── Footer üstü widget'lar ── --}}
+@php $footerWidgets = \App\Models\Widget::forPosition('footer_top', request()->segment(2) ?? 'home'); @endphp
+@if($footerWidgets->isNotEmpty())
+<section class="footer-widgets">
+  <div class="wrap footer-widgets-grid">
+    @foreach($footerWidgets as $widget)
+      <x-widget :widget="$widget" />
+    @endforeach
+  </div>
+</section>
+@endif
+
+{{-- ── Floating widget'lar (WhatsApp vb.) ── --}}
+@foreach(\App\Models\Widget::forPosition('floating', request()->segment(2) ?? 'home') as $widget)
+  <x-widget :widget="$widget" />
+@endforeach
 
 <footer id="footer">
   <div class="wrap">

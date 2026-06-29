@@ -79,5 +79,10 @@
     </div>
   </section>
   @endif
+  @foreach(\App\Models\Widget::forPosition('content_bottom', 'places') as $widget)
+    <section class="wrap" style="padding:40px 0">
+      <x-widget :widget="$widget" />
+    </section>
+  @endforeach
 </main>
 @endsection

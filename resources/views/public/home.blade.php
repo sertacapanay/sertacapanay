@@ -186,6 +186,18 @@
   </a>
 </section>
 
+{{-- ── Hero altı widget'lar ── --}}
+@php $heroWidgets = \App\Models\Widget::forPosition('home_hero', 'home'); @endphp
+@if($heroWidgets->isNotEmpty())
+<section style="padding:40px 0;border-bottom:1px solid var(--line)">
+  <div class="wrap" style="display:flex;gap:40px;flex-wrap:wrap">
+    @foreach($heroWidgets as $widget)
+      <div style="flex:1;min-width:220px"><x-widget :widget="$widget" /></div>
+    @endforeach
+  </div>
+</section>
+@endif
+
 {{-- ════════════════════════════════════════
      STATS
 ════════════════════════════════════════ --}}
