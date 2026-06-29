@@ -52,16 +52,28 @@ class Widget extends Model
         $key = "widgets_{$position}_{$page}";
 
         return Cache::remember($key, 3600, function () use ($position, $page) {
-            return static::where('is_active', true)
-                ->where('position', $position)
-                ->where(function ($q) use ($page) {
-                    // pages null ise (seçilmemiş) tüm sayfalarda göster
-                    $q->whereNull('pages')
-                      ->orWhereJsonContains('pages', 'all')
-                      ->orWhereJsonContains('pages', $page);
-                })
-                ->orderBy('sort')
-                ->get();
+            try {
+                return static::where('is_active', true)
+                    ->where('position', $position)
+                    ->where(function ($q) use ($page) {
+                        $q->whereNull('pages')
+                          ->orWhereJsonContains('pages', 'all')
+                          ->orWhereJsonContains('pages', $page);
+                    })
+                    ->orderBy('sort')
+                    ->get();
+            } catch (\Throwable $e) {
+                // JSON sorgusu desteklenmiyorsa PHP'de filtrele
+                \Illuminate\Support\Facades\Log::warning('Widget query fallback: ' . $e->getMessage());
+                return static::where('is_active', true)
+                    ->where('position', $position)
+                    ->orderBy('sort')
+                    ->get()
+                    ->filter(function ($w) use ($page) {
+                        $pages = $w->pages;
+                        return empty($pages) || in_array('all', $pages) || in_array($page, $pages);
+                    });
+            }
         });
     }
 
