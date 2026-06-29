@@ -7,6 +7,7 @@
 @endphp
 @section('title', ($isEn ? $place->name_en : $place->name_tr) . ' — Sertaç Apanay')
 @section('description', $isEn ? ($place->short_description_en ?? '') : ($place->short_description_tr ?? ''))
+@if($place->image)@section('og_image', rtrim(config('app.url'),'/').'/storage/'.$place->image)@endif
 
 @push('jsonld')
 <script type="application/ld+json">

@@ -10,6 +10,7 @@
 
 @section('title', $pname.' — Çarşı — Sertaç Apanay')
 @section('description', Str::limit(strip_tags($pdesc), 155))
+@if($product->image)@section('og_image', rtrim(config('app.url'),'/').'/storage/'.$product->image)@endif
 
 @push('jsonld')
 <script type="application/ld+json">

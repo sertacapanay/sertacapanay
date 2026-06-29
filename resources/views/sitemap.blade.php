@@ -62,4 +62,16 @@
   </url>
   @endforeach
 
+  {{-- Guides (city guides) --}}
+  @foreach($guides as $guide)
+  <url>
+    <loc>{{ $baseUrl }}/tr/guides/{{ $guide->slug }}</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="{{ $baseUrl }}/tr/guides/{{ $guide->slug }}"/>
+    <xhtml:link rel="alternate" hreflang="en" href="{{ $baseUrl }}/en/guides/{{ $guide->slug }}"/>
+    <lastmod>{{ $guide->updated_at->toDateString() }}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  @endforeach
+
 </urlset>

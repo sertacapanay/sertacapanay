@@ -5,6 +5,41 @@
   ? 'Group tour guide, destination lecturer and travel companion. Six continents of shared journeys.'
   : 'Grup tur rehberi, destinasyon anlatıcısı ve seyahat arkadaşı. Altı kıtada paylaşılan yolculuklar.')
 
+@push('jsonld')
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "WebSite",
+  "name": "Sertaç Apanay",
+  "url": "{{ rtrim(config('app.url'),'/') }}",
+  "description": {{ Js::from($isEn ? 'Group tour guide, destination lecturer and travel companion. Six continents of shared journeys.' : 'Grup tur rehberi, destinasyon anlatıcısı ve seyahat arkadaşı. Altı kıtada paylaşılan yolculuklar.') }},
+  "inLanguage": ["tr", "en"],
+  "potentialAction": {
+    "@@type": "SearchAction",
+    "target": {
+      "@@type": "EntryPoint",
+      "urlTemplate": "{{ rtrim(config('app.url'),'/') }}/{{ $locale }}/blog?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@@type": "ListItem",
+      "position": 1,
+      "name": {{ Js::from($isEn ? 'Home' : 'Ana Sayfa') }},
+      "item": "{{ rtrim(config('app.url'),'/') }}/{{ $locale }}"
+    }
+  ]
+}
+</script>
+@endpush
+
 @push('styles')
 <style>
   /* ── Hero ── */

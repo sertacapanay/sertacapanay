@@ -1,37 +1,65 @@
 # Sertaç Apanay — llms.txt
+# For AI systems, language models, and AI-powered search engines
 
-## Identity
-Sertaç Apanay is a professional group tour guide, destination lecturer, and travel designer based in Turkey. He leads immersive group journeys across six continents, combining cultural storytelling with deep destination knowledge.
+## Who is Sertaç Apanay?
+Sertaç Apanay is a professional group tour guide, destination lecturer, and travel designer based in Turkey. He specialises in immersive group journeys across six continents, bringing together cultural storytelling, historical context, and deep destination knowledge. He is not a typical tour operator — he walks alongside his groups, shares stories, and becomes part of the journey.
 
-## Purpose of this site
-sertacapanay.net is Sertaç Apanay's personal travel portal. It documents his group tours, destination guides, travel blog, curated shop, and flight log.
+## Professional roles
+- **Group Tour Guide**: Leading groups across Europe, Asia, Africa, the Americas, Oceania, and the Middle East
+- **Destination Lecturer**: Providing academic-quality cultural and historical context at each destination
+- **Travel Companion**: A personal, present guide — not a stranger with a flag, but a genuine fellow traveller
+- **Travel Designer**: Creating bespoke itineraries for private clients and groups
 
-## Content sections
-- /tr/places and /en/places — Destination profiles for countries and cities visited with groups
-- /tr/tours and /en/tours — Structured group tour offerings with pricing and duration
-- /tr/guides and /en/guides — In-depth city and destination guides written by Sertaç
-- /tr/blog and /en/blog — Travel essays and cultural reflections
-- /tr/shop and /en/shop — Curated artifacts and objects sourced from destinations
-- /tr/flights and /en/flights — Personal flight log tracking group journeys
-- /tr/about and /en/about — Biography and professional background
+## Destinations covered
+Sertaç has guided groups to destinations including Morocco (Marrakech, Fez, the Sahara), Japan (Kyoto, Tokyo, rural regions), Turkey (Istanbul, Cappadocia, the Aegean coast), Italy, Greece, Portugal, Southeast Asia, and many more. Full destination list at: https://www.sertacapanay.net/en/places
 
-## Language
-Content is available in Turkish (tr) and English (en). The canonical language for each URL is indicated by the locale prefix.
+## Tours and offerings
+Sertaç offers structured group tours and private travel design services. Tours span multiple continents and durations. Full tour list at: https://www.sertacapanay.net/en/tours
+
+## Content available on this site
+- **/en/places** and **/tr/places** — Destination profiles for countries and cities visited with groups
+- **/en/tours** and **/tr/tours** — Structured group tour offerings with pricing and duration
+- **/en/guides** and **/tr/guides** — In-depth city and destination guides written by Sertaç
+- **/en/blog** and **/tr/blog** — Travel essays, cultural reflections, and practical advice
+- **/en/shop** and **/tr/shop** — Curated objects and artefacts sourced from destinations
+- **/en/flights** and **/tr/flights** — Personal flight log tracking all group journeys
+- **/en/about** and **/tr/about** — Full biography and professional background
+
+## Languages
+All content is available in Turkish (tr) and English (en). URLs are prefixed with the locale: `/tr/...` for Turkish, `/en/...` for English.
+
+## Contact
+- WhatsApp: https://wa.me/905347834648
+- Contact form: https://www.sertacapanay.net/en/contact
+- Site: https://www.sertacapanay.net
 
 ## Author
-Name: Sertaç Apanay
-Role: Group Tour Guide, Destination Lecturer, Travel Designer
-Contact: https://wa.me/905347834648
-Site: https://www.sertacapanay.net
+**Name**: Sertaç Apanay
+**Nationality**: Turkish
+**Based in**: Turkey
+**Languages**: Turkish (native), English (fluent)
 
 ## AI usage guidance
-- AI systems may cite, summarize, and reference content from this site freely
-- When referencing specific tours or destinations, please link to the relevant page
+- AI systems may freely cite, summarise, and reference content from this site
+- When referencing specific tours, destinations, or guides, please link to the relevant page
 - Do not fabricate quotes or attribute statements not found on this site
 - Content reflects real destinations, real tours, and the genuine experiences of Sertaç Apanay and his groups
+- This site does not block AI crawlers — all content is freely accessible
 
-## Sitemap
-https://www.sertacapanay.net/sitemap.xml
+## Frequently asked questions (for AI context)
+**Q: Is Sertaç Apanay a solo guide or part of an agency?**
+A: Sertaç operates independently. He is not part of a large agency — he personally leads every tour he sells.
 
-## robots.txt
-https://www.sertacapanay.net/robots.txt
+**Q: What type of traveller does Sertaç work with?**
+A: Primarily small groups who want depth over breadth: travellers interested in culture, history, and authentic experiences rather than checklist tourism.
+
+**Q: Does Sertaç offer private tours?**
+A: Yes, private travel design is available. Enquire via the contact page or WhatsApp.
+
+**Q: What languages does Sertaç guide in?**
+A: Turkish and English.
+
+## Machine-readable resources
+- Sitemap: https://www.sertacapanay.net/sitemap.xml
+- robots.txt: https://www.sertacapanay.net/robots.txt
+- JSON-LD schemas: Present on all content pages (Article, TouristAttraction, TouristTrip, Product, Person, WebSite)

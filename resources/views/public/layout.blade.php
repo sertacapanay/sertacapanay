@@ -26,21 +26,21 @@
   <link rel="alternate" hreflang="x-default" href="{{ $baseUrl }}/tr">
 
   {{-- ── Open Graph ── --}}
-  <meta property="og:type"        content="website">
+  <meta property="og:type"        content="@yield('og_type', 'website')">
   <meta property="og:site_name"   content="Sertaç Apanay">
   <meta property="og:locale"      content="{{ $canonicalLocale === 'en' ? 'en_US' : 'tr_TR' }}">
   <meta property="og:url"         content="{{ $canonicalUrl }}">
   <meta property="og:title"       content="@yield('title', 'Sertaç Apanay')">
   <meta property="og:description" content="@yield('description', 'Kültürel anlatıcı, seyahat uzmanı ve yol arkadaşı.')">
   <meta property="og:image"       content="@yield('og_image', asset('images/hero.jpg'))">
-  <meta property="og:image:width"  content="1344">
-  <meta property="og:image:height" content="768">
+  <meta property="og:image:alt"   content="@yield('title', 'Sertaç Apanay')">
 
   {{-- ── Twitter Card ── --}}
   <meta name="twitter:card"        content="summary_large_image">
   <meta name="twitter:title"       content="@yield('title', 'Sertaç Apanay')">
   <meta name="twitter:description" content="@yield('description', 'Kültürel anlatıcı, seyahat uzmanı ve yol arkadaşı.')">
   <meta name="twitter:image"       content="@yield('og_image', asset('images/hero.jpg'))">
+  <meta name="twitter:image:alt"   content="@yield('title', 'Sertaç Apanay')">
 
   {{-- ── Person JSON-LD ── --}}
   <script type="application/ld+json">

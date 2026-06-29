@@ -19,6 +19,8 @@
 
 @section('title', $title.' — Sertaç Apanay')
 @section('description', Str::limit(strip_tags($excerpt ?: $body), 155))
+@section('og_type', 'article')
+@if($post->image)@section('og_image', rtrim(config('app.url'),'/').'/storage/'.$post->image)@endif
 
 @push('jsonld')
 <script type="application/ld+json">

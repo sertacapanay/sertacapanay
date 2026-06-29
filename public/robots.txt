@@ -1,6 +1,7 @@
 # robots.txt — sertacapanay.net
 # © Sertac Apanay. Unauthorized scraping is prohibited.
 
+# ── Arama motoru botları ──
 User-agent: Googlebot
 Allow: /
 
@@ -13,6 +14,35 @@ Allow: /
 User-agent: Yandex
 Allow: /
 
+User-agent: Applebot
+Allow: /
+
+# ── AI arama ve içerik botları ──
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Gemini
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# ── Zararlı scraper'lar ──
 User-agent: HTTrack
 Disallow: /
 
@@ -73,11 +103,12 @@ Disallow: /
 User-agent: MJ12bot
 Disallow: /
 
+# ── Genel kural ──
 User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /admin/
 Disallow: /up
-Crawl-delay: 10
+Crawl-delay: 2
 
 Sitemap: https://www.sertacapanay.net/sitemap.xml

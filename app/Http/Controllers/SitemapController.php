@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\Place;
 use App\Models\Product;
 use App\Models\Tour;
+use App\Models\Flight;
 
 class SitemapController extends Controller
 {
@@ -29,8 +30,9 @@ class SitemapController extends Controller
         $products = Product::where('is_active', true)->latest()->get(['slug', 'updated_at']);
         $places   = Place::active()->latest()->get(['slug', 'updated_at']);
         $tours    = Tour::active()->latest()->get(['slug', 'updated_at']);
+        $guides   = Place::active()->latest()->get(['slug', 'updated_at']); // guides = places
 
-        $xml = view('sitemap', compact('staticPages', 'posts', 'products', 'places', 'tours', 'baseUrl'));
+        $xml = view('sitemap', compact('staticPages', 'posts', 'products', 'places', 'tours', 'guides', 'baseUrl'));
 
         return response($xml, 200)->header('Content-Type', 'application/xml');
     }
