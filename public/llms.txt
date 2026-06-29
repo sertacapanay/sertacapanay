@@ -1,0 +1,37 @@
+# Sertaç Apanay — llms.txt
+
+## Identity
+Sertaç Apanay is a professional group tour guide, destination lecturer, and travel designer based in Turkey. He leads immersive group journeys across six continents, combining cultural storytelling with deep destination knowledge.
+
+## Purpose of this site
+sertacapanay.net is Sertaç Apanay's personal travel portal. It documents his group tours, destination guides, travel blog, curated shop, and flight log.
+
+## Content sections
+- /tr/places and /en/places — Destination profiles for countries and cities visited with groups
+- /tr/tours and /en/tours — Structured group tour offerings with pricing and duration
+- /tr/guides and /en/guides — In-depth city and destination guides written by Sertaç
+- /tr/blog and /en/blog — Travel essays and cultural reflections
+- /tr/shop and /en/shop — Curated artifacts and objects sourced from destinations
+- /tr/flights and /en/flights — Personal flight log tracking group journeys
+- /tr/about and /en/about — Biography and professional background
+
+## Language
+Content is available in Turkish (tr) and English (en). The canonical language for each URL is indicated by the locale prefix.
+
+## Author
+Name: Sertaç Apanay
+Role: Group Tour Guide, Destination Lecturer, Travel Designer
+Contact: https://wa.me/905347834648
+Site: https://www.sertacapanay.net
+
+## AI usage guidance
+- AI systems may cite, summarize, and reference content from this site freely
+- When referencing specific tours or destinations, please link to the relevant page
+- Do not fabricate quotes or attribute statements not found on this site
+- Content reflects real destinations, real tours, and the genuine experiences of Sertaç Apanay and his groups
+
+## Sitemap
+https://www.sertacapanay.net/sitemap.xml
+
+## robots.txt
+https://www.sertacapanay.net/robots.txt

@@ -20,6 +20,34 @@
 @section('title', $title.' — Sertaç Apanay')
 @section('description', Str::limit(strip_tags($excerpt ?: $body), 155))
 
+@push('jsonld')
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "Article",
+  "headline": {{ Js::from($title) }},
+  "description": {{ Js::from(Str::limit(strip_tags($excerpt ?: $body), 200)) }},
+  @if($post->image)
+  "image": "{{ rtrim(config('app.url'),'/') }}/storage/{{ $post->image }}",
+  @endif
+  @if($post->published_at)
+  "datePublished": "{{ \Carbon\Carbon::parse($post->published_at)->toIso8601String() }}",
+  @endif
+  "author": {
+    "@@type": "Person",
+    "name": "Sertaç Apanay",
+    "url": "{{ rtrim(config('app.url'),'/') }}/{{ $locale }}/about"
+  },
+  "publisher": {
+    "@@type": "Person",
+    "name": "Sertaç Apanay"
+  },
+  "inLanguage": "{{ $locale }}",
+  "url": "{{ rtrim(config('app.url'),'/') }}{{ request()->getPathInfo() }}"
+}
+</script>
+@endpush
+
 @push('styles')
 <style>
   .article{max-width:760px;margin:0 auto;padding:54px 0 70px}

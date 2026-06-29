@@ -10,6 +10,38 @@
 @section('title', $title.' — Şehir Rehberi — Sertaç Apanay')
 @section('description', Str::limit(strip_tags($excerpt ?: $body), 155))
 
+@push('jsonld')
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "Article",
+  "articleSection": {{ Js::from($isEn ? 'City Guide' : 'Şehir Rehberi') }},
+  "headline": {{ Js::from($title) }},
+  "description": {{ Js::from(Str::limit(strip_tags($excerpt ?: $body), 200)) }},
+  @if($place->image)
+  "image": "{{ rtrim(config('app.url'),'/') }}/storage/{{ $place->image }}",
+  @endif
+  @if($country)
+  "about": {
+    "@@type": "Place",
+    "name": {{ Js::from($country) }}
+  },
+  @endif
+  "author": {
+    "@@type": "Person",
+    "name": "Sertaç Apanay",
+    "url": "{{ rtrim(config('app.url'),'/') }}/{{ $locale }}/about"
+  },
+  "publisher": {
+    "@@type": "Person",
+    "name": "Sertaç Apanay"
+  },
+  "inLanguage": "{{ $locale }}",
+  "url": "{{ rtrim(config('app.url'),'/') }}{{ request()->getPathInfo() }}"
+}
+</script>
+@endpush
+
 @push('styles')
 <style>
   /* Article layout — no hero, pure content */

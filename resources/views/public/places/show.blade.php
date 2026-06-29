@@ -1,7 +1,40 @@
 @extends('public.layout')
 
+@php
+  $placeName = $isEn ? ($place->name_en ?? $place->title_en ?? '') : ($place->name_tr ?? $place->title_tr ?? '');
+  $placeDesc = $isEn ? ($place->short_description_en ?? $place->excerpt_en ?? '') : ($place->short_description_tr ?? $place->excerpt_tr ?? '');
+  $placeCountry = $isEn ? ($place->country_en ?? '') : ($place->country_tr ?? '');
+@endphp
 @section('title', ($isEn ? $place->name_en : $place->name_tr) . ' — Sertaç Apanay')
 @section('description', $isEn ? ($place->short_description_en ?? '') : ($place->short_description_tr ?? ''))
+
+@push('jsonld')
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "TouristAttraction",
+  "name": {{ Js::from($placeName) }},
+  "description": {{ Js::from(Str::limit(strip_tags($placeDesc), 200)) }},
+  @if($place->image)
+  "image": "{{ rtrim(config('app.url'),'/') }}/storage/{{ $place->image }}",
+  @endif
+  @if($placeCountry)
+  "address": {
+    "@@type": "PostalAddress",
+    "addressCountry": {{ Js::from($placeCountry) }}
+  },
+  @endif
+  "touristType": "Group Tour",
+  "provider": {
+    "@@type": "Person",
+    "name": "Sertaç Apanay",
+    "url": "{{ rtrim(config('app.url'),'/') }}"
+  },
+  "inLanguage": "{{ $locale }}",
+  "url": "{{ rtrim(config('app.url'),'/') }}{{ request()->getPathInfo() }}"
+}
+</script>
+@endpush
 
 @push('styles')
 <style>

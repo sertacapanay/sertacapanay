@@ -11,6 +11,47 @@
 @section('title', $pname.' — Çarşı — Sertaç Apanay')
 @section('description', Str::limit(strip_tags($pdesc), 155))
 
+@push('jsonld')
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "Product",
+  "name": {{ Js::from($pname) }},
+  "description": {{ Js::from(Str::limit(strip_tags($pdesc), 200)) }},
+  @if($product->image)
+  "image": "{{ rtrim(config('app.url'),'/') }}/storage/{{ $product->image }}",
+  @endif
+  @if($psrc)
+  "countryOfOrigin": {
+    "@@type": "Place",
+    "name": {{ Js::from($psrc) }}
+  },
+  @endif
+  @if($pcat)
+  "category": {{ Js::from($pcat) }},
+  @endif
+  "brand": {
+    "@@type": "Person",
+    "name": "Sertaç Apanay"
+  },
+  @if($product->price)
+  "offers": {
+    "@@type": "Offer",
+    "price": "{{ $product->price }}",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    @if($product->affiliate_url)
+    "url": "{{ $product->affiliate_url }}"
+    @else
+    "url": "{{ rtrim(config('app.url'),'/') }}{{ request()->getPathInfo() }}"
+    @endif
+  },
+  @endif
+  "url": "{{ rtrim(config('app.url'),'/') }}{{ request()->getPathInfo() }}"
+}
+</script>
+@endpush
+
 @push('styles')
 <style>
   .back{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;

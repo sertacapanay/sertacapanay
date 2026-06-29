@@ -1,7 +1,51 @@
 @extends('public.layout')
 
+@php
+  $tourName = $isEn ? ($tour->name_en ?? $tour->title_en ?? '') : ($tour->name_tr ?? $tour->title_tr ?? '');
+  $tourDesc = $isEn ? ($tour->short_description_en ?? $tour->excerpt_en ?? '') : ($tour->short_description_tr ?? $tour->excerpt_tr ?? '');
+  $tourCountry = $isEn ? ($tour->country_en ?? '') : ($tour->country_tr ?? '');
+@endphp
 @section('title', ($isEn ? $tour->name_en : $tour->name_tr) . ' — Sertaç Apanay')
 @section('description', $isEn ? ($tour->short_description_en ?? '') : ($tour->short_description_tr ?? ''))
+
+@push('jsonld')
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "TouristTrip",
+  "name": {{ Js::from($tourName) }},
+  "description": {{ Js::from(Str::limit(strip_tags($tourDesc), 200)) }},
+  @if($tour->image)
+  "image": "{{ rtrim(config('app.url'),'/') }}/storage/{{ $tour->image }}",
+  @endif
+  @if($tourCountry)
+  "location": {
+    "@@type": "Place",
+    "name": {{ Js::from($tourCountry) }}
+  },
+  @endif
+  @if($tour->price)
+  "offers": {
+    "@@type": "Offer",
+    "price": "{{ $tour->price }}",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock"
+  },
+  @endif
+  @if($tour->duration_days)
+  "duration": "P{{ $tour->duration_days }}D",
+  @endif
+  "touristType": "Group Tour",
+  "provider": {
+    "@@type": "Person",
+    "name": "Sertaç Apanay",
+    "url": "{{ rtrim(config('app.url'),'/') }}"
+  },
+  "inLanguage": "{{ $locale }}",
+  "url": "{{ rtrim(config('app.url'),'/') }}{{ request()->getPathInfo() }}"
+}
+</script>
+@endpush
 
 @push('styles')
 <style>
