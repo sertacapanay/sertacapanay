@@ -12,8 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // Trust Railway's reverse proxy so HTTPS is detected correctly
-        $middleware->trustProxies(at: '*');
+        // Trust reverse proxy — Railway uses '*', InMotion doesn't need it
+        if (env('TRUST_PROXIES')) {
+            $middleware->trustProxies(at: env('TRUST_PROXIES'));
+        }
 
         $middleware->web(append: [
             \App\Http\Middleware\ComingSoon::class,
