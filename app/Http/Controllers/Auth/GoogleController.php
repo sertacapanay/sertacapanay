@@ -19,7 +19,7 @@ class GoogleController extends Controller
         try {
             $googleUser = Socialite::driver('google')->user();
         } catch (\Exception $e) {
-            return redirect()->route('home')->with('error', 'Google girişi başarısız oldu.');
+            return redirect()->route('home', ['locale' => 'tr'])->with('error', 'Google girişi başarısız oldu.');
         }
 
         $guestUser = GuestUser::updateOrCreate(
@@ -33,7 +33,7 @@ class GoogleController extends Controller
 
         session(['guest_user_id' => $guestUser->id]);
 
-        $redirect = session()->pull('url.intended', route('testimonial.create'));
+        $redirect = session()->pull('url.intended', route('testimonial.create', ['locale' => 'tr']));
 
         return redirect($redirect)->with('success', 'Google ile giriş yapıldı.');
     }
