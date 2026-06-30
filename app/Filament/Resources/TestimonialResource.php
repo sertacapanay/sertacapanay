@@ -4,16 +4,17 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TestimonialResource\Pages;
 use App\Models\Testimonial;
+use BackedEnum;
 use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
 
 class TestimonialResource extends Resource
 {
     protected static ?string $model = Testimonial::class;
-    protected static \BackedEnum|string|null $navigationIcon = 'heroicon-o-chat-bubble-left-right';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-chat-bubble-left-right';
     protected static ?string $navigationLabel = 'Testimonials';
     protected static \UnitEnum|string|null $navigationGroup = 'İçerik';
     protected static ?int $navigationSort = 5;
@@ -29,9 +30,9 @@ class TestimonialResource extends Resource
         return 'warning';
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form->schema([
+        return $schema->components([
             Forms\Components\Select::make('guest_user_id')
                 ->relationship('guestUser', 'name')
                 ->label('Kullanıcı')
@@ -122,8 +123,8 @@ class TestimonialResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListTestimonials::route('/'),
-            'edit'   => Pages\EditTestimonial::route('/{record}/edit'),
+            'index' => Pages\ListTestimonials::route('/'),
+            'edit'  => Pages\EditTestimonial::route('/{record}/edit'),
         ];
     }
 }
