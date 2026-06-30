@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 class TestimonialResource extends Resource
 {
     protected static ?string $model = Testimonial::class;
-    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
-    protected static ?string $navigationLabel = 'Testimonials';
-    protected static \UnitEnum|string|null $navigationGroup = 'İçerik';
+    protected static \BackedEnum|string|null $navigationIcon = 'heroicon-o-chat-bubble-left-right';
+    protected static \BackedEnum|string|null $navigationLabel = 'Testimonials';
+    protected static \BackedEnum|string|null $navigationGroup = 'İçerik';
     protected static ?int $navigationSort = 5;
 
     public static function getNavigationBadge(): ?string
