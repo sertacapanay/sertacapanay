@@ -233,42 +233,7 @@
   </section>
 
   {{-- ── Testimonials ── --}}
-  <section class="about-testimonials">
-    <div class="wrap">
-      <div class="sec-head" style="margin-bottom:36px">
-        <div>
-          <span class="eyebrow"><span data-tr>Gezginlerden</span><span data-en>Client Voices</span></span>
-          <h2><span data-tr>Seyahat Arkadaşlarımdan</span><span data-en>Words from Travelers</span></h2>
-        </div>
-      </div>
-
-      <div class="tgrid2">
-        <div class="tcard2">
-          <div class="qt">"</div>
-          <p class="q" data-tr>Bir akademisyenin derinliği ve bir hikâye anlatıcısının yeteneğiyle olağanüstü bir rehber. Fas yolculuğumuz tam anlamıyla dönüştürücüydü. Ziyaret ettiğimiz her yer, yalnız hiç keşfedemeyeceğim anlam katmanları taşıyordu.</p>
-          <p class="q b" data-en>An extraordinary guide with an academic's depth and a storyteller's gift. Our Morocco journey was nothing short of transformational. Every place we visited had layers of meaning I never would have discovered alone.</p>
-          <div class="who">Sophia Harrington</div>
-          <div class="trip"><span data-tr>Özel Fas Turu · 2024</span><span data-en>Private Morocco Tour · 2024</span></div>
-        </div>
-
-        <div class="tcard2">
-          <div class="qt">"</div>
-          <p class="q" data-tr>Japonya gezimiz için hazırlanan özel rota kusursuzdu. Her ayrıntıda özen ve derin bir kültür anlayışı hissediliyordu — sadece gezilecek yerler değil, bağlar vardı. Kendimizi turist gibi değil, içeriden biri gibi hissettik.</p>
-          <p class="q b" data-en>The bespoke itinerary crafted for our Japan trip was flawless. Every detail reflected a genuine understanding of what we were looking for — not just sights, but connections. We felt like insiders, not tourists.</p>
-          <div class="who">James &amp; Elaine Park</div>
-          <div class="trip"><span data-tr>Japonya Seyahat Tasarımı · 2025</span><span data-en>Japan Travel Design · 2025</span></div>
-        </div>
-
-        <div class="tcard2">
-          <div class="qt">"</div>
-          <p class="q" data-tr>Birçok anlatılı seyahate katıldım ama hiçbiri bu deneyimin entelektüel zenginliğine yaklaşamadı. Her destinasyona getirilen bağlam, çektiğim her fotoğrafı bir anlık görüntü değil, gerçek bir anı gibi hissettiriyor.</p>
-          <p class="q b" data-en>I've joined several lecture voyages and none have come close to the intellectual richness of this experience. The context brought to each destination makes every photograph I took feel like a memory instead of a snapshot.</p>
-          <div class="who">Dr. Margaret Osei</div>
-          <div class="trip"><span data-tr>Akdeniz Anlatı Seferi · 2025</span><span data-en>Mediterranean Lecture Voyage · 2025</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <x-testimonials :limit="12" />
 
 </main>
 @endsection

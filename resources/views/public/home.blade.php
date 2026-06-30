@@ -620,4 +620,6 @@
   </div>
 </section>
 
+<x-testimonials :limit="6" />
+
 @endsection

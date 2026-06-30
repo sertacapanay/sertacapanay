@@ -187,5 +187,8 @@
       <x-widget :widget="$widget" />
     </section>
   @endforeach
+
+  <x-testimonials :tourId="$tour->id" :limit="4" />
+
 </main>
 @endsection

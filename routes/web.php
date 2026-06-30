@@ -2,6 +2,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\Auth\GoogleController;
 
 Route::redirect('/', '/tr');
 
@@ -23,3 +25,12 @@ Route::get('/{locale}/shop/{slug}', [PublicController::class, 'productShow'])->w
 Route::get('/{locale}/contact', [PublicController::class, 'contact'])->whereIn('locale', ['tr','en'])->name('contact');
 Route::post('/{locale}/contact', [PublicController::class, 'contactSubmit'])->whereIn('locale', ['tr','en'])->name('contact.submit')->middleware('throttle:5,1');
 Route::get('/{locale}/about', [PublicController::class, 'about'])->whereIn('locale', ['tr','en'])->name('about');
+
+// Google OAuth
+Route::get('/auth/google',          [GoogleController::class, 'redirect'])->name('auth.google');
+Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('auth.google.callback');
+Route::post('/auth/google/logout',  [GoogleController::class, 'logout'])->name('auth.google.logout');
+
+// Testimonials
+Route::get('/testimonial',  [TestimonialController::class, 'create'])->name('testimonial.create');
+Route::post('/testimonial', [TestimonialController::class, 'store'])->name('testimonial.store')->middleware('throttle:3,5');
