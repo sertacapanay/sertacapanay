@@ -22,20 +22,38 @@
   .fstat:last-child{border-right:0}
   .fstat-num{font-family:var(--display);font-size:54px;font-weight:500;line-height:1;color:var(--ink)}
   .fstat-lbl{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:10px;line-height:1.4}
+  .fstat-sub{font-family:var(--mono);font-size:11px;color:var(--coral);margin-top:8px;letter-spacing:.04em}
 
   .flog-body{padding:48px 0 90px}
-  .fl-list{display:flex;flex-direction:column;gap:3px}
-  .fcard{display:grid;grid-template-columns:80px 1fr auto;gap:0 28px;align-items:center;
-    padding:20px 22px;border:1px solid var(--line);border-radius:4px;background:var(--paper);transition:box-shadow .2s}
+  .fl-list{display:flex;flex-direction:column;gap:10px}
+
+  .fcard{display:flex;align-items:center;gap:24px;flex-wrap:wrap;
+    padding:20px 24px;border:1px solid var(--line);border-radius:4px;background:var(--paper);transition:box-shadow .2s}
   .fcard:hover{box-shadow:0 4px 18px rgba(8,10,14,.08)}
-  .fcard-num{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--coral)}
-  .fcard-route{font-family:var(--display);font-style:italic;font-size:26px;color:var(--ink)}
-  .fcard-route .arr{color:var(--muted);margin:0 12px;font-style:normal;font-size:20px}
-  .fcard-meta{text-align:right;font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8}
-  .fcard-meta strong{display:block;font-weight:400;color:var(--ink);font-family:var(--ui)}
+
+  .fcard-code{display:flex;align-items:center;gap:8px;flex-shrink:0;width:76px}
+  .fcard-code svg{width:16px;height:16px;color:var(--muted);flex-shrink:0}
+  .fcard-code span{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--coral)}
+
+  .fcard-route{flex:1 1 260px;display:flex;align-items:center;gap:16px;min-width:0}
+  .fcard-airport{flex-shrink:0}
+  .fcard-airport .code{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .fcard-airport .city{font-family:var(--ui);font-size:17px;color:var(--ink);margin-top:2px;white-space:nowrap}
+  .fcard-line{flex:1 1 auto;min-width:32px;height:1px;background:var(--line);position:relative}
+  .fcard-line svg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(90deg);
+    width:15px;height:15px;color:var(--muted);background:var(--paper);padding:0 6px}
+
+  .fcard-stats{display:flex;align-items:center;gap:28px;flex-shrink:0;margin-left:auto;
+    font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap}
+  .fcard-stats .item{text-align:right}
 
   .empty-state{padding:80px 0;text-align:center;color:var(--muted)}
   .empty-state p{font-family:var(--display);font-style:italic;font-size:28px;margin-bottom:12px;color:var(--ink)}
+
+  @media (max-width:860px){
+    .fcard{gap:16px}
+    .fcard-stats{width:100%;margin-left:0;justify-content:space-between;padding-top:14px;border-top:1px solid var(--line)}
+  }
 </style>
 @endpush
 
@@ -65,6 +83,11 @@
   <div class="fstat">
     <div class="fstat-num">{{ $flights->pluck('airline')->filter()->unique()->count() }}</div>
     <div class="fstat-lbl"><span data-tr>Havayolu</span><span data-en>Airlines</span></div>
+    @php $worldTours = $total > 0 ? $km / 40075 : 0; @endphp
+    <div class="fstat-sub">
+      <span data-tr>Dünyanın etrafını {{ number_format($worldTours, 1) }} kez turladı</span>
+      <span data-en>Circled the globe {{ number_format($worldTours, 1) }} times</span>
+    </div>
   </div>
 </div>
 
@@ -77,26 +100,64 @@
       </div>
     @else
       <div class="fl-list">
-        @php $idx = 1; @endphp
+        @php
+          $idx = 1;
+          $airportCodes = [
+            'İstanbul' => 'IST', 'Ankara' => 'ESB', 'Antalya' => 'AYT', 'Gazipaşa' => 'GZP',
+            'Kayseri' => 'ASR', 'Cenova' => 'GOA', 'Singapur' => 'SIN', 'Sao Paulo' => 'GRU',
+            'Nevşehir' => 'NAV', 'Barselona' => 'BCN', 'Nice' => 'NCE', 'Torino' => 'TRN',
+            'Malta' => 'MLA', 'Catania' => 'CTA', 'Palermo' => 'PMO', 'Marsilya' => 'MRS',
+            'Cancun' => 'CUN', 'Havana' => 'HAV', 'Mexico City' => 'MEX', 'Miami' => 'MIA',
+            'Mumbai' => 'BOM', 'Male' => 'MLE', 'Katmandu' => 'KTM', 'Delhi' => 'DEL',
+            'Bologna' => 'BLQ', 'Helsinki' => 'HEL', 'Vilnius' => 'VNO', 'Amsterdam' => 'AMS',
+            'Atina' => 'ATH', 'Madrid' => 'MAD', 'Lizbon' => 'LIS', 'Napoli' => 'NAP',
+            'Venedik' => 'VCE', 'Berlin' => 'TXL', 'Oslo' => 'OSL', 'Bangkok' => 'BKK',
+            'Varanasi' => 'VNS', 'Londra' => 'LHR', 'Edinburgh' => 'EDI', 'Johannesburg' => 'JNB',
+            'Cape Town' => 'CPT', 'Ho Chi Minh' => 'SGN', 'Hanoi' => 'HAN', 'Osaka' => 'KIX',
+            'Tokyo' => 'NRT', 'Roma' => 'FCO', 'Stockholm' => 'ARN', 'Kopenhag' => 'CPH',
+            'Moskova' => 'VKO', 'St. Petersburg' => 'LED', 'Milano' => 'MXP', 'Hamburg' => 'HAM',
+            'Buenos Aires' => 'EZE', 'Rovaniemi' => 'RVN', 'Brüksel' => 'CRL', 'İzmir' => 'ADB',
+            'Bakü' => 'GYD',
+          ];
+        @endphp
         @foreach($flights as $flight)
+        @php
+          $code = $flight->flight_number ?? str_pad($total - $idx + 1, 3, '0', STR_PAD_LEFT);
+          $fromCode = $airportCodes[$flight->from_city] ?? null;
+          $toCode = $airportCodes[$flight->to_city] ?? null;
+        @endphp
         <div class="fcard">
-          <div class="fcard-num">
-            {{ $flight->flight_number ?? str_pad($total - $idx + 1, 3, '0', STR_PAD_LEFT) }}
+          <div class="fcard-code">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+              <path d="M10.5 21l1.5-6.5L21 10l-1-2-9 2.5L7 5H5l2 7.5L2 14l1 2 5-1.5L9.5 21z"/>
+            </svg>
+            <span>{{ $code }}</span>
           </div>
           <div class="fcard-route">
-            {{ $flight->from_city ?? '—' }}
-            <span class="arr">→</span>
-            {{ $flight->to_city ?? '—' }}
+            <div class="fcard-airport">
+              @if($fromCode)<div class="code">{{ $fromCode }}</div>@endif
+              <div class="city">{{ $flight->from_city ?? '—' }}</div>
+            </div>
+            <div class="fcard-line">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+                <path d="M10.5 21l1.5-6.5L21 10l-1-2-9 2.5L7 5H5l2 7.5L2 14l1 2 5-1.5L9.5 21z"/>
+              </svg>
+            </div>
+            <div class="fcard-airport">
+              @if($toCode)<div class="code">{{ $toCode }}</div>@endif
+              <div class="city">{{ $flight->to_city ?? '—' }}</div>
+            </div>
           </div>
-          <div class="fcard-meta">
-            @if($flight->airline)
-              <strong>{{ $flight->airline }}</strong>
-            @endif
+          <div class="fcard-stats">
             @if($flight->distance_km)
-              {{ number_format($flight->distance_km) }} km · {{ round($flight->distance_km / 850) }} {{ $isEn ? 'hr' : 'sa' }}
+              <div class="item">{{ number_format($flight->distance_km) }} km</div>
+              <div class="item">{{ round($flight->distance_km / 850, 1) }}{{ $isEn ? 'h' : 's' }}</div>
             @endif
             @if($flight->flight_date)
-              {{ \Carbon\Carbon::parse($flight->flight_date)->locale($locale)->isoFormat('D MMM YYYY') }}
+              <div class="item">{{ \Carbon\Carbon::parse($flight->flight_date)->locale($locale)->isoFormat('D MMM YYYY') }}</div>
+            @endif
+            @if($flight->airline)
+              <div class="item">{{ $flight->airline }}</div>
             @endif
           </div>
         </div>
