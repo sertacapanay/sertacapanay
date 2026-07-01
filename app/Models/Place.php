@@ -4,9 +4,22 @@ use Illuminate\Database\Eloquent\Model;
 class Place extends Model
 {
     protected $fillable = [
-        'title_tr', 'title_en', 'slug', 'excerpt_tr', 'excerpt_en', 'body_tr', 'body_en',
-        'image', 'country_tr', 'country_en', 'city', 'is_active',
-        'meta_title_tr', 'meta_title_en', 'meta_description_tr', 'meta_description_en',
+        'name_tr', 'name_en', 'slug', 'type',
+        'country_tr', 'country_en', 'city_tr', 'city_en', 'region_tr', 'region_en',
+        'cover_image',
+        'short_description_tr', 'short_description_en',
+        'history_tr', 'history_en',
+        'stories_tr', 'stories_en',
+        'what_to_see_tr', 'what_to_see_en',
+        'latitude', 'longitude',
+        'is_featured', 'is_active',
+    ];
+
+    protected $casts = [
+        'latitude'    => 'decimal:7',
+        'longitude'   => 'decimal:7',
+        'is_featured' => 'boolean',
+        'is_active'   => 'boolean',
     ];
 
     public function scopeActive($query)

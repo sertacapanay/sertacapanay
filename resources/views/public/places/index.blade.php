@@ -106,10 +106,10 @@
   <div class="country-grid">
     @forelse($places as $place)
       @php
-        $pname   = $isEn ? ($place->title_en ?? $place->title_tr) : $place->title_tr;
+        $pname   = $isEn ? ($place->name_en ?? $place->name_tr) : $place->name_tr;
         $country = $isEn ? ($place->country_en ?? $place->country_tr) : $place->country_tr;
-        $excerpt = $isEn ? ($place->excerpt_en ?? $place->excerpt_tr ?? '') : ($place->excerpt_tr ?? '');
-        $imgUrl  = $place->image ? asset('storage/'.$place->image) : asset('images/destinations-hero.jpg');
+        $excerpt = $isEn ? ($place->short_description_en ?? $place->short_description_tr ?? '') : ($place->short_description_tr ?? '');
+        $imgUrl  = $place->cover_image ? asset('storage/'.$place->cover_image) : asset('images/destinations-hero.jpg');
         $ccode   = strtoupper(substr($country ?? '', 0, 2));
         $cregion = $country ?? '';
       @endphp
@@ -168,7 +168,7 @@
       @if($places->isNotEmpty())
         @foreach($places as $place)
           @php
-            $pname  = $isEn ? ($place->title_en ?? $place->title_tr) : $place->title_tr;
+            $pname  = $isEn ? ($place->name_en ?? $place->name_tr) : $place->name_tr;
             $ccode  = strtoupper(substr($isEn ? ($place->country_en ?? $place->country_tr ?? '') : ($place->country_tr ?? ''), 0, 2));
           @endphp
           <a href="/{{ $locale }}/places/{{ $place->slug }}" class="city-card">
