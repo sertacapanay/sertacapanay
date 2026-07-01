@@ -134,6 +134,10 @@
               <span data-tr>Genellikle 24–48 saat içinde yanıt veririm.</span>
               <span data-en>I typically respond within 24–48 hours.</span>
             </p>
+            <p class="form-note">
+              <span data-tr>Bu formu göndererek verilerinizin <a href="/{{ $locale }}/privacy">Gizlilik Politikası &amp; KVKK Aydınlatma Metni</a> kapsamında işlenmesini kabul edersiniz.</span>
+              <span data-en>By submitting this form, you agree to the processing of your data as described in our <a href="/{{ $locale }}/privacy">Privacy Policy</a>.</span>
+            </p>
           </form>
         </div>
 

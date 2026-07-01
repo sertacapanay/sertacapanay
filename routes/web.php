@@ -26,6 +26,10 @@ Route::get('/{locale}/contact', [PublicController::class, 'contact'])->whereIn('
 Route::post('/{locale}/contact', [PublicController::class, 'contactSubmit'])->whereIn('locale', ['tr','en'])->name('contact.submit')->middleware('throttle:5,1');
 Route::get('/{locale}/about', [PublicController::class, 'about'])->whereIn('locale', ['tr','en'])->name('about');
 Route::get('/{locale}/reviews', [PublicController::class, 'reviews'])->whereIn('locale', ['tr','en'])->name('reviews');
+Route::get('/{locale}/privacy', [PublicController::class, 'privacy'])->whereIn('locale', ['tr','en'])->name('privacy');
+Route::get('/{locale}/cookies', [PublicController::class, 'cookies'])->whereIn('locale', ['tr','en'])->name('cookies');
+Route::get('/{locale}/terms', [PublicController::class, 'terms'])->whereIn('locale', ['tr','en'])->name('terms');
+Route::get('/{locale}/returns', [PublicController::class, 'returns'])->whereIn('locale', ['tr','en'])->name('returns');
 
 // Google OAuth
 Route::get('/auth/google',          [GoogleController::class, 'redirect'])->name('auth.google');

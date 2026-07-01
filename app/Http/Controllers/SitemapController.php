@@ -24,6 +24,10 @@ class SitemapController extends Controller
             ['loc' => $baseUrl.'/tr/flights',  'alt_en' => $baseUrl.'/en/flights',  'priority' => '0.6', 'changefreq' => 'monthly'],
             ['loc' => $baseUrl.'/tr/about',    'alt_en' => $baseUrl.'/en/about',    'priority' => '0.6', 'changefreq' => 'yearly'],
             ['loc' => $baseUrl.'/tr/contact',  'alt_en' => $baseUrl.'/en/contact',  'priority' => '0.5', 'changefreq' => 'yearly'],
+            ['loc' => $baseUrl.'/tr/privacy',  'alt_en' => $baseUrl.'/en/privacy',  'priority' => '0.2', 'changefreq' => 'yearly'],
+            ['loc' => $baseUrl.'/tr/cookies',  'alt_en' => $baseUrl.'/en/cookies',  'priority' => '0.2', 'changefreq' => 'yearly'],
+            ['loc' => $baseUrl.'/tr/terms',    'alt_en' => $baseUrl.'/en/terms',    'priority' => '0.2', 'changefreq' => 'yearly'],
+            ['loc' => $baseUrl.'/tr/returns',  'alt_en' => $baseUrl.'/en/returns',  'priority' => '0.2', 'changefreq' => 'yearly'],
         ];
 
         $posts    = Post::published()->latest()->get(['slug', 'updated_at']);

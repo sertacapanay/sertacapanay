@@ -250,7 +250,10 @@
   .foot ul{list-style:none;display:flex;flex-direction:column;gap:14px}
   .foot ul a{font-size:16px;color:#cdc7ba;transition:color .2s}
   .foot ul a:hover{color:var(--coral-2)}
-  .foot-bottom{border-top:1px solid rgba(243,239,230,.12);padding:24px 0;display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#7d7768}
+  .foot-legal{border-top:1px solid rgba(243,239,230,.12);padding:22px 0 0;display:flex;flex-wrap:wrap;gap:10px 24px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase}
+  .foot-legal a{color:#8a8474;transition:color .2s}
+  .foot-legal a:hover{color:var(--coral-2)}
+  .foot-bottom{padding:18px 0 24px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#7d7768}
 
   @media(max-width:1024px){.menu{display:none}}
   @media(max-width:1024px){
@@ -633,6 +636,12 @@
           <li><a href="/{{ $locale ?? 'tr' }}/contact"><span data-tr>İletişim</span><span data-en>Contact</span></a></li>
         </ul>
       </div>
+    </div>
+    <div class="foot-legal">
+      <a href="/{{ $locale ?? 'tr' }}/privacy"><span data-tr>Gizlilik &amp; KVKK</span><span data-en>Privacy Policy</span></a>
+      <a href="/{{ $locale ?? 'tr' }}/cookies"><span data-tr>Çerez Politikası</span><span data-en>Cookie Policy</span></a>
+      <a href="/{{ $locale ?? 'tr' }}/terms"><span data-tr>Kullanım Koşulları</span><span data-en>Terms of Use</span></a>
+      <a href="/{{ $locale ?? 'tr' }}/returns"><span data-tr>Mesafeli Satış &amp; İade</span><span data-en>Distance Sales &amp; Returns</span></a>
     </div>
     <div class="foot-bottom">
       <span data-tr>© {{ date('Y') }} Sertaç Apanay — Tüm hakları saklıdır</span>

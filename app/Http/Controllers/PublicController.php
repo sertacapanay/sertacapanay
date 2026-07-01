@@ -272,6 +272,30 @@ class PublicController extends Controller
         return view('public.about', ['locale' => $locale, 'isEn' => $locale === 'en']);
     }
 
+    public function privacy(string $locale = 'tr')
+    {
+        $locale = $this->locale($locale);
+        return view('public.privacy', ['locale' => $locale, 'isEn' => $locale === 'en']);
+    }
+
+    public function cookies(string $locale = 'tr')
+    {
+        $locale = $this->locale($locale);
+        return view('public.cookies', ['locale' => $locale, 'isEn' => $locale === 'en']);
+    }
+
+    public function terms(string $locale = 'tr')
+    {
+        $locale = $this->locale($locale);
+        return view('public.terms', ['locale' => $locale, 'isEn' => $locale === 'en']);
+    }
+
+    public function returns(string $locale = 'tr')
+    {
+        $locale = $this->locale($locale);
+        return view('public.returns', ['locale' => $locale, 'isEn' => $locale === 'en']);
+    }
+
     public function contactSubmit(string $locale, Request $request)
     {
         $locale = $this->locale($locale);

@@ -71,6 +71,10 @@
             <button type="submit" class="btn btn-primary" style="width:100%; padding:14px; font-size:16px; font-weight:600;">
                 Gönder
             </button>
+            <p style="font-size:12px; color:var(--text-muted); text-align:center; margin-top:14px;">
+                Gönder'e tıklayarak adınız ve yorumunuzun sitede yayınlanmasını ve verilerinizin
+                <a href="/tr/privacy">Gizlilik Politikası &amp; KVKK Aydınlatma Metni</a> kapsamında işlenmesini kabul edersiniz.
+            </p>
         </form>
     </div>
 </section>
