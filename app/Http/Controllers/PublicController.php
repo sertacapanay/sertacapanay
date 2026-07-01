@@ -245,7 +245,7 @@ class PublicController extends Controller
     public function flights(string $locale = 'tr')
     {
         $locale = $this->locale($locale);
-        $flights = Flight::oldest('flight_date')->get();
+        $flights = Flight::latest('flight_date')->get();
         return view('public.flights.index', [
             'locale'  => $locale,
             'isEn'    => $locale === 'en',

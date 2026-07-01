@@ -81,7 +81,7 @@
         @foreach($flights as $flight)
         <div class="fcard">
           <div class="fcard-num">
-            {{ $flight->flight_number ?? str_pad($idx, 3, '0', STR_PAD_LEFT) }}
+            {{ $flight->flight_number ?? str_pad($total - $idx + 1, 3, '0', STR_PAD_LEFT) }}
           </div>
           <div class="fcard-route">
             {{ $flight->from_city ?? '—' }}
