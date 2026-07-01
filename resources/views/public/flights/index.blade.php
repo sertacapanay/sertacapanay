@@ -38,8 +38,8 @@
   .fcard-route{flex:1 1 260px;display:flex;align-items:center;gap:16px;min-width:0}
   .fcard-airport{flex-shrink:0}
   .fcard-airport .code{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-  .fcard-airport .city{font-family:'Train One','Anton',var(--ui);font-size:17px;font-weight:400;
-    text-transform:uppercase;letter-spacing:.02em;color:var(--ink);margin-top:3px;white-space:nowrap}
+  .fcard-airport .city{font-family:'Skyfont','Train One','Anton',var(--ui);font-size:17px;font-weight:400;
+    text-transform:uppercase;letter-spacing:.03em;color:var(--ink);margin-top:3px;white-space:nowrap}
   .fcard-line{flex:1 1 auto;min-width:32px;height:1px;background:var(--line);position:relative}
   .fcard-line svg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(90deg);
     width:20px;height:20px;color:var(--coral);background:var(--paper);padding:0 7px;stroke-width:1.6}

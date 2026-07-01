@@ -83,6 +83,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Train+One&family=Anton&display=swap" rel="stylesheet">
   <style>
 
+  @font-face{
+    font-family:'Skyfont';
+    src:url('{{ asset("fonts/custom/Skyfont.otf") }}') format('opentype');
+    font-weight:normal;font-style:normal;font-display:swap;
+  }
   :root{
     --ink:hsl(130 8% 10%);--bone:hsl(40 27% 93%);--bone-2:hsl(40 15% 88%);--paper:hsl(40 20% 96%);
     --coral:hsl(24 76% 44%);--coral-2:hsl(24 76% 52%);--gold:hsl(24 70% 55%);--moss:hsl(93 11% 34%);--muted:hsl(100 6% 40%);--line:hsl(40 15% 82%);
