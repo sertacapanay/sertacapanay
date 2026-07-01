@@ -21,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\ComingSoon::class,
             \App\Http\Middleware\BlockScrapers::class,
             \App\Http\Middleware\SecurityHeaders::class,
+            \App\Http\Middleware\StripInactiveLocaleMarkup::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

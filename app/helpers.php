@@ -24,3 +24,19 @@ if (! function_exists('txt')) {
             ?? null;
     }
 }
+
+if (! function_exists('sanitizeHtml')) {
+    function sanitizeHtml(?string $html): string
+    {
+        if (! $html) {
+            return '';
+        }
+
+        $allowed = '<p><br><strong><b><em><i><a><ul><ol><li><h2><h3><h4><blockquote><img>';
+        $clean = strip_tags($html, $allowed);
+        $clean = preg_replace('/\s+on\w+\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)/i', '', $clean);
+        $clean = preg_replace('/(href|src)\s*=\s*("|\')\s*javascript:[^"\']*\2/i', '$1=$2#$2', $clean);
+
+        return $clean;
+    }
+}

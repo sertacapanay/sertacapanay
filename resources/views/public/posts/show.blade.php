@@ -146,7 +146,7 @@
 
       @if($body)
         <div class="article-body">
-          {!! nl2br(e($body)) !!}
+          {!! sanitizeHtml($body) !!}
         </div>
       @endif
 
