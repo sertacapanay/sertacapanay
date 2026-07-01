@@ -680,6 +680,22 @@ function alignHero() {
 window.addEventListener('load', alignHero);
 window.addEventListener('resize', alignHero);
 alignHero();
+
+(function() {
+  function decode(hex) {
+    var key = parseInt(hex.substr(0, 2), 16), out = '';
+    for (var i = 2; i < hex.length; i += 2) {
+      out += String.fromCharCode(parseInt(hex.substr(i, 2), 16) ^ key);
+    }
+    return out;
+  }
+  document.querySelectorAll('.cf-email').forEach(function(el) {
+    var email = decode(el.getAttribute('data-cfe'));
+    var label = el.getAttribute('data-cfl') ? decode(el.getAttribute('data-cfl')) : email;
+    el.setAttribute('href', 'mailto:' + email);
+    el.textContent = label;
+  });
+})();
 </script>
 
 @stack('scripts')

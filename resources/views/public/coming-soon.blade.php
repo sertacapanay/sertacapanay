@@ -184,7 +184,7 @@
   <p class="contact-note">
     <span data-tr>İletişim için: </span>
     <span data-en>Contact: </span>
-    <a href="mailto:merhaba@sertacapanay.net">merhaba@sertacapanay.net</a>
+    {!! obfuscateEmail('merhaba@sertacapanay.net') !!}
   </p>
 
   <script>
@@ -197,6 +197,22 @@
     // Restore saved language
     const saved = localStorage.getItem('sa_lang');
     if (saved === 'en') setLang('en');
+
+    (function() {
+      function decode(hex) {
+        var key = parseInt(hex.substr(0, 2), 16), out = '';
+        for (var i = 2; i < hex.length; i += 2) {
+          out += String.fromCharCode(parseInt(hex.substr(i, 2), 16) ^ key);
+        }
+        return out;
+      }
+      document.querySelectorAll('.cf-email').forEach(function(el) {
+        var email = decode(el.getAttribute('data-cfe'));
+        var label = el.getAttribute('data-cfl') ? decode(el.getAttribute('data-cfl')) : email;
+        el.setAttribute('href', 'mailto:' + email);
+        el.textContent = label;
+      });
+    })();
   </script>
 </body>
 </html>

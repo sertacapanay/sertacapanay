@@ -36,7 +36,7 @@
           <strong>Emin Sertaç Apanay</strong><br>
           Güllerpınarı Mah. Bulut Sok. No:2B, Alanya / Antalya, Türkiye<br>
           Tax office: Alanya Vergi Dairesi — Tax No: 0570075313<br>
-          Contact: <a href="mailto:sertac@hotmail.com">sertac@hotmail.com</a>
+          Contact: {!! obfuscateEmail('sertac@hotmail.com') !!}
         </p>
 
         <h2>What Data We Collect and Why</h2>
@@ -57,7 +57,7 @@
 
         <h2>Your Rights</h2>
         <p>Under KVKK Article 11 and, where applicable, GDPR Articles 15–22, you have the right to: learn whether your data is processed; request information about processing; learn the purpose of processing and whether it is used accordingly; know third parties to whom data is transferred; request correction of incomplete or inaccurate data; request erasure or destruction of your data; object to a result arising from automated processing that is to your detriment; and request compensation for damages caused by unlawful processing.</p>
-        <p>To exercise these rights, write to <a href="mailto:sertac@hotmail.com">sertac@hotmail.com</a>. We will respond within 30 days at the latest, as required by law.</p>
+        <p>To exercise these rights, write to {!! obfuscateEmail('sertac@hotmail.com') !!}. We will respond within 30 days at the latest, as required by law.</p>
 
         <h2>Children</h2>
         <p>This site is not directed at children under 13, and we do not knowingly collect personal data from them.</p>
@@ -75,7 +75,7 @@
           <strong>Emin Sertaç Apanay</strong><br>
           Güllerpınarı Mah. Bulut Sok. No:2B, Alanya / Antalya<br>
           Vergi Dairesi: Alanya Vergi Dairesi — Vergi No: 0570075313<br>
-          İletişim: <a href="mailto:sertac@hotmail.com">sertac@hotmail.com</a>
+          İletişim: {!! obfuscateEmail('sertac@hotmail.com') !!}
         </p>
 
         <h2>Hangi Verileri, Neden İşliyoruz</h2>
@@ -96,7 +96,7 @@
 
         <h2>Haklarınız</h2>
         <p>KVKK'nın 11. maddesi uyarınca; kişisel verinizin işlenip işlenmediğini öğrenme, işlenmişse buna ilişkin bilgi talep etme, işlenme amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme, yurt içinde/yurt dışında aktarıldığı üçüncü kişileri bilme, eksik veya yanlış işlenmişse düzeltilmesini isteme, silinmesini veya yok edilmesini isteme, işlemenin yalnızca otomatik sistemler yoluyla analiz edilmesi suretiyle aleyhinize bir sonucun ortaya çıkmasına itiraz etme ve kanuna aykırı işleme nedeniyle zarara uğramanız hâlinde zararın giderilmesini talep etme haklarına sahipsiniz.</p>
-        <p>Bu haklarınızı kullanmak için <a href="mailto:sertac@hotmail.com">sertac@hotmail.com</a> adresine yazabilirsiniz. Talebiniz, kanunun öngördüğü şekilde en geç 30 gün içinde yanıtlanacaktır.</p>
+        <p>Bu haklarınızı kullanmak için {!! obfuscateEmail('sertac@hotmail.com') !!} adresine yazabilirsiniz. Talebiniz, kanunun öngördüğü şekilde en geç 30 gün içinde yanıtlanacaktır.</p>
 
         <h2>Çocuklar</h2>
         <p>Bu site 13 yaşından küçük çocuklara yönelik değildir ve bilerek bu kişilerden veri toplanmaz.</p>

@@ -36,10 +36,10 @@
         <p>Once online ordering is available, and except where the product is excluded by law (e.g. made-to-order or personalized items), you will have the right to withdraw within 14 days of receiving the product without giving any reason, and to receive a full refund once the item is returned in its original condition, in line with Turkish consumer protection legislation.</p>
 
         <h2>Damaged or Incorrect Items</h2>
-        <p>If an item arrives damaged or does not match its description, contact us at <a href="mailto:sertac@hotmail.com">sertac@hotmail.com</a> within 14 days of delivery with photos of the item, and we will arrange a replacement or refund.</p>
+        <p>If an item arrives damaged or does not match its description, contact us at {!! obfuscateEmail('sertac@hotmail.com') !!} within 14 days of delivery with photos of the item, and we will arrange a replacement or refund.</p>
 
         <h2>Contact</h2>
-        <p>For any question about an order, write to <a href="mailto:sertac@hotmail.com">sertac@hotmail.com</a>.</p>
+        <p>For any question about an order, write to {!! obfuscateEmail('sertac@hotmail.com') !!}.</p>
       @else
         <h1>Mesafeli Satış ve İade Koşulları</h1>
         <div class="updated">Son güncelleme: {{ date('d.m.Y') }}</div>
@@ -53,10 +53,10 @@
         <p>Online sipariş verme özelliği devreye girdiğinde, kanunen istisna tutulan ürünler (ör. kişiye özel/ısmarlama üretilen ürünler) hariç olmak üzere, ürünü teslim aldığınız tarihten itibaren 14 gün içinde herhangi bir gerekçe göstermeksizin cayma hakkına ve ürünü orijinal haliyle iade ettiğinizde tam iade alma hakkına, Türk tüketici mevzuatına uygun şekilde sahip olacaksınız.</p>
 
         <h2>Hasarlı veya Yanlış Ürünler</h2>
-        <p>Bir ürün hasarlı ulaşırsa veya açıklamasıyla uyuşmuyorsa, teslimattan itibaren 14 gün içinde ürünün fotoğraflarıyla birlikte <a href="mailto:sertac@hotmail.com">sertac@hotmail.com</a> adresine yazın; değişim veya iade süreci başlatılsın.</p>
+        <p>Bir ürün hasarlı ulaşırsa veya açıklamasıyla uyuşmuyorsa, teslimattan itibaren 14 gün içinde ürünün fotoğraflarıyla birlikte {!! obfuscateEmail('sertac@hotmail.com') !!} adresine yazın; değişim veya iade süreci başlatılsın.</p>
 
         <h2>İletişim</h2>
-        <p>Bir sipariş hakkında sorularınız için <a href="mailto:sertac@hotmail.com">sertac@hotmail.com</a> adresine yazabilirsiniz.</p>
+        <p>Bir sipariş hakkında sorularınız için {!! obfuscateEmail('sertac@hotmail.com') !!} adresine yazabilirsiniz.</p>
       @endif
     </article>
   </div>

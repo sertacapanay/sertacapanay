@@ -148,7 +148,7 @@
             <span data-en>Everywhere & nowhere — currently on the road</span>
           </p>
           <h4>E-mail</h4>
-          <p><a href="mailto:merhaba@sertacapanay.net">merhaba@sertacapanay.net</a></p>
+          <p>{!! obfuscateEmail('merhaba@sertacapanay.net') !!}</p>
           <h4><span data-tr>Sosyal</span><span data-en>Social</span></h4>
           <p>
             <a href="#">Instagram</a> &nbsp;·&nbsp; <a href="#">Facebook</a>

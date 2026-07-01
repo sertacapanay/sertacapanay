@@ -39,7 +39,10 @@ class StripInactiveLocaleMarkup
             $node->removeAttribute("data-{$locale}");
         }
 
-        $response->setContent($dom->saveHTML());
+        $output = $dom->saveHTML();
+        $output = preg_replace('/^<\?xml[^>]*\?>\s*/', '', $output, 1);
+
+        $response->setContent($output);
 
         return $response;
     }

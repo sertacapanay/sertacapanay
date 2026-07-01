@@ -40,3 +40,28 @@ if (! function_exists('sanitizeHtml')) {
         return $clean;
     }
 }
+
+if (! function_exists('obfuscateEmail')) {
+    /**
+     * E-posta adresini spam scraper'lardan gizler. HTML kaynağında düz metin
+     * e-posta bırakmaz; XOR + hex ile kodlar, gerçek link JS ile sayfa
+     * yüklenince oluşturulur (Cloudflare email-protection tekniğiyle aynı mantık).
+     */
+    function obfuscateEmail(string $email, ?string $label = null): string
+    {
+        $label = $label ?? $email;
+        $key   = random_int(1, 255);
+
+        $encode = function (string $value) use ($key): string {
+            $out = '';
+            foreach (str_split($value) as $char) {
+                $out .= sprintf('%02x', ord($char) ^ $key);
+            }
+            return $out;
+        };
+
+        $keyHex = sprintf('%02x', $key);
+
+        return '<a href="#" class="cf-email" data-cfe="' . $keyHex . $encode($email) . '" data-cfl="' . $keyHex . $encode($label) . '">[protected]</a>';
+    }
+}

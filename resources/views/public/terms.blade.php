@@ -52,7 +52,7 @@
         <p>These terms are governed by the laws of the Republic of Türkiye. Any dispute shall be subject to the exclusive jurisdiction of the courts and enforcement offices of Alanya, Antalya, unless mandatory consumer-protection rules require otherwise.</p>
 
         <h2>Contact</h2>
-        <p>Questions about these terms can be sent to <a href="mailto:sertac@hotmail.com">sertac@hotmail.com</a>.</p>
+        <p>Questions about these terms can be sent to {!! obfuscateEmail('sertac@hotmail.com') !!}.</p>
       @else
         <h1>Kullanım Koşulları</h1>
         <div class="updated">Son güncelleme: {{ date('d.m.Y') }}</div>
@@ -85,7 +85,7 @@
         <p>Bu koşullar Türkiye Cumhuriyeti kanunlarına tabidir. Zorunlu tüketici koruma kuralları aksini gerektirmedikçe, uyuşmazlıklarda Alanya (Antalya) Mahkemeleri ve İcra Daireleri yetkilidir.</p>
 
         <h2>İletişim</h2>
-        <p>Bu koşullarla ilgili sorularınızı <a href="mailto:sertac@hotmail.com">sertac@hotmail.com</a> adresine gönderebilirsiniz.</p>
+        <p>Bu koşullarla ilgili sorularınızı {!! obfuscateEmail('sertac@hotmail.com') !!} adresine gönderebilirsiniz.</p>
       @endif
     </article>
   </div>
