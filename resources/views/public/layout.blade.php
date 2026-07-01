@@ -486,6 +486,7 @@
     <ul class="menu">
       <li><a href="/{{ $locale ?? 'tr' }}/places"><span data-tr>Destinasyonlar</span><span data-en>Destinations</span></a></li>
       <li><a href="/{{ $locale ?? 'tr' }}/flights"><span data-tr>Uçuşlar</span><span data-en>Flights</span></a></li>
+      <li><a href="/{{ $locale ?? 'tr' }}/cruiselog"><span data-tr>Gemi Seyirleri</span><span data-en>Cruises</span></a></li>
       <li><a href="/{{ $locale ?? 'tr' }}/tours"><span data-tr>Turlar</span><span data-en>Tours</span></a></li>
       <li><a href="/{{ $locale ?? 'tr' }}/guides"><span data-tr>Rehberler</span><span data-en>Guides</span></a></li>
       <li><a href="/{{ $locale ?? 'tr' }}/blog">Blog</a></li>
