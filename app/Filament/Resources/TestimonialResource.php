@@ -5,6 +5,12 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\TestimonialResource\Pages;
 use App\Models\Testimonial;
 use BackedEnum;
+use Filament\Actions\Action;
+use Filament\Actions\BulkAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -91,14 +97,14 @@ class TestimonialResource extends Resource
                     ->falseLabel('Bekleyen'),
             ])
             ->actions([
-                Tables\Actions\Action::make('approve')
+                Action::make('approve')
                     ->label('Onayla')
                     ->icon('heroicon-o-check')
                     ->color('success')
                     ->visible(fn (Testimonial $record) => ! $record->is_approved)
                     ->action(fn (Testimonial $record) => $record->update(['is_approved' => true])),
 
-                Tables\Actions\Action::make('reject')
+                Action::make('reject')
                     ->label('Reddet')
                     ->icon('heroicon-o-x-mark')
                     ->color('danger')
@@ -106,16 +112,16 @@ class TestimonialResource extends Resource
                     ->visible(fn (Testimonial $record) => $record->is_approved)
                     ->action(fn (Testimonial $record) => $record->update(['is_approved' => false])),
 
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\BulkAction::make('approve_all')
+                BulkActionGroup::make([
+                    BulkAction::make('approve_all')
                         ->label('Seçilenleri Onayla')
                         ->icon('heroicon-o-check')
                         ->action(fn ($records) => $records->each->update(['is_approved' => true])),
-                    Tables\Actions\DeleteBulkAction::make(),
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
