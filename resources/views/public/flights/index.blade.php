@@ -38,10 +38,11 @@
   .fcard-route{flex:1 1 260px;display:flex;align-items:center;gap:16px;min-width:0}
   .fcard-airport{flex-shrink:0}
   .fcard-airport .code{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-  .fcard-airport .city{font-family:var(--ui);font-size:17px;color:var(--ink);margin-top:2px;white-space:nowrap}
+  .fcard-airport .city{font-family:'Train One','Anton',var(--ui);font-size:17px;font-weight:400;
+    text-transform:uppercase;letter-spacing:.02em;color:var(--ink);margin-top:3px;white-space:nowrap}
   .fcard-line{flex:1 1 auto;min-width:32px;height:1px;background:var(--line);position:relative}
   .fcard-line svg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(90deg);
-    width:15px;height:15px;color:var(--muted);background:var(--paper);padding:0 6px}
+    width:20px;height:20px;color:var(--coral);background:var(--paper);padding:0 7px;stroke-width:1.6}
 
   .fcard-stats{display:flex;align-items:center;gap:28px;flex-shrink:0;margin-left:auto;
     font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap}
@@ -75,6 +76,11 @@
   <div class="fstat">
     <div class="fstat-num">{{ $total > 0 ? number_format($km) : 0 }}</div>
     <div class="fstat-lbl"><span data-tr>Toplam km</span><span data-en>Distance km</span></div>
+    @php $worldTours = $total > 0 ? $km / 40075 : 0; @endphp
+    <div class="fstat-sub">
+      <span data-tr>Dünyanın etrafını {{ number_format($worldTours, 1) }} kez turladı</span>
+      <span data-en>Circled the globe {{ number_format($worldTours, 1) }} times</span>
+    </div>
   </div>
   <div class="fstat">
     <div class="fstat-num">{{ $total > 0 ? round($km / 850) : 0 }}</div>
@@ -83,11 +89,6 @@
   <div class="fstat">
     <div class="fstat-num">{{ $flights->pluck('airline')->filter()->unique()->count() }}</div>
     <div class="fstat-lbl"><span data-tr>Havayolu</span><span data-en>Airlines</span></div>
-    @php $worldTours = $total > 0 ? $km / 40075 : 0; @endphp
-    <div class="fstat-sub">
-      <span data-tr>Dünyanın etrafını {{ number_format($worldTours, 1) }} kez turladı</span>
-      <span data-en>Circled the globe {{ number_format($worldTours, 1) }} times</span>
-    </div>
   </div>
 </div>
 
