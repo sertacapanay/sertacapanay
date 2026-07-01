@@ -93,7 +93,7 @@
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{font-family:var(--ui);color:var(--ink);background:var(--bone);line-height:1.65;-webkit-font-smoothing:antialiased}
-  img{max-width:100%;display:block}
+  img{max-width:100%;display:block;-webkit-user-drag:none;-khtml-user-drag:none;-moz-user-drag:none;-o-user-drag:none;user-drag:none;-webkit-touch-callout:none}
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1240px;margin:0 auto;padding:0 44px}
   .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--coral)}
@@ -682,6 +682,18 @@ function alignHero() {
 window.addEventListener('load', alignHero);
 window.addEventListener('resize', alignHero);
 alignHero();
+
+(function() {
+  // Görsellerin sağ tık / sürükle ile indirilmesini zorlaştır (arka planlı resimler zaten korumalı;
+  // burada gerçek <img> etiketlerini kapsıyoruz). Not: teknik olarak %100 engel değildir,
+  // sadece sıradan "resmi kaydet" davranışını caydırır.
+  document.addEventListener('contextmenu', function(e) {
+    if (e.target && e.target.tagName === 'IMG') e.preventDefault();
+  });
+  document.addEventListener('dragstart', function(e) {
+    if (e.target && e.target.tagName === 'IMG') e.preventDefault();
+  });
+})();
 
 (function() {
   function decode(hex) {
