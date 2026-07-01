@@ -39,6 +39,13 @@ class StripInactiveLocaleMarkup
             $node->removeAttribute("data-{$locale}");
         }
 
+        // Encoding'i doğru okutmak için eklenen geçici XML bildirimi, libxml
+        // tarafından bazen <body> içine bir processing-instruction node'u
+        // olarak taşınıyor. String başında aramak yerine ağaçtan temizle.
+        foreach ($xpath->query('//processing-instruction()') as $pi) {
+            $pi->parentNode?->removeChild($pi);
+        }
+
         $output = $dom->saveHTML();
         $output = preg_replace('/^<\?xml[^>]*\?>\s*/', '', $output, 1);
 
