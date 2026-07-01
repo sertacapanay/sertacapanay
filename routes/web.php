@@ -17,6 +17,8 @@ Route::get('/{locale}/places', [PublicController::class, 'places'])->whereIn('lo
 Route::get('/{locale}/places/{slug}', [PublicController::class, 'placeShow'])->whereIn('locale', ['tr','en'])->name('places.show');
 Route::get('/{locale}/tours', [PublicController::class, 'tours'])->whereIn('locale', ['tr','en'])->name('tours');
 Route::get('/{locale}/tours/{slug}', [PublicController::class, 'tourShow'])->whereIn('locale', ['tr','en'])->name('tours.show');
+Route::get('/{locale}/cruiselog', [PublicController::class, 'cruiselog'])->whereIn('locale', ['tr','en'])->name('cruiselog');
+Route::get('/{locale}/cruiselog/{slug}', [PublicController::class, 'cruiselogShow'])->whereIn('locale', ['tr','en'])->name('cruiselog.show');
 Route::get('/{locale}/flights', [PublicController::class, 'flights'])->whereIn('locale', ['tr','en'])->name('flights');
 Route::get('/{locale}/guides', [PublicController::class, 'guides'])->whereIn('locale', ['tr','en'])->name('guides');
 Route::get('/{locale}/guides/{slug}', [PublicController::class, 'guideShow'])->whereIn('locale', ['tr','en'])->name('guides.show');

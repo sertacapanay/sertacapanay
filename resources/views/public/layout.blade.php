@@ -486,7 +486,7 @@
     <ul class="menu">
       <li><a href="/{{ $locale ?? 'tr' }}/places"><span data-tr>Destinasyonlar</span><span data-en>Destinations</span></a></li>
       <li><a href="/{{ $locale ?? 'tr' }}/flights"><span data-tr>Uçuşlar</span><span data-en>Flights</span></a></li>
-      <li><a href="/{{ $locale ?? 'tr' }}/tours"><span data-tr>Seyirler</span><span data-en>Cruises</span></a></li>
+      <li><a href="/{{ $locale ?? 'tr' }}/tours"><span data-tr>Turlar</span><span data-en>Tours</span></a></li>
       <li><a href="/{{ $locale ?? 'tr' }}/guides"><span data-tr>Rehberler</span><span data-en>Guides</span></a></li>
       <li><a href="/{{ $locale ?? 'tr' }}/blog">Blog</a></li>
       <li><a href="/{{ $locale ?? 'tr' }}/shop"><span data-tr>Çarşı</span><span data-en>Shop</span></a></li>
@@ -527,8 +527,8 @@
       <span class="r-lab"><span data-tr>Destinasyonlar</span><span data-en>Destinations</span></span>
       <span class="r-num">02</span>
     </a>
-    <a class="r-item {{ request()->is($loc.'/tours*') ? 'active' : '' }}"
-       style="left:89.4%;top:43.1%" href="/{{ $loc }}/tours" onclick="toggleMenu(false)">
+    <a class="r-item {{ request()->is($loc.'/cruiselog*') ? 'active' : '' }}"
+       style="left:89.4%;top:43.1%" href="/{{ $loc }}/cruiselog" onclick="toggleMenu(false)">
       <span class="r-lab"><span data-tr>Seyir&nbsp;Günlükleri</span><span data-en>Cruise&nbsp;Log</span></span>
       <span class="r-num">03</span>
     </a>
@@ -609,7 +609,8 @@
         <h4><span data-tr>Keşfet</span><span data-en>Explore</span></h4>
         <ul>
           <li><a href="/{{ $locale ?? 'tr' }}/places"><span data-tr>Destinasyonlar</span><span data-en>Destinations</span></a></li>
-          <li><a href="/{{ $locale ?? 'tr' }}/tours"><span data-tr>Seyir Günlükleri</span><span data-en>Cruise Log</span></a></li>
+          <li><a href="/{{ $locale ?? 'tr' }}/tours"><span data-tr>Turlar</span><span data-en>Tours</span></a></li>
+          <li><a href="/{{ $locale ?? 'tr' }}/cruiselog"><span data-tr>Seyir Günlükleri</span><span data-en>Cruise Log</span></a></li>
           <li><a href="/{{ $locale ?? 'tr' }}/guides"><span data-tr>Şehir Rehberleri</span><span data-en>City Guides</span></a></li>
           <li><a href="/{{ $locale ?? 'tr' }}/blog">Blog</a></li>
         </ul>

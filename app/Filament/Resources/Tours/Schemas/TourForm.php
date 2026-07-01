@@ -20,6 +20,11 @@ class TourForm
                 TextInput::make('title_en'),
                 TextInput::make('slug')
                     ->required(),
+                TextInput::make('booking_url')
+                    ->label('Gezikolay.net Linki')
+                    ->helperText('Bu tura özel satın alma linki. Boş bırakılırsa genel gezikolay.net anasayfasına yönlendirilir.')
+                    ->url()
+                    ->columnSpanFull(),
                 TextInput::make('region_tr'),
                 TextInput::make('region_en'),
                 TextInput::make('country_tr'),

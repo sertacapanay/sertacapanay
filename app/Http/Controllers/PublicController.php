@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Place;
 use App\Models\Tour;
+use App\Models\Cruise;
 use App\Models\Flight;
 use App\Models\Product;
 use App\Mail\ContactInquiry;
@@ -141,7 +142,7 @@ class PublicController extends Controller
             ->orderBy($col)
             ->pluck($col);
 
-        $query = Tour::active()->latest();
+        $query = Tour::active()->orderByRaw('start_date IS NULL')->orderBy('start_date')->latest('id');
 
         if ($request->filled('country')) {
             $query->where($col, $request->country);
@@ -154,6 +155,7 @@ class PublicController extends Controller
             'isEn'            => $locale === 'en',
             'tours'           => $query->paginate(12)->withQueryString(),
             'allTours'        => $allTours,
+            'bookingUrlDefault' => 'https://www.gezikolay.net',
             'countries'       => $countries,
             'selectedCountry' => $request->country,
         ]);
@@ -179,7 +181,65 @@ class PublicController extends Controller
                 ->get();
         }
 
-        return view('public.tours.show', compact('locale', 'tour', 'relatedTours') + ['isEn' => $locale === 'en']);
+        return view('public.tours.show', compact('locale', 'tour', 'relatedTours') + [
+            'isEn'              => $locale === 'en',
+            'bookingUrlDefault' => 'https://www.gezikolay.net',
+        ]);
+    }
+
+    public function cruiselog(string $locale = 'tr', Request $request)
+    {
+        $locale = $this->locale($locale);
+        $col    = $locale === 'en' ? 'country_en' : 'country_tr';
+
+        $countries = Cruise::active()
+            ->whereNotNull($col)
+            ->where($col, '!=', '')
+            ->select($col)
+            ->distinct()
+            ->orderBy($col)
+            ->pluck($col);
+
+        $query = Cruise::active()->orderByDesc('departure_date');
+
+        if ($request->filled('country')) {
+            $query->where($col, $request->country);
+        }
+
+        $allCruises = Cruise::active()->get();
+
+        return view('public.cruiselog.index', [
+            'locale'          => $locale,
+            'isEn'            => $locale === 'en',
+            'cruises'         => $query->paginate(12)->withQueryString(),
+            'allCruises'      => $allCruises,
+            'countries'       => $countries,
+            'selectedCountry' => $request->country,
+        ]);
+    }
+
+    public function cruiselogShow(string $locale, string $slug)
+    {
+        $locale = $this->locale($locale);
+        $cruise = Cruise::active()->where('slug', $slug)->firstOrFail();
+        $col    = $locale === 'en' ? 'country_en' : 'country_tr';
+
+        $relatedCruises = Cruise::active()
+            ->where('id', '!=', $cruise->id)
+            ->when($cruise->{$col}, fn($q) => $q->where($col, $cruise->{$col}))
+            ->orderByDesc('departure_date')
+            ->take(3)
+            ->get();
+
+        if ($relatedCruises->count() < 3) {
+            $relatedCruises = Cruise::active()
+                ->where('id', '!=', $cruise->id)
+                ->orderByDesc('departure_date')
+                ->take(3)
+                ->get();
+        }
+
+        return view('public.cruiselog.show', compact('locale', 'cruise', 'relatedCruises') + ['isEn' => $locale === 'en']);
     }
 
     public function flights(string $locale = 'tr')

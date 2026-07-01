@@ -62,6 +62,18 @@
   </url>
   @endforeach
 
+  {{-- Cruises --}}
+  @foreach($cruises as $cruise)
+  <url>
+    <loc>{{ $baseUrl }}/tr/cruiselog/{{ $cruise->slug }}</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="{{ $baseUrl }}/tr/cruiselog/{{ $cruise->slug }}"/>
+    <xhtml:link rel="alternate" hreflang="en" href="{{ $baseUrl }}/en/cruiselog/{{ $cruise->slug }}"/>
+    <lastmod>{{ $cruise->updated_at->toDateString() }}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  @endforeach
+
   {{-- Guides (city guides) --}}
   @foreach($guides as $guide)
   <url>
