@@ -334,6 +334,9 @@
           <span class="eyebrow"><span data-tr>Müşteri Sözleri</span><span data-en>Client Voices</span></span>
           <h2><span data-tr>Gezginlerden Sözler</span><span data-en>Words from Travelers</span></h2>
         </div>
+        <a class="arrow" href="/{{ $locale }}/reviews">
+          <span data-tr>tümünü gör →</span><span data-en>View all →</span>
+        </a>
       </div>
       <div class="tgrid">
         <div class="tcard">
@@ -354,6 +357,19 @@
           <div class="who">Dr. Margaret Osei</div>
           <div class="trip"><span data-tr>Akdeniz Anlatı Seferi · 2025</span><span data-en>Mediterranean Lecture Voyage · 2025</span></div>
         </div>
+        {{-- DB Testimonials --}}
+        @foreach(\App\Models\Testimonial::approved()->with('guestUser','tour')->latest()->take(3)->get() as $t)
+        <div class="tcard">
+          <p class="q">"{{ Str::limit($t->body, 220) }}"</p>
+          <div class="who">{{ $t->guestUser->name }}</div>
+          <div class="trip">{{ $t->tour ? ($isEn ? ($t->tour->title_en ?? $t->tour->title_tr) : $t->tour->title_tr) : ($isEn ? 'General Experience' : 'Genel Deneyim') }}</div>
+        </div>
+        @endforeach
+      </div>
+      <div style="margin-top:28px; display:flex; gap:24px; align-items:center;">
+        <a href="{{ route('testimonial.create') }}" style="font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ink);padding-bottom:2px;">
+          <span data-tr>✍ Deneyimini Paylaş</span><span data-en>✍ Share Your Experience</span>
+        </a>
       </div>
     </div>
 
@@ -619,7 +635,5 @@
     </div>
   </div>
 </section>
-
-<x-testimonials :limit="6" />
 
 @endsection

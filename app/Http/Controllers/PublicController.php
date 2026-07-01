@@ -317,4 +317,18 @@ class PublicController extends Controller
 
         return back()->with('success', $success);
     }
+
+    public function reviews(string $locale = 'tr')
+    {
+        $locale = $this->locale($locale);
+        $testimonials = \App\Models\Testimonial::approved()
+            ->with('guestUser', 'tour')
+            ->latest()
+            ->get();
+        return view('public.reviews.index', [
+            'locale'       => $locale,
+            'isEn'         => $locale === 'en',
+            'testimonials' => $testimonials,
+        ]);
+    }
 }

@@ -233,7 +233,35 @@
   </section>
 
   {{-- ── Testimonials ── --}}
-  <x-testimonials :limit="12" />
+  @php
+    $aboutTestimonials = \App\Models\Testimonial::approved()->with('guestUser','tour')->latest()->get();
+    $aboutLocale = app()->getLocale();
+    $aboutIsEn = $aboutLocale === 'en';
+  @endphp
+  @if($aboutTestimonials->isNotEmpty())
+  <section class="about-testimonials">
+    <div class="wrap">
+      <div class="sec-head" style="margin-bottom:28px">
+        <div>
+          <span class="eyebrow"><span data-tr>Katılımcılar</span><span data-en>Travelers</span></span>
+          <h2><span data-tr>Gezginlerden Sözler</span><span data-en>Words from Travelers</span></h2>
+        </div>
+        <a href="{{ route('testimonial.create') }}" style="font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ink);padding-bottom:2px;">
+          <span data-tr>✍ Deneyimini Paylaş</span><span data-en>✍ Share Experience</span>
+        </a>
+      </div>
+      <div class="tgrid2">
+        @foreach($aboutTestimonials as $t)
+        <div class="tcard2">
+          <p class="q">"{{ Str::limit($t->body, 260) }}"</p>
+          <div class="who">{{ $t->guestUser->name }}</div>
+          <div class="trip">{{ $t->tour ? ($aboutIsEn ? ($t->tour->title_en ?? $t->tour->title_tr) : $t->tour->title_tr) : ($aboutIsEn ? 'General Experience' : 'Genel Deneyim') }}</div>
+        </div>
+        @endforeach
+      </div>
+    </div>
+  </section>
+  @endif
 
 </main>
 @endsection
