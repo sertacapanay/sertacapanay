@@ -39,7 +39,7 @@
   .fcard-airport{flex-shrink:0}
   .fcard-airport .code{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
   .fcard-airport .city{font-family:'Skyfont','Train One','Anton',var(--ui);font-size:17px;font-weight:400;
-    text-transform:uppercase;letter-spacing:.03em;color:var(--ink);margin-top:3px;white-space:nowrap}
+    letter-spacing:.03em;color:var(--ink);margin-top:3px;white-space:nowrap}
   .fcard-line{flex:1 1 auto;min-width:32px;height:1px;background:var(--line);position:relative}
   .fcard-line svg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(90deg);
     width:20px;height:20px;color:var(--coral);background:var(--paper);padding:0 7px;stroke-width:1.6}
@@ -120,10 +120,10 @@
             'Buenos Aires' => 'EZE', 'Rovaniemi' => 'RVN', 'Brüksel' => 'CRL', 'İzmir' => 'ADB',
             'Bakü' => 'GYD',
           ];
-          $toLatin = fn($s) => strtr($s ?? '', [
+          $toLatin = fn($s) => strtoupper(strtr($s ?? '', [
             'Ş'=>'S','ş'=>'s','İ'=>'I','ı'=>'i','Ü'=>'U','ü'=>'u',
             'Ö'=>'O','ö'=>'o','Ç'=>'C','ç'=>'c','Ğ'=>'G','ğ'=>'g',
-          ]);
+          ]));
         @endphp
         @foreach($flights as $flight)
         @php
