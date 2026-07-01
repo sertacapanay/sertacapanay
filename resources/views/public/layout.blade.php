@@ -684,15 +684,81 @@ window.addEventListener('resize', alignHero);
 alignHero();
 
 (function() {
-  // Görsellerin sağ tık / sürükle ile indirilmesini zorlaştır (arka planlı resimler zaten korumalı;
-  // burada gerçek <img> etiketlerini kapsıyoruz). Not: teknik olarak %100 engel değildir,
+  // Sağ tık / sürükle ile indirmeyi zorlaştır. Not: teknik olarak %100 engel değildir,
   // sadece sıradan "resmi kaydet" davranışını caydırır.
   document.addEventListener('contextmenu', function(e) {
-    if (e.target && e.target.tagName === 'IMG') e.preventDefault();
+    if (e.target && (e.target.tagName === 'IMG' || e.target.hasAttribute('data-protected'))) e.preventDefault();
   });
   document.addEventListener('dragstart', function(e) {
-    if (e.target && e.target.tagName === 'IMG') e.preventDefault();
+    if (e.target && (e.target.tagName === 'IMG' || e.target.hasAttribute('data-protected'))) e.preventDefault();
   });
+})();
+
+(function() {
+  // Gerçek <img> etiketlerini <canvas>'a çizerek yayınlar: sağ tıkta artık
+  // "Resmi Farklı Kaydet" seçeneği çıkmaz (canvas'ın kendi menüsü yok).
+  // Not: bu SEO görsel indekslemesini ve ekran okuyucu deneyimini etkileyebilir,
+  // bilinçli bir ödünleşim olarak seçildi.
+  function drawFit(ctx, img, cw, ch, mode) {
+    var iw = img.naturalWidth, ih = img.naturalHeight;
+    if (!iw || !ih) return;
+    var ir = iw / ih, cr = cw / ch, sx, sy, sw, sh;
+    if (mode === 'cover') {
+      if (ir > cr) { sh = ih; sw = sh * cr; sx = (iw - sw) / 2; sy = 0; }
+      else { sw = iw; sh = sw / cr; sx = 0; sy = (ih - sh) / 2; }
+      ctx.drawImage(img, sx, sy, sw, sh, 0, 0, cw, ch);
+    } else if (mode === 'contain' || mode === 'scale-down') {
+      var scale = Math.min(cw / iw, ch / ih);
+      var dw = iw * scale, dh = ih * scale;
+      ctx.clearRect(0, 0, cw, ch);
+      ctx.drawImage(img, 0, 0, iw, ih, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+    } else {
+      ctx.drawImage(img, 0, 0, cw, ch);
+    }
+  }
+
+  function swap(img) {
+    if (!img.naturalWidth || img.dataset.canvasDone) return;
+    img.dataset.canvasDone = '1';
+    var rect = img.getBoundingClientRect();
+    var cw = Math.round(rect.width) || img.naturalWidth;
+    var ch = Math.round(rect.height) || img.naturalHeight;
+    if (!cw || !ch) return;
+    var canvas = document.createElement('canvas');
+    canvas.width = cw;
+    canvas.height = ch;
+    canvas.className = img.className;
+    if (img.getAttribute('style')) canvas.setAttribute('style', img.getAttribute('style'));
+    canvas.setAttribute('role', 'img');
+    canvas.setAttribute('data-protected', '1');
+    if (img.alt) canvas.setAttribute('aria-label', img.alt);
+    var fit = window.getComputedStyle(img).objectFit || 'fill';
+    try {
+      drawFit(canvas.getContext('2d'), img, cw, ch, fit);
+      if (img.parentNode) img.parentNode.replaceChild(canvas, img);
+    } catch (err) { /* CORS vb. bir sorun olursa orijinal img kalsın */ }
+  }
+
+  function process(img) {
+    if (img.complete && img.naturalWidth) {
+      swap(img);
+    } else {
+      img.addEventListener('load', function() { swap(img); });
+    }
+  }
+
+  document.querySelectorAll('img').forEach(process);
+
+  // Sonradan eklenen (lazy/dinamik) img'ler için de aynı korumayı uygula.
+  new MutationObserver(function(mutations) {
+    mutations.forEach(function(m) {
+      m.addedNodes.forEach(function(node) {
+        if (node.nodeType !== 1) return;
+        if (node.tagName === 'IMG') process(node);
+        node.querySelectorAll && node.querySelectorAll('img').forEach(process);
+      });
+    });
+  }).observe(document.body, { childList: true, subtree: true });
 })();
 
 (function() {
