@@ -93,7 +93,7 @@
               <strong>{{ $flight->airline }}</strong>
             @endif
             @if($flight->distance_km)
-              {{ number_format($flight->distance_km) }} km
+              {{ number_format($flight->distance_km) }} km · {{ round($flight->distance_km / 850) }} {{ $isEn ? 'hr' : 'sa' }}
             @endif
             @if($flight->flight_date)
               {{ \Carbon\Carbon::parse($flight->flight_date)->locale($locale)->isoFormat('D MMM YYYY') }}
