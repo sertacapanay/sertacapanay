@@ -120,6 +120,10 @@
             'Buenos Aires' => 'EZE', 'Rovaniemi' => 'RVN', 'Brüksel' => 'CRL', 'İzmir' => 'ADB',
             'Bakü' => 'GYD',
           ];
+          $toLatin = fn($s) => strtr($s ?? '', [
+            'Ş'=>'S','ş'=>'s','İ'=>'I','ı'=>'i','Ü'=>'U','ü'=>'u',
+            'Ö'=>'O','ö'=>'o','Ç'=>'C','ç'=>'c','Ğ'=>'G','ğ'=>'g',
+          ]);
         @endphp
         @foreach($flights as $flight)
         @php
@@ -137,7 +141,7 @@
           <div class="fcard-route">
             <div class="fcard-airport">
               @if($fromCode)<div class="code">{{ $fromCode }}</div>@endif
-              <div class="city">{{ $flight->from_city ?? '—' }}</div>
+              <div class="city">{{ $flight->from_city ? $toLatin($flight->from_city) : '—' }}</div>
             </div>
             <div class="fcard-line">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
@@ -146,7 +150,7 @@
             </div>
             <div class="fcard-airport">
               @if($toCode)<div class="code">{{ $toCode }}</div>@endif
-              <div class="city">{{ $flight->to_city ?? '—' }}</div>
+              <div class="city">{{ $flight->to_city ? $toLatin($flight->to_city) : '—' }}</div>
             </div>
           </div>
           <div class="fcard-stats">
