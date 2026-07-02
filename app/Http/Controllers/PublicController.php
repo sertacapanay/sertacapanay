@@ -245,13 +245,18 @@ class PublicController extends Controller
     public function flights(string $locale = 'tr')
     {
         $locale = $this->locale($locale);
-        $flights = Flight::latest('flight_date')->get();
+        $total = Flight::count();
+        $km    = (float) Flight::sum('distance_km');
+        $airlineCount = Flight::whereNotNull('airline')->where('airline', '!=', '')
+            ->distinct('airline')->count('airline');
+        $flights = Flight::latest('flight_date')->paginate(30)->withQueryString();
         return view('public.flights.index', [
-            'locale'  => $locale,
-            'isEn'    => $locale === 'en',
-            'flights' => $flights,
-            'total'   => $flights->count(),
-            'km'      => $flights->sum('distance_km'),
+            'locale'       => $locale,
+            'isEn'         => $locale === 'en',
+            'flights'      => $flights,
+            'total'        => $total,
+            'km'           => $km,
+            'airlineCount' => $airlineCount,
         ]);
     }
 

@@ -8,7 +8,7 @@
   <title>@yield('title', 'Sertaç Apanay')</title>
   <meta name="description" content="@yield('description', 'Kültürel anlatıcı, seyahat uzmanı ve yol arkadaşı.')">
   <meta name="author"      content="Sertaç Apanay">
-  <meta name="robots"      content="index, follow">
+  <meta name="robots"      content="@yield('robots', 'index, follow')">
   <meta name="google-site-verification" content="3NEGayZbmOZ0y2kmz1xCBDvXgFxefwefY6DY3zZEqGw" />
 
   {{-- ── Canonical & hreflang ── --}}
@@ -60,14 +60,24 @@
   {{-- ── Page-specific head (preload hints, etc.) ── --}}
   @stack('head')
 
-  {{-- ── Google Analytics GA4 ── --}}
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7ZYDKVLC7Z"></script>
+  {{-- ── Google Analytics GA4 (Consent Mode: default denied until user accepts) ── --}}
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      analytics_storage: 'denied',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+    });
+    var savedConsent = localStorage.getItem('cookie_consent');
+    if (savedConsent === 'accepted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+    }
     gtag('js', new Date());
     gtag('config', 'G-7ZYDKVLC7Z');
   </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7ZYDKVLC7Z"></script>
 
   {{-- ── Favicon ── --}}
   <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
@@ -652,6 +662,7 @@
     <div class="foot-legal">
       <a href="/{{ $locale ?? 'tr' }}/privacy"><span data-tr>Gizlilik &amp; KVKK</span><span data-en>Privacy Policy</span></a>
       <a href="/{{ $locale ?? 'tr' }}/cookies"><span data-tr>Çerez Politikası</span><span data-en>Cookie Policy</span></a>
+      <a href="#" onclick="openCookiePrefs();return false;"><span data-tr>Çerez Tercihleri</span><span data-en>Cookie Preferences</span></a>
       <a href="/{{ $locale ?? 'tr' }}/terms"><span data-tr>Kullanım Koşulları</span><span data-en>Terms of Use</span></a>
       <a href="/{{ $locale ?? 'tr' }}/returns"><span data-tr>Mesafeli Satış &amp; İade</span><span data-en>Distance Sales &amp; Returns</span></a>
     </div>
@@ -663,6 +674,53 @@
     </div>
   </div>
 </footer>
+
+{{-- ── Çerez rızası (Google Consent Mode) ── --}}
+<style>
+  #cookie-banner{position:fixed;left:0;right:0;bottom:0;z-index:80;background:var(--ink);color:var(--bone);
+    padding:18px 24px;display:none;align-items:center;justify-content:center;gap:22px;flex-wrap:wrap;
+    box-shadow:0 -4px 20px rgba(0,0,0,.2)}
+  #cookie-banner.show{display:flex}
+  #cookie-banner p{margin:0;font-size:13px;line-height:1.5;max-width:640px;color:rgba(243,239,230,.85)}
+  #cookie-banner a{color:var(--bone);text-decoration:underline}
+  #cookie-banner .cb-actions{display:flex;gap:10px;flex-shrink:0}
+  #cookie-banner button{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    padding:10px 18px;border-radius:3px;cursor:pointer;border:1px solid rgba(243,239,230,.4);background:none;color:var(--bone)}
+  #cookie-banner .cb-accept{background:var(--coral);border-color:var(--coral);color:#fff}
+  @media (max-width:640px){#cookie-banner{flex-direction:column;align-items:stretch;text-align:center}}
+</style>
+<div id="cookie-banner">
+  <p>
+    <span data-tr>Deneyimini iyileştirmek için çerezler kullanıyoruz. Detaylar için <a href="/{{ $locale ?? 'tr' }}/cookies">Çerez Politikası</a>'na bakabilirsin.</span>
+    <span data-en>We use cookies to improve your experience. See our <a href="/{{ $locale ?? 'tr' }}/cookies">Cookie Policy</a> for details.</span>
+  </p>
+  <div class="cb-actions">
+    <button type="button" class="cb-reject" onclick="setCookieConsent(false)">
+      <span data-tr>Reddet</span><span data-en>Decline</span>
+    </button>
+    <button type="button" class="cb-accept" onclick="setCookieConsent(true)">
+      <span data-tr>Kabul Et</span><span data-en>Accept</span>
+    </button>
+  </div>
+</div>
+
+<script>
+function setCookieConsent(accepted) {
+  localStorage.setItem('cookie_consent', accepted ? 'accepted' : 'rejected');
+  if (accepted && window.gtag) {
+    gtag('consent', 'update', { analytics_storage: 'granted' });
+  }
+  document.getElementById('cookie-banner').classList.remove('show');
+}
+function openCookiePrefs() {
+  document.getElementById('cookie-banner').classList.add('show');
+}
+(function() {
+  if (!localStorage.getItem('cookie_consent')) {
+    document.getElementById('cookie-banner').classList.add('show');
+  }
+})();
+</script>
 
 <script>
 function toggleMenu(open) {

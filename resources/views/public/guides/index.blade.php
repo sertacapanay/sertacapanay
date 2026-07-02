@@ -2,6 +2,9 @@
 
 @section('title', $isEn ? 'City Guides — Sertaç Apanay' : 'Şehir Rehberleri — Sertaç Apanay')
 @section('description', $isEn ? 'Deep-dive explorations into the world\'s most compelling destinations.' : 'Dünyanın en etkileyici destinasyonlarına derinlemesine yolculuklar.')
+@if($places->isEmpty())
+@section('robots', 'noindex, follow')
+@endif
 
 @push('styles')
 <style>
@@ -134,7 +137,7 @@
           ] as $g)
           <div class="guide">
             <div class="gimg">
-              <img src="{{ $g['img'] }}" alt="" loading="lazy">
+              <img src="{{ $g['img'] }}" alt="{{ $isEn ? $g['title_en'] : $g['title_tr'] }}" loading="lazy">
             </div>
             <div class="gloc">
               <span data-tr>{{ $g['loc_tr'] }}</span>

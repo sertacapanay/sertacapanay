@@ -51,6 +51,11 @@
   .empty-state{padding:80px 0;text-align:center;color:var(--muted)}
   .empty-state p{font-family:var(--display);font-style:italic;font-size:28px;margin-bottom:12px;color:var(--ink)}
 
+  .pagination-wrap{display:flex;justify-content:center;gap:8px;padding:40px 0 0}
+  .pagination-wrap a,.pagination-wrap span{font-family:var(--mono);font-size:12px;letter-spacing:.1em;
+    padding:8px 16px;border:1px solid var(--line);border-radius:3px;color:var(--ink)}
+  .pagination-wrap .active-page{background:var(--ink);color:var(--bone);border-color:var(--ink)}
+
   @media (max-width:860px){
     .fcard{gap:16px}
     .fcard-stats{width:100%;margin-left:0;justify-content:space-between;padding-top:14px;border-top:1px solid var(--line)}
@@ -87,7 +92,7 @@
     <div class="fstat-lbl"><span data-tr>Tahmini Saat</span><span data-en>Hours Airborne</span></div>
   </div>
   <div class="fstat">
-    <div class="fstat-num">{{ $flights->pluck('airline')->filter()->unique()->count() }}</div>
+    <div class="fstat-num">{{ $airlineCount }}</div>
     <div class="fstat-lbl"><span data-tr>Havayolu</span><span data-en>Airlines</span></div>
   </div>
 </div>
@@ -102,7 +107,7 @@
     @else
       <div class="fl-list">
         @php
-          $idx = 1;
+          $idx = $flights->firstItem() ?? 1;
           $airportCodes = [
             'İstanbul' => 'IST', 'Ankara' => 'ESB', 'Antalya' => 'AYT', 'Gazipaşa' => 'GZP',
             'Kayseri' => 'ASR', 'Cenova' => 'GOA', 'Singapur' => 'SIN', 'Sao Paulo' => 'GRU',
@@ -180,6 +185,17 @@
         @php $idx++; @endphp
         @endforeach
       </div>
+
+      @if($flights->hasPages())
+      <div class="pagination-wrap">
+        @if($flights->onFirstPage())<span>←</span>@else<a href="{{ $flights->previousPageUrl() }}">←</a>@endif
+        @foreach($flights->getUrlRange(1, $flights->lastPage()) as $page => $url)
+          @if($page == $flights->currentPage())<span class="active-page">{{ $page }}</span>
+          @else<a href="{{ $url }}">{{ $page }}</a>@endif
+        @endforeach
+        @if($flights->hasMorePages())<a href="{{ $flights->nextPageUrl() }}">→</a>@else<span>→</span>@endif
+      </div>
+      @endif
     @endif
   </div>
 </main>

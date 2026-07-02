@@ -6,6 +6,9 @@
 
 @section('title', $isEn ? 'Cruise Log — Sertaç Apanay' : 'Seyir Günlükleri — Sertaç Apanay')
 @section('description', $isEn ? 'Beyond the horizons, into the depths of oceans — cruise experiences and sea voyages.' : 'Ufukların ötesine, okyanusların derinliklerine — cruise deneyimleri ve gemi yolculukları.')
+@if($cruises->isEmpty())
+@section('robots', 'noindex, follow')
+@endif
 
 @push('styles')
 <style>

@@ -2,6 +2,9 @@
 
 @section('title', $isEn ? 'Tours — Sertaç Apanay' : 'Turlar — Sertaç Apanay')
 @section('description', $isEn ? 'This year\'s guided tours and group journeys.' : 'Bu yılki rehberli turlar ve grup yolculukları.')
+@if($tours->isEmpty())
+@section('robots', 'noindex, follow')
+@endif
 
 @push('styles')
 <style>
