@@ -124,14 +124,21 @@
         </div>
       </a>
     @empty
-      {{-- Static placeholders when DB is empty --}}
-      @php $moroccoImg = asset('images/morocco.jpg'); @endphp
+      {{-- Static placeholders when DB is empty (local assets — external Unsplash hotlinks were unreliable) --}}
+      @php
+        $moroccoImg = asset('images/morocco.jpg');
+        $peruImg = asset('images/dest-peru.jpg');
+        $jordanImg = asset('images/dest-jordan.jpg');
+        $japanImg = asset('images/dest-japan.jpg');
+        $italyImg = asset('images/dest-italy.jpg');
+        $indonesiaImg = asset('images/destinations-hero.jpg');
+      @endphp
       @foreach([
-        ['img'=>'https://images.unsplash.com/photo-1526392060635-9d6019884377?w=800&q=80&fit=crop&auto=format','badge_tr'=>'PE · GÜNEY AMERİKA','badge_en'=>'PE · SOUTH AMERICA','name_tr'=>'Peru','name_en'=>'Peru','tag_tr'=>'And Dağları, zamandan daha eski sırlar barındırır','tag_en'=>'The Andes hold secrets older than time'],
-        ['img'=>'https://images.unsplash.com/photo-1548013146-72479768bada?w=800&q=80&fit=crop&auto=format','badge_tr'=>'JO · ASYA','badge_en'=>'JO · ASIA','name_tr'=>'Ürdün','name_en'=>'Jordan','tag_tr'=>'Kumtaşı şehirler bin yıllık tarihi fısıldar','tag_en'=>'Where sandstone cities whisper millennia of history'],
-        ['img'=>'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&q=80&fit=crop&auto=format','badge_tr'=>'JP · ASYA','badge_en'=>'JP · ASIA','name_tr'=>'Japonya','name_en'=>'Japan','tag_tr'=>'Her ayrıntıda hassasiyet, güzellik ve derinlik','tag_en'=>'Precision, beauty, and depth in every detail'],
-        ['img'=>'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=800&q=80&fit=crop&auto=format','badge_tr'=>'IT · AVRUPA','badge_en'=>'IT · EUROPE','name_tr'=>'İtalya','name_en'=>'Italy','tag_tr'=>'Her meydanda ve tabakta tatlı hayat','tag_en'=>'La dolce vita in every piazza and plate'],
-        ['img'=>'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&q=80&fit=crop&auto=format','badge_tr'=>'ID · ASYA','badge_en'=>'ID · ASIA','name_tr'=>'Endonezya','name_en'=>'Indonesia','tag_tr'=>'17.000 adada anlatılmamış hikâyeler','tag_en'=>'17,000 islands of untold stories'],
+        ['img'=>$peruImg,'badge_tr'=>'PE · GÜNEY AMERİKA','badge_en'=>'PE · SOUTH AMERICA','name_tr'=>'Peru','name_en'=>'Peru','tag_tr'=>'And Dağları, zamandan daha eski sırlar barındırır','tag_en'=>'The Andes hold secrets older than time'],
+        ['img'=>$jordanImg,'badge_tr'=>'JO · ASYA','badge_en'=>'JO · ASIA','name_tr'=>'Ürdün','name_en'=>'Jordan','tag_tr'=>'Kumtaşı şehirler bin yıllık tarihi fısıldar','tag_en'=>'Where sandstone cities whisper millennia of history'],
+        ['img'=>$japanImg,'badge_tr'=>'JP · ASYA','badge_en'=>'JP · ASIA','name_tr'=>'Japonya','name_en'=>'Japan','tag_tr'=>'Her ayrıntıda hassasiyet, güzellik ve derinlik','tag_en'=>'Precision, beauty, and depth in every detail'],
+        ['img'=>$italyImg,'badge_tr'=>'IT · AVRUPA','badge_en'=>'IT · EUROPE','name_tr'=>'İtalya','name_en'=>'Italy','tag_tr'=>'Her meydanda ve tabakta tatlı hayat','tag_en'=>'La dolce vita in every piazza and plate'],
+        ['img'=>$indonesiaImg,'badge_tr'=>'ID · ASYA','badge_en'=>'ID · ASIA','name_tr'=>'Endonezya','name_en'=>'Indonesia','tag_tr'=>'17.000 adada anlatılmamış hikâyeler','tag_en'=>'17,000 islands of untold stories'],
         ['img'=>$moroccoImg,'badge_tr'=>'MA · AFRİKA','badge_en'=>'MA · AFRICA','name_tr'=>'Fas','name_en'=>'Morocco','tag_tr'=>'Afrika ile Akdeniz ruhunun buluştuğu yer','tag_en'=>'Where Africa meets the Mediterranean soul'],
       ] as $ph)
       <div class="c-card">
