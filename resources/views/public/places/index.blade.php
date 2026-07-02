@@ -6,7 +6,7 @@
 @push('styles')
 <style>
   /* HERO */
-  .hero{position:relative;min-height:78vh;display:flex;align-items:flex-end;color:var(--bone);overflow:hidden}
+  .hero{position:relative;min-height:56vh;display:flex;align-items:flex-end;color:var(--bone);overflow:hidden}
   .hero-bg{position:absolute;inset:0;z-index:0;
     background:url('{{ asset("images/destinations-hero.jpg") }}') center/cover no-repeat}
   .hero::after{content:"";position:absolute;inset:0;z-index:1;
