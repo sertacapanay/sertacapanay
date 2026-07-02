@@ -155,8 +155,19 @@
           </div>
           <div class="fcard-stats">
             @if($flight->distance_km)
+              @php
+                $totalMin = round($flight->distance_km / 850 * 60);
+                $hrs = intdiv($totalMin, 60);
+                $mins = $totalMin % 60;
+              @endphp
               <div class="item">{{ number_format($flight->distance_km) }} km</div>
-              <div class="item">{{ round($flight->distance_km / 850, 1) }}{{ $isEn ? 'h' : 's' }}</div>
+              <div class="item">
+                @if($isEn)
+                  {{ $hrs }}h {{ $mins }}m
+                @else
+                  {{ $hrs }} sa {{ $mins }} dk
+                @endif
+              </div>
             @endif
             @if($flight->flight_date)
               <div class="item">{{ \Carbon\Carbon::parse($flight->flight_date)->locale($locale)->isoFormat('D MMM YYYY') }}</div>

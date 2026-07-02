@@ -219,7 +219,7 @@
 
           {{-- CTA'lar --}}
           <div class="about-ctas">
-            <a class="cta-primary" href="/{{ $locale }}/contact">
+            <a class="cta-primary" href="{{ route('tours', ['locale' => $locale]) }}">
               <span data-tr>Tura Katıl</span><span data-en>Join a Tour</span>
             </a>
             <a class="cta-secondary" href="/{{ $locale }}/places">

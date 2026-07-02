@@ -529,44 +529,49 @@
       <span class="r-num">01</span>
     </a>
     <a class="r-item {{ request()->is($loc.'/places*') ? 'active' : '' }}"
-       style="left:75.7%;top:19.4%" href="/{{ $loc }}/places" onclick="toggleMenu(false)">
+       style="left:73.5%;top:17.6%" href="/{{ $loc }}/places" onclick="toggleMenu(false)">
       <span class="r-lab"><span data-tr>Destinasyonlar</span><span data-en>Destinations</span></span>
       <span class="r-num">02</span>
     </a>
-    <a class="r-item {{ request()->is($loc.'/cruiselog*') ? 'active' : '' }}"
-       style="left:89.4%;top:43.1%" href="/{{ $loc }}/cruiselog" onclick="toggleMenu(false)">
-      <span class="r-lab"><span data-tr>Seyir&nbsp;Günlükleri</span><span data-en>Cruise&nbsp;Log</span></span>
+    <a class="r-item {{ request()->is($loc.'/tours*') ? 'active' : '' }}"
+       style="left:88.0%;top:37.6%" href="/{{ $loc }}/tours" onclick="toggleMenu(false)">
+      <span class="r-lab"><span data-tr>Turlar</span><span data-en>Tours</span></span>
       <span class="r-num">03</span>
     </a>
-    <a class="r-item {{ request()->is($loc.'/flights*') ? 'active' : '' }}"
-       style="left:84.6%;top:70.0%" href="/{{ $loc }}/flights" onclick="toggleMenu(false)">
-      <span class="r-lab"><span data-tr>Uçuşlar</span><span data-en>Flights</span></span>
+    <a class="r-item {{ request()->is($loc.'/cruiselog*') ? 'active' : '' }}"
+       style="left:88.0%;top:62.4%" href="/{{ $loc }}/cruiselog" onclick="toggleMenu(false)">
+      <span class="r-lab"><span data-tr>Seyir&nbsp;Günlükleri</span><span data-en>Cruise&nbsp;Log</span></span>
       <span class="r-num">04</span>
     </a>
-    <a class="r-item {{ request()->is($loc.'/guides*') ? 'active' : '' }}"
-       style="left:63.7%;top:87.6%" href="/{{ $loc }}/guides" onclick="toggleMenu(false)">
-      <span class="r-lab"><span data-tr>Rehberler</span><span data-en>Guides</span></span>
+    <a class="r-item {{ request()->is($loc.'/flights*') ? 'active' : '' }}"
+       style="left:73.5%;top:82.4%" href="/{{ $loc }}/flights" onclick="toggleMenu(false)">
+      <span class="r-lab"><span data-tr>Uçuşlar</span><span data-en>Flights</span></span>
       <span class="r-num">05</span>
     </a>
-    <a class="r-item {{ request()->is($loc.'/blog*') ? 'active' : '' }}"
-       style="left:36.3%;top:87.6%" href="/{{ $loc }}/blog" onclick="toggleMenu(false)">
-      <span class="r-lab"><span data-tr>Blog</span><span data-en>Blog</span></span>
+    <a class="r-item {{ request()->is($loc.'/guides*') ? 'active' : '' }}"
+       style="left:50.0%;top:90.0%" href="/{{ $loc }}/guides" onclick="toggleMenu(false)">
+      <span class="r-lab"><span data-tr>Rehberler</span><span data-en>Guides</span></span>
       <span class="r-num">06</span>
     </a>
-    <a class="r-item {{ request()->is($loc.'/shop*') ? 'active' : '' }}"
-       style="left:15.4%;top:70.0%" href="/{{ $loc }}/shop" onclick="toggleMenu(false)">
-      <span class="r-lab"><span data-tr>Çarşı</span><span data-en>Shop</span></span>
+    <a class="r-item {{ request()->is($loc.'/blog*') ? 'active' : '' }}"
+       style="left:26.5%;top:82.4%" href="/{{ $loc }}/blog" onclick="toggleMenu(false)">
+      <span class="r-lab"><span data-tr>Blog</span><span data-en>Blog</span></span>
       <span class="r-num">07</span>
     </a>
-    <a class="r-item {{ request()->is($loc.'/about*') ? 'active' : '' }}"
-       style="left:10.6%;top:43.1%" href="/{{ $loc }}/about" onclick="toggleMenu(false)">
-      <span class="r-lab"><span data-tr>Hakkımda</span><span data-en>About</span></span>
+    <a class="r-item {{ request()->is($loc.'/shop*') ? 'active' : '' }}"
+       style="left:12.0%;top:62.4%" href="/{{ $loc }}/shop" onclick="toggleMenu(false)">
+      <span class="r-lab"><span data-tr>Çarşı</span><span data-en>Shop</span></span>
       <span class="r-num">08</span>
     </a>
-    <a class="r-item {{ request()->is($loc.'/contact*') ? 'active' : '' }}"
-       style="left:24.3%;top:19.4%" href="/{{ $loc }}/contact" onclick="toggleMenu(false)">
-      <span class="r-lab"><span data-tr>İletişim</span><span data-en>Contact</span></span>
+    <a class="r-item {{ request()->is($loc.'/about*') ? 'active' : '' }}"
+       style="left:12.0%;top:37.6%" href="/{{ $loc }}/about" onclick="toggleMenu(false)">
+      <span class="r-lab"><span data-tr>Hakkımda</span><span data-en>About</span></span>
       <span class="r-num">09</span>
+    </a>
+    <a class="r-item {{ request()->is($loc.'/contact*') ? 'active' : '' }}"
+       style="left:26.5%;top:17.6%" href="/{{ $loc }}/contact" onclick="toggleMenu(false)">
+      <span class="r-lab"><span data-tr>İletişim</span><span data-en>Contact</span></span>
+      <span class="r-num">10</span>
     </a>
     <div class="r-wm">Sertaç Apanay</div>
     <div class="r-lang">
